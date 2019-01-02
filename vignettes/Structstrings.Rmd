@@ -1,0 +1,185 @@
+---
+title: "Structstrings"
+author: "Felix G.M. Ernst"
+date: "`r Sys.Date()`"
+package: Structstrings
+abstract: >
+  Classes for RNA sequences with secondary structure informations
+output:
+  BiocStyle::html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+vignette: >
+  %\VignetteIndexEntry{Structstrings}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: references.bib
+---
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown(css.files = c('custom.css'))
+```
+
+# Introduction
+
+The `Structstrings` package implements the widely used to bracket annotation for
+storing base pairing information in structured RNA. For example it is used in
+the ViennaRNA package [@Lorenz.2011], the tRNAscan-SE software [@Lowe.1997] and
+the tRNAdb [@Juhling.2009].
+
+`Structstrings` uses the infrastructure provided by the
+[Biostrings](#References) package and derives the class `DotBracketString` and
+such from the equivalent `BString` class. From these base pair table can be
+produced for in depth analysis. For this purpose the `DotBracketDataFrame` class
+is derived from the `DataFrame` class. In addition the loop indices of the base
+pairs can be retrieved as a `LoopIndexList`, a derivate if the `IntegerList`.
+Generally, it checks automatically for the validity of the dot bracket
+annotation.
+
+The conversion of the `DotBracketString` to the base pair table and the loop 
+indices is implemented in C for efficiency. The C implementation to a large 
+extent inspired by the [ViennaRNA](https://www.tbi.univie.ac.at/RNA/) package.
+
+This package was developed as a requirement for the `tRNA` package.
+
+# Creating and accessing structure information
+
+```{r package, echo=FALSE}
+suppressPackageStartupMessages({
+  library(Structstrings)
+})
+```
+```{r package2, eval=FALSE}
+library(Structstrings)
+```
+
+`DotBracketString` objects can be created from character as any other `XString`.
+The validity of the structure information is checked for upon creation or 
+modification of the object.
+
+```{r creation, error=TRUE, purl=FALSE}
+# Hairpin with 4 base pairs
+dbs <- DotBracketString("((((....))))")
+dbs
+# a StringSet with four hairpin structures, which are all equivalent
+dbs <- DotBracketStringSet(c("((((....))))",
+                             "<<<<....>>>>",
+                             "[[[[....]]]]",
+                             "{{{{....}}}}"))
+dbs
+# StringSetList for storing even more structure annotations
+dbsl <- DotBracketStringSetList(dbs,rev(dbs))
+dbsl
+# invalid structure
+DotBracketString("((((....)))")
+```
+
+Annotations can be converted using the `convertAnnotation` function.
+
+```{r annotation_convert}
+dbs[[2]] <- convertAnnotation(dbs[[2]],from = 2L, to = 1L)
+dbs[[3]] <- convertAnnotation(dbs[[3]],from = 3L, to = 1L)
+dbs[[4]] <- convertAnnotation(dbs[[4]],from = 4L, to = 1L)
+# Note: convertAnnotation checks for presence of annotation and stops
+# if there is any conflict.
+dbs
+```
+
+The dot bracket annotation can be turned into a base pairing table, which allows
+the base pairing information to be queried more easily. For example, the `tRNA` 
+package makes uses this to identify the structural elements for tRNAs.
+
+For this purpose the class `DotBracketDataFrame` is derived from `DataFrame`.
+This special `DataFrame` can only contain 3 columns, `pos`, `forward`, `reverse`
+`character`, `base`. The first three are obligatory, whereas the last two are
+optional.
+
+```{r base_pairing}
+# base pairing table
+dbdfl <- getBasePairing(dbs, compress = TRUE)
+dbdfl[[1]]
+```
+
+The types of each column are also fixed as shown in the example above. The fifth 
+column not shown above must be an `XString` object.
+
+Additionally, loop indices can be generated for the individual annotation types. 
+These information can also be used to distinguish structure elements.
+
+```{r loopindices}
+loopids <- getLoopIndices(dbs, bracket.type = 1L)
+loopids[[1]]
+# can also be constructed from DotBracketDataFrame and contains the same 
+# information
+loopids2 <- getLoopIndices(dbdfl, bracket.type = 1L)
+all(loopids == loopids2)
+```
+
+# Creating a dot bracket annotation from base pairing information
+
+The dot bracket annotation can be recreated from a `DotBracketDataFrame` object
+with the function `getDotBracket()`. If the `character` column is present, this 
+informations is just concatenated and used to create a `DotBracketString`. If
+it is not present or `force.bracket` is set to `TRUE`, the dot bracket string
+is created from the base pairing information.
+
+```{r dotbracket}
+rec_dbs <- getDotBracket(dbdfl)
+dbdf <- unlist(dbdfl)
+dbdf$character <- NULL
+dbdfl2 <- relist(dbdf,dbdfl)
+# even if the character column is not set, the dot bracket string can be created
+rec_dbs2 <- getDotBracket(dbdfl2)
+rec_dbs3 <- getDotBracket(dbdfl, force = TRUE)
+rec_dbs[[1]]
+rec_dbs2[[1]]
+rec_dbs3[[1]]
+```
+
+Please be aware that `getDotBracket()` might return a different output than 
+original input, if this information is turned around from a `DotBracketString` 
+to `DotBracketDataFrame` and back to a `DotBracketString`. First the `()` 
+annotation is used followed by `<>`, `[]` and `{}` in this order.
+
+For a `DotBracketString` containing only one type of annotation this might not 
+mean much, except if the `character` string itself is evaluated. However,
+if pseudoloops are present, this will lead potentially to a reformated and
+simplified annotation.
+
+```{r pseudoloop}
+db <- DotBracketString("((((....[[[))))....((((....<<<<...))))]]]....>>>>...")
+db
+getDotBracket(getBasePairing(db), force = TRUE)
+```
+
+# Storing sequence and structure in one object
+
+To store a nucleotide sequence and a structure in one object, the classes
+`StructuredRNAStringSet` and `StructuredModRNAStringSet`  are implemented.
+
+```{r structured_rna_string}
+data("dbs", package = "Structstrings", envir = environment())
+data("seq", package = "Structstrings", envir = environment())
+sdbs <- StructuredRNAStringSet(seq,dbs)
+sdbs[1]
+# subsetting to element returns the sequence
+sdbs[[1]]
+# dotbracket() gives access to the DotBracketStringSet
+dotbracket(sdbs)[[1]]
+```
+
+The base pair table can be directly accessed using `getBasePairing()`. The 
+`base` column is automatically populated from the nucleotide sequence. This is a
+bit slower than just creating the base pair table. Therefore this step can be 
+omitted by setting `return.sequence` to `FALSE`.
+
+```{r structured_rna_string_base_pairing}
+dbdfl <- getBasePairing(sdbs)
+dbdfl[[1]]
+# returns the result without sequence information
+dbdfl <- getBasePairing(sdbs, return.sequence = TRUE)
+dbdfl[[1]]
+```
+
+# References

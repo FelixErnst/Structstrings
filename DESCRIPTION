@@ -1,0 +1,50 @@
+Package: Structstrings
+Title: Extension to the Biostrings package
+Version: 0.98.0
+Date: 2018-12-07
+Authors@R: person("Felix G.M.", 
+                  "Ernst", 
+                  email = "felix.g.m.ernst@outlook.com", 
+                  role = c("aut", "cre"))
+Description: What the package does (one paragraph).
+License: Artistic-2.0
+Encoding: UTF-8
+biocViews:
+    DataImport, DataRepresentation, Infrastructure, Sequencing, Software
+Depends:
+    R (>= 3.5),
+    S4Vectors,
+    IRanges,
+    Biostrings,
+    Modstrings
+LinkingTo:
+    IRanges,
+    S4Vectors
+Imports:
+    methods,
+    assertive,
+    BiocGenerics,
+    XVector,
+    stringr,
+    stringi
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown,
+    BiocStyle
+VignetteBuilder: knitr
+RoxygenNote: 6.1.1
+Collate: 
+    'Structstrings.R'
+    'AllGenerics.R'
+    'Structstrings-DotBracket-io.R'
+    'Structstrings-DotBracketDataFrame.R'
+    'Structstrings-DotBracketString.R'
+    'Structstrings-DotBracketStringSet.R'
+    'Structstrings-DotBracketStringSetList.R'
+    'Structstrings-LoopIndexList.R'
+    'Structstrings-StructuredXStringSet.R'
+    'Structstrings-alphabet.R'
+    'Structstrings-conversion.R'
+    'zzz.R'
+NeedsCompilation: yes
