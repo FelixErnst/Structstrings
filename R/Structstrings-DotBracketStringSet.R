@@ -38,7 +38,6 @@ setReplaceMethod("seqtype", "DotBracketStringSet",
 
 setMethod("windows", "DotBracketStringSet",
           function(x, start = NA, end = NA, width = NA){
-            browser()
             x <- callNextMethod()
             .subsetting_validity_check(x)
             x

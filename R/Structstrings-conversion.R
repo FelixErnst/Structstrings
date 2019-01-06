@@ -100,11 +100,11 @@ setAs("DotBracketString","DotBracketDataFrame",
       function(from){
         .get_pairing(DotBracketStringSet(from))[[1L]]
       })
-setAs("DotBracketStringSet","DotBracketDataFrameList",
-      function(from){
-        .get_pairing(from)
-      })
 setAs("DotBracketStringSet","SplitDotBracketDataFrameList",
+      function(from){
+        as(.get_pairing(from),"SplitDotBracketDataFrameList")
+      })
+setAs("DotBracketStringSet","CompressedSplitDotBracketDataFrameList",
       function(from){
         .get_pairing(from)
       })
@@ -123,9 +123,9 @@ setMethod("getBasePairing",
           definition = function(x,
                                 compress = TRUE){
             if(compress){
-              return(as(x,"SplitDotBracketDataFrameList"))
+              return(as(x,"CompressedSplitDotBracketDataFrameList"))
             }
-            as(x,"DotBracketDataFrameList")
+            as(x,"SplitDotBracketDataFrameList")
           })
 
 # DotBracketDataFrame conversion to DotBracketStringSet ------------------------

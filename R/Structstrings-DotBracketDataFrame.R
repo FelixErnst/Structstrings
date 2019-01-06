@@ -243,6 +243,13 @@ setAs("list", "CompressedSplitDotBracketDataFrameList",
 setAs("CompressedSplitDotBracketDataFrameList", "DotBracketDataFrameList",
       function(from) do.call("DotBracketDataFrameList",as.list(from)))
 
+#' @name DotBracketDataFrame
+#' @export
+setAs("CompressedSplitDotBracketDataFrameList", "SplitDotBracketDataFrameList",
+      function(from) do.call("SplitDotBracketDataFrameList",
+                             c(as.list(from),
+                               compress = FALSE)))
+
 
 # DotBracketDataFrame constructor ----------------------------------------------
 
@@ -348,3 +355,19 @@ SDBDFL <- function(...,
                                compress = compress, 
                                cbindArgs = cbindArgs)
 }
+
+#' @rdname Structstrings-internals
+#' @param x,i,j,...,value See \link{DataFrame}.
+#' @export
+setReplaceMethod("[", "DotBracketDataFrame",
+                 function(x, i, j, ..., value){
+                   # Starting from Bioc 3.6, value is of class 
+                   # DotBracketDataFrame instead of DataFrame. 
+                   # this is a problem since missing columns get autopopulated.
+                   # So its need to be converted to a DataFrame again.
+                   # 
+                   # Reason/place for this conversion unknown. Maybe directly 
+                   # Base C since DataFrame derives from list.
+                   value <- as(value[,seq_along(i),drop = FALSE],"DataFrame")
+                   callNextMethod(x, i, value = value)
+                 })

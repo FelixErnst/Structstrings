@@ -292,7 +292,8 @@ setMethod("getBasePairing", "StructuredXStringSet",
                    compress = TRUE,
                    return.sequence = FALSE) {
             ans <- getBasePairing(dotbracket(x),
-                                  compress)
+                                  compress = compress)
+            names(ans) <- names(x)
             # if sequence should not be save in the DotBracketDataFrame
             if(return.sequence){
               return(ans)
@@ -312,16 +313,18 @@ setMethod("getBasePairing", "StructuredXStringSet",
                                 classNameSeq)
                            })
             if(is(ans,"CompressedList")){
-              seqList <- do.call(paste0(classNameSeq,"List"),
-                                 seqs)
-              ans@unlistData$base <- unlist(do.call(paste0(classNameSeq,"List"),
-                                                    seqs))
+              seqList <- unlist(do.call(paste0(classNameSeq,"List"),
+                                 seqs))
+              df <- as(ans@unlistData,"DataFrame")
+              df$base <- seqList
+              ans@unlistData <- as(df,"DotBracketDataFrame")
             } else {
               ans <- do.call("SplitDotBracketDataFrameList",
                              c(mapply(
                                  function(z,s){
-                                   z$base <- s
-                                   z
+                                   zz <- as(z,"DataFrame")
+                                   zz$base <- s
+                                   as(zz,"DotBracketDataFrame")
                                  },
                                  ans,
                                  seqs),

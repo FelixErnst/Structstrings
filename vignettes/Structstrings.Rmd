@@ -97,7 +97,7 @@ optional.
 
 ```{r base_pairing}
 # base pairing table
-dbdfl <- getBasePairing(dbs, compress = TRUE)
+dbdfl <- getBasePairing(dbs)
 dbdfl[[1]]
 ```
 
