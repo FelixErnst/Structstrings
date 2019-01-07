@@ -8,12 +8,12 @@ used in the ViennaRNA ([Lorenz et al. 2011](#Literature)) package, the tRNAscan-
 
 `Structstrings` uses the infrastructure provided by the
 [Biostrings](#Literature) package and derives the class `DotBracketString` and
-such from the equivalent `BString` class. From these base pair table can be
-produced for in depth analysis. For this purpose the `DotBracketDataFrame` class
-is derived from the `DataFrame` class. In addition the loop indices of the base
+related class from the `BString` class. From these base pair table can be
+produced for in depth analysis. For this the `DotBracketDataFrame` class
+is derived from the `DataFrame` class. In addition, the loop indices of the base
 pairs can be retrieved as a `LoopIndexList`, a derivate if the `IntegerList`.
-Generally, it checks automatically for the validity of the dot bracket
-annotation.
+Generally, all classes check automatically for the validity of the base pairing
+information.
 
 The conversion of the `DotBracketString` to the base pair table and the loop 
 indices is implemented in C for efficiency. The C implementation is to a large 
