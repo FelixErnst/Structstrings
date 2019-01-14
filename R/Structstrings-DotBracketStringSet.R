@@ -66,7 +66,9 @@ setReplaceMethod("subseq", "DotBracketStringSet",
 .BStringToDotBracketStringSet <- function(from){
   from <- .norm_letters(as.character(from))
   .check_for_invalid_db_letters(from, DOTBRACKET_ALPHABET)
-  as(BStringSet(from), "DotBracketStringSet")
+  ans <- as(BStringSet(from), "DotBracketStringSet")
+  validObject(ans)
+  ans
 }
 .BStringSetToDotBracketStringSet <- function(from){
   from <- unlist(lapply(as.character(from), .norm_letters))
@@ -77,6 +79,7 @@ setReplaceMethod("subseq", "DotBracketStringSet",
               ranges = from@ranges,
               check = FALSE)
   names(ans) <- names(from)
+  validObject(ans)
   ans
 }
 .integerToDotBracketStringSet <- function(from){
@@ -89,6 +92,7 @@ setReplaceMethod("subseq", "DotBracketStringSet",
   ans
 }
 .IntegerListToDotBracketStringSet <- function(from){
+  browser()
   ans <- unlist(from, use.names = FALSE)
   .check_for_invalid_db_values(ans, DOTBRACKET_CHAR_VALUES)
   as(relist(as(ans, "DotBracketStringSet")[[1L]], from),

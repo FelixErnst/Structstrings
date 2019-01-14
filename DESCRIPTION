@@ -1,7 +1,7 @@
 Package: Structstrings
 Title: Structstrings: implementation of the dot bracket annotations with Biostrings
 Version: 0.98.0
-Date: 2018-01-07
+Date: 2018-01-14
 Authors@R: person("Felix G.M.", 
                   "Ernst", 
                   email = "felix.g.m.ernst@outlook.com", 

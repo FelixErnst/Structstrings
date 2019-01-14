@@ -33,10 +33,50 @@ LoopIndexList <- function(...){
 }
 
 .valid.LoopIndexList <- function(x){
-  # all elements must be contained in even numbers?!
-  # unique values must be constantly increasing
-  # browser()
+  y <- IntegerList(
+    mapply(function(i,j){
+      c(i,j)
+    },
+    IntegerList(list(0,0,0,0)),
+    x,
+    SIMPLIFY = FALSE))
+  z <- IntegerList(
+    mapply(function(i,j){
+      c(i,j)
+    },
+    x,
+    IntegerList(list(0,0,0,0)),
+    SIMPLIFY = FALSE))
+  # First check reveals error faster, but is leaky
+  message <- "Unmatched positions."
+  z <- y - z
+  if(sum(sum(z)) != 0L){
+    return(message)
+  } else {
+    if(sum(sum(unique(z))) != 0L){
+      return(message)
+    }
+  }
   NULL
 }
+
 S4Vectors:::setValidity2("LoopIndexList",
                          .valid.LoopIndexList)
+
+#' @name LoopIndexList
+#' @export
+setAs("IntegerList", "LoopIndexList",
+      function(from) {
+        from <- IRanges::CompressedIntegerList(from)
+        class(from) <- "LoopIndexList"
+        validObject(from)
+        from
+      })
+#' @name LoopIndexList
+#' @export
+setAs("CompressedIntegerList", "LoopIndexList",
+      function(from) {
+        class(from) <- "LoopIndexList"
+        validObject(from)
+        from
+      })
