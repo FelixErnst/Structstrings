@@ -33,6 +33,7 @@ LoopIndexList <- function(...){
 }
 
 .valid.LoopIndexList <- function(x){
+  # shift values
   y <- IntegerList(
     mapply(function(i,j){
       c(i,j)
@@ -47,15 +48,18 @@ LoopIndexList <- function(...){
     x,
     IntegerList(list(0,0,0,0)),
     SIMPLIFY = FALSE))
-  # First check reveals error faster, but is leaky
+  a <- y - z
   message <- "Unmatched positions."
-  z <- y - z
-  if(sum(sum(z)) != 0L){
+  # the sumsum of the shift should always be zero
+  if(sum(sum(a)) != 0L){
     return(message)
-  } else {
-    if(sum(sum(unique(z))) != 0L){
-      return(message)
-    }
+  }
+  # ... however there are case were omitting one bracket can cause the sumsum
+  # of the shift to be zero as well. In these cases one value occurs only once,
+  # which can never be the case (except 0)
+  a <- table(unlist(x))
+  if(any(a < 2L) && names(a[a < 2L]) != "0"){
+    return(message)
   }
   NULL
 }
