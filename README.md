@@ -1,5 +1,7 @@
 # Structstrings: implementation of the dot bracket annotations with Biostrings
 
+<img src="https://github.com/FelixErnst/BiocStickers/blob/Structstrings/Structstrings/Structstrings.png" height="300" align="right">
+
 The `Structstrings` package implements the widely used to bracket annotation for 
 storing base pairing information in structured RNA. For example it is heavily 
 used in the ViennaRNA ([Lorenz et al. 2011](#Literature)) package, the tRNAscan-SE 
