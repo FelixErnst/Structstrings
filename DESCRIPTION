@@ -54,3 +54,4 @@ Collate:
     'Structstrings-conversion.R'
     'zzz.R'
 NeedsCompilation: yes
+BugReports: https://github.com/FelixErnst/Structstrings/issues
