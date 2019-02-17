@@ -19,7 +19,7 @@ Encoding: UTF-8
 biocViews:
     DataImport, DataRepresentation, Infrastructure, Sequencing, Software
 Depends:
-    R (>= 3.5),
+    R (>= 3.6),
     S4Vectors,
     IRanges,
     Biostrings
