@@ -46,7 +46,6 @@ setMethod("windows", "DotBracketStringSet",
 
 setMethod("threebands", "DotBracketStringSet",
           function(x, start = NA, end = NA, width = NA){
-            browser()
             x <- callNextMethod()
             lapply(x, .subsetting_validity_check)
             x
@@ -92,7 +91,6 @@ setReplaceMethod("subseq", "DotBracketStringSet",
   ans
 }
 .IntegerListToDotBracketStringSet <- function(from){
-  browser()
   ans <- unlist(from, use.names = FALSE)
   .check_for_invalid_db_values(ans, DOTBRACKET_CHAR_VALUES)
   as(relist(as(ans, "DotBracketStringSet")[[1L]], from),
@@ -114,7 +112,7 @@ setAs("character", "DotBracketStringSet",
 #' @name DotBracketString
 #' @export
 setAs("list", "DotBracketStringSet",
-      function(from) .BStringToDotBracketStringSet(as(from,"BStringSet")))
+      function(from) .BStringSetToDotBracketStringSet(as(from,"BStringSet")))
 # the worst case thing, but need for many internal Biostrings functions
 #' @name DotBracketString
 #' @export
