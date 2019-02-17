@@ -16,7 +16,7 @@ static const R_CallMethodDef callMethods[] = {
   {NULL, NULL, 0}
 };
 
-void R_init_Modstrings(DllInfo *dll)
+void R_init_Structstrings(DllInfo *dll)
 {
   R_registerRoutines(dll, NULL, callMethods, NULL, NULL);
   R_useDynamicSymbols(dll, TRUE);

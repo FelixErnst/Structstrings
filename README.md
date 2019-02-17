@@ -28,7 +28,6 @@ The current version of the `Structstrings` package is available from GitHub.
  
 ```{r}
 # Dependencies
-devtools::install_github("FelixErnst/Modstrings")
 BiocManager::install("Biostrings")
 # Installation
 devtools::install_github("FelixErnst/Structstrings")

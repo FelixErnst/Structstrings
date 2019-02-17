@@ -53,11 +53,9 @@ NULL
 #' @import IRanges
 #' @import BiocGenerics
 #' @import Biostrings
-#' @import Modstrings
 requireNamespace("S4Vectors")
 requireNamespace("BiocGenerics")
 requireNamespace("Biostrings")
-requireNamespace("Modstrings")
 
 #' @name Structstrings-internals
 #' 

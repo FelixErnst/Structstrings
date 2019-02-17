@@ -3,10 +3,10 @@
 NULL
 
 #' @name StructuredXStringSet
-#' @aliases StructuredRNAStringSet StructuredModRNAStringSet
+#' @aliases StructuredRNAStringSet
 #' 
-#' @title StructuredRNAStringSet and StructuredModRNAStringSet for storing 
-#' DotBracketAnnotation alongside nucleotide sequences
+#' @title StructuredRNAStringSet for storing DotBracketAnnotation alongside 
+#' nucleotide sequences
 #' 
 #' @description 
 #' The \code{\link{StructuredXStringSet}} class can be used to store structure 
@@ -22,9 +22,8 @@ NULL
 #' \code{\link{DotBracketStringSet}}.
 #' 
 #' @param x For the \code{Structured*StringSet} constructors: Either a character
-#' vector, or an \code{RNA*ModRNAString}, \code{RNA*ModRNAtringSet} or 
-#' \code{RNA*ModRNAStringViews} object. For \code{writeQualityScaledXStringSet}:
-#' A \code{StructuredRNAStringSet} or a \code{StructuredModRNAStringSet} 
+#' vector, or an \code{RNAString}, \code{RNAStringSet} object. 
+#' For \code{writeQualityScaledXStringSet}: A \code{StructuredRNAStringSet} 
 #' derivative.
 #' @param structure A \code{\link{DotBracketStringSet}}
 #' @param bracket.type \code{getLoopIndices}: Which dot bracket annotation type 
@@ -39,8 +38,7 @@ NULL
 #' @param return.sequence \code{TRUE}(default) or \code{FALSE}: Whether the 
 #' sequence should be returned in the \code{base} column.
 #' 
-#' @return a \code{StructuredRNAStringSet} or \code{StructuredModRNAStringSet}
-#' object.
+#' @return a \code{StructuredRNAStringSet} object.
 #' 
 #' @examples
 #' str <- DotBracketStringSet("(())")
@@ -65,11 +63,6 @@ setMethod("parallelSlotNames", "StructuredXStringSet",
 #' @export
 setClass("StructuredRNAStringSet",
          contains=c("RNAStringSet", "StructuredXStringSet")
-)
-#' @rdname StructuredXStringSet
-#' @export
-setClass("StructuredModRNAStringSet",
-         contains=c("ModRNAStringSet", "StructuredXStringSet")
 )
 
 # checking validity ------------------------------------------------------------
@@ -162,12 +155,6 @@ StructuredRNAStringSet <- function(x, structure){
   StructuredXStringSet(RNAStringSet(x),
                        as(structure,"DotBracketStringSet"))
 }
-#' @rdname StructuredXStringSet
-#' @export
-StructuredModRNAStringSet <- function(x, structure){
-  StructuredXStringSet(ModRNAStringSet(x),
-                       as(structure,"DotBracketStringSet"))
-}
 
 # overwrite some functions to work with StructuredXStringSet -------------------
 setMethod("windows", "StructuredXStringSet",
@@ -203,11 +190,7 @@ setMethod("show", "StructuredXStringSet",
           function(object){
             cat("  A ", class(object), " instance containing:\n", sep="")
             cat("\n")
-            if(is(object,"ModStringSet")){
-              selectMethod("show", "ModStringSet")(as(object, "ModStringSet"))
-            } else {
-              selectMethod("show", "XStringSet")(as(object, "XStringSet"))
-            }
+            selectMethod("show", "XStringSet")(as(object, "XStringSet"))
             cat("\n")
             show(dotbracket(object))
             cat("\n")
@@ -242,20 +225,6 @@ readStructuredRNAStringSet <- function(filepath,
                                        seek.first.rec = FALSE,
                                        use.names = TRUE){
   .read_StructuredXStringSet("RNA",
-                             filepath,
-                             nrec,
-                             skip,
-                             seek.first.rec,
-                             use.names)
-}
-#' @rdname StructuredXStringSet
-#' @export
-readStructuredModRNAStringSet <- function(filepath,
-                                          nrec = -1L,
-                                          skip = 0L,
-                                          seek.first.rec = FALSE,
-                                          use.names = TRUE){
-  .read_StructuredXStringSet("ModRNA",
                              filepath,
                              nrec,
                              skip,
@@ -299,11 +268,7 @@ setMethod("getBasePairing", "StructuredXStringSet",
               return(ans)
             }
             # downgrade to sequence only object
-            if(is(x,"ModStringSet")){
-              seq <- as(x, "ModStringSet")
-            } else {
-              seq <- as(x, "XStringSet")
-            }
+            seq <- as(x, "XStringSet")
             classNameSeq <- class(seq)
             seqs <- lapply(seq,
                            function(z){

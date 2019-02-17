@@ -4,28 +4,20 @@
 \name{StructuredXStringSet}
 \alias{StructuredXStringSet}
 \alias{StructuredRNAStringSet}
-\alias{StructuredModRNAStringSet}
 \alias{StructuredRNAStringSet-class}
-\alias{StructuredModRNAStringSet-class}
 \alias{dotbracket}
 \alias{readStructuredRNAStringSet}
-\alias{readStructuredModRNAStringSet}
 \alias{writeStructuredXStringSet}
 \alias{getBasePairing,StructuredXStringSet-method}
 \alias{getLoopIndices,StructuredXStringSet-method}
-\title{StructuredRNAStringSet and StructuredModRNAStringSet for storing 
-DotBracketAnnotation alongside nucleotide sequences}
+\title{StructuredRNAStringSet for storing DotBracketAnnotation alongside 
+nucleotide sequences}
 \usage{
 dotbracket(x)
 
 StructuredRNAStringSet(x, structure)
 
-StructuredModRNAStringSet(x, structure)
-
 readStructuredRNAStringSet(filepath, nrec = -1L, skip = 0L,
-  seek.first.rec = FALSE, use.names = TRUE)
-
-readStructuredModRNAStringSet(filepath, nrec = -1L, skip = 0L,
   seek.first.rec = FALSE, use.names = TRUE)
 
 writeStructuredXStringSet(x, filepath, append = FALSE,
@@ -39,9 +31,8 @@ writeStructuredXStringSet(x, filepath, append = FALSE,
 }
 \arguments{
 \item{x}{For the \code{Structured*StringSet} constructors: Either a character
-vector, or an \code{RNA*ModRNAString}, \code{RNA*ModRNAtringSet} or 
-\code{RNA*ModRNAStringViews} object. For \code{writeQualityScaledXStringSet}:
-A \code{StructuredRNAStringSet} or a \code{StructuredModRNAStringSet} 
+vector, or an \code{RNAString}, \code{RNAStringSet} object. 
+For \code{writeQualityScaledXStringSet}: A \code{StructuredRNAStringSet} 
 derivative.}
 
 \item{structure}{A \code{\link{DotBracketStringSet}}}
@@ -62,8 +53,7 @@ present.
 \item{warn.type.drops}{See \code{\link{getLoopIndices}}}
 }
 \value{
-a \code{StructuredRNAStringSet} or \code{StructuredModRNAStringSet}
-object.
+a \code{StructuredRNAStringSet} object.
 }
 \description{
 The \code{\link{StructuredXStringSet}} class can be used to store structure 

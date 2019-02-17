@@ -157,7 +157,7 @@ getDotBracket(getBasePairing(db), force = TRUE)
 # Storing sequence and structure in one object
 
 To store a nucleotide sequence and a structure in one object, the classes
-`StructuredRNAStringSet` and `StructuredModRNAStringSet`  are implemented.
+`StructuredRNAStringSet` are implemented.
 
 ```{r structured_rna_string}
 data("dbs", package = "Structstrings", envir = environment())
