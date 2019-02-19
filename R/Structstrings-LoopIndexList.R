@@ -38,7 +38,7 @@ LoopIndexList <- function(...){
     mapply(function(i,j){
       c(i,j)
     },
-    IntegerList(list(0,0,0,0)),
+    IntegerList(as.list(rep(0,length(x)))),
     x,
     SIMPLIFY = FALSE))
   z <- IntegerList(
@@ -46,7 +46,7 @@ LoopIndexList <- function(...){
       c(i,j)
     },
     x,
-    IntegerList(list(0,0,0,0)),
+    IntegerList(as.list(rep(0,length(x)))),
     SIMPLIFY = FALSE))
   a <- y - z
   message <- "Unmatched positions."
@@ -64,14 +64,13 @@ LoopIndexList <- function(...){
   NULL
 }
 
-S4Vectors:::setValidity2("LoopIndexList",
-                         .valid.LoopIndexList)
+S4Vectors:::setValidity2("LoopIndexList", .valid.LoopIndexList)
 
 #' @name LoopIndexList
 #' @export
 setAs("IntegerList", "LoopIndexList",
       function(from) {
-        from <- IRanges::CompressedIntegerList(from)
+        from <- as(from,"CompressedIntegerList")
         class(from) <- "LoopIndexList"
         validObject(from)
         from

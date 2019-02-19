@@ -70,7 +70,7 @@ setReplaceMethod("subseq", "DotBracketStringSet",
   ans
 }
 .BStringSetToDotBracketStringSet <- function(from){
-  from <- unlist(lapply(as.character(from), .norm_letters))
+  from <- .norm_letters(as.character(from))
   .check_for_invalid_db_letters(from, DOTBRACKET_ALPHABET)
   from <- BStringSet(from)
   ans <- new2("DotBracketStringSet",
@@ -165,7 +165,9 @@ setAs("ANY", "DotBracketStringSet", function(from) DotBracketStringSet(from))
 .needs_letters_normalized <- function(x){
   f <- stringr::str_locate(x, ">")[,"start"] < 
     stringr::str_locate(x, "<")[,"start"]
-  if(is.na(f) || !any(f)) {
+  ff <- vapply(f,is.na,logical(1))
+  f[ff] <- FALSE
+  if(!any(f)) {
     return(FALSE)
   }
   ans <- TRUE
