@@ -194,13 +194,14 @@ setAs("ANY", "DotBracketStringSet", function(from) DotBracketStringSet(from))
   x
 }
 
+#' @importFrom stringr str_locate_all
 .pos_letters <- function(x,chrs){
   lapply(chrs,
          function(chr){
            stringr::str_locate_all(x, chr)
          })
 }
-#' @importFrom stringr str_locate_all
+
 .check_matched_postions <- function(x){
   x <- lapply(x,.norm_letters)
   open <- .pos_letters(x,STRUCTURE_OPEN_CHR)

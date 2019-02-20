@@ -6,9 +6,10 @@
 \alias{dbs}
 \alias{seq}
 \title{Structstrings example data}
-\format{object of class \code{\link{DotBracketStringSet}}}
+\format{object of class \code{\link{DotBracketStringSet}} and 
+\code{\link{DNAStringSet}}}
 \usage{
-Structstrings
+dbs
 
 seq
 }

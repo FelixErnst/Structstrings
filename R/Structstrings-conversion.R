@@ -380,7 +380,7 @@ setMethod("getLoopIndices",
 #' @param from which annotation type should be converted? Must be one of the 
 #' following values: \code{1L = '()', 2L = '<>', 3L = '[]', 4L = '{}'} and must
 #' be present in the input.
-#' @param to Into which annotation type should the selectec one be converted? 
+#' @param to Into which annotation type should the selected one be converted? 
 #' Must be one of the following values: 
 #' \code{1L = '()', 2L = '<>', 3L = '[]', 4L = '{}'}. Must not be present in the
 #' input.

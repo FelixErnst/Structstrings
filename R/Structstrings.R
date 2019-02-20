@@ -90,9 +90,11 @@ STRUCTURE_CLOSE_CHR <- c("\\)",">","\\]","\\}")
 #' @title Structstrings example data
 #' @description Example data for using the Structstrings package
 #' @docType data
-#' @usage Structstrings
-#' @format object of class \code{\link{DotBracketStringSet}}
+#' @usage dbs
+#' @format object of class \code{\link{DotBracketStringSet}} and 
+#' \code{\link{DNAStringSet}}
 #' @keywords datasets Structstrings
 "dbs"
 #' @name Structstrings-data
+#' @usage seq
 "seq"
