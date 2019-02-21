@@ -1,16 +1,16 @@
 Package: Structstrings
 Title: Structstrings: implementation of the dot bracket annotations with Biostrings
-Version: 0.99.4
-Date: 2018-02-20
+Version: 0.99.5
+Date: 2018-02-21
 Authors@R: person("Felix GM","Ernst", email = "felix.gm.ernst@outlook.com",
                   role = c("aut", "cre"))
-Description: The Structstrings package implements the widely used to bracket 
+Description: The Structstrings package implements the widely used dot bracket 
     annotation for storing base pairing information in structured RNA.
     Structstrings uses the infrastructure provided by the Biostrings package and 
     derives the DotBracketString and related classes from the BString class. 
-    From these base pair table can be produced for in depth analysis. In 
-    addition, the loop indices of the base pairs can be retrieved.
-    For better efficiency information conversion is implemented in C, inspired 
+    From these, base pair tables can be produced for in depth analysis. In 
+    addition, the loop indices of the base pairs can be retrieved as well.
+    For better efficiency, information conversion is implemented in C, inspired 
     to a large extend by the ViennaRNA package.
 License: Artistic-2.0
 Encoding: UTF-8
