@@ -28,11 +28,10 @@ setClass(Class = "LoopIndexList",
 
 #' @rdname LoopIndexList
 #' @export
-LoopIndexList <- function(...){
-  as(IRanges::IntegerList(...),"LoopIndexList")
-}
+LoopIndexList <- function(...) as(IRanges::IntegerList(...),"LoopIndexList")
 
-.valid.LoopIndexList <- function(x){
+.valid.LoopIndexList <- function(x)
+{
   # shift values
   y <- IntegerList(
     mapply(function(i,j){
@@ -68,18 +67,24 @@ S4Vectors:::setValidity2("LoopIndexList", .valid.LoopIndexList)
 
 #' @name LoopIndexList
 #' @export
-setAs("IntegerList", "LoopIndexList",
-      function(from) {
-        from <- as(from,"CompressedIntegerList")
-        class(from) <- "LoopIndexList"
-        validObject(from)
-        from
-      })
+setAs(
+  "IntegerList", "LoopIndexList",
+  function(from)
+  {
+    from <- as(from,"CompressedIntegerList")
+    class(from) <- "LoopIndexList"
+    validObject(from)
+    from
+  }
+)
 #' @name LoopIndexList
 #' @export
-setAs("CompressedIntegerList", "LoopIndexList",
-      function(from) {
-        class(from) <- "LoopIndexList"
-        validObject(from)
-        from
-      })
+setAs(
+  "CompressedIntegerList", "LoopIndexList",
+  function(from)
+  {
+    class(from) <- "LoopIndexList"
+    validObject(from)
+    from
+  }
+)

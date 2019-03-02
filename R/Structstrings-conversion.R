@@ -75,13 +75,15 @@ NULL
 
 # converts the character column from integer to character
 # if it is not the empty character the closing character is added as well
-.convert_char_type_to_character <- function(x){
+.convert_char_type_to_character <- function(x)
+{
   x$character <- strsplit(rawToChar(as.raw(as.integer(x$character))),"")[[1]]
   x
 }
 
 # convert dot bracket annotation in ct like format
-.get_pairing <- function(x){
+.get_pairing <- function(x)
+{
   # XString* classes cannot be converted to strings in C function
   # since functions are not available from Biostrings package externally
   chr <- lapply(x,as.character)
@@ -129,12 +131,12 @@ setMethod("getBasePairing",
 
 # DotBracketDataFrame conversion to DotBracketStringSet ------------------------
 
-.get_dot_bracket <- function(x, force = FALSE){
+.get_dot_bracket <- function(x, force = FALSE)
+{
   if(length(colnames(x[[1]])) >= 4L & !force){
     chr <- lapply(x,"[[","character")
     chr <- vapply(chr,paste,character(1),collapse = "")
-    ans <- do.call("DotBracketStringSet",
-                   list(chr))
+    ans <- DotBracketStringSet(chr)
   } else {
     int <- lapply(x,"[[","reverse")
     ans <- .Call2("new_DotBracket_from_INTEGER",
@@ -185,7 +187,8 @@ setMethod("getDotBracket",
 
 # DotBracketDataFrame/DotBracketStringSet conversion to LoopIndexList ----------
 
-.norm_bracket_type <- function(input, type){
+.norm_bracket_type <- function(input, type)
+{
   if(is(input,"DotBracketStringSet")){
     types <- unique(unlist(strsplit(as.character(input),"")))
   } else if(is(input,"CompressedSplitDotBracketDataFrameList") || 
@@ -233,7 +236,8 @@ setMethod("getDotBracket",
   type
 }
 
-.check_for_dbtype_string <- function(x, type){
+.check_for_dbtype_string <- function(x, type)
+{
   non_dbtype <- 
     STRUCTURE_OPEN_CHR[!(STRUCTURE_OPEN_CHR %in% STRUCTURE_OPEN_CHR[type])]
   if(any(stringr::str_detect(as.character(x),non_dbtype))){
@@ -242,7 +246,8 @@ setMethod("getDotBracket",
   TRUE
 }
 
-.check_for_dbtype_dbdf <- function(x, type){
+.check_for_dbtype_dbdf <- function(x, type)
+{
   non_dbtype <- 
     paste0(
       STRUCTURE_OPEN_CHR[!(STRUCTURE_OPEN_CHR %in% STRUCTURE_OPEN_CHR[type])],
@@ -253,7 +258,8 @@ setMethod("getDotBracket",
   }
   TRUE
 }
-.norm_dbdf_bracket_type <- function(x, type, warn = TRUE){
+.norm_dbdf_bracket_type <- function(x, type, warn = TRUE)
+{
   if(.check_for_dbtype_dbdf(x,type)){
     return(x)
   }
@@ -273,7 +279,8 @@ setMethod("getDotBracket",
   x
 }
 
-.get_idx_of_loops_from_dbs <- function(dbs, type, warn.type.drops){
+.get_idx_of_loops_from_dbs <- function(dbs, type, warn.type.drops)
+{
   type <- .norm_bracket_type(dbs,type)
   assertive::assert_is_a_bool(warn.type.drops)
   # XString* classes cannot be converted to strings in C function
@@ -298,7 +305,8 @@ setMethod("getDotBracket",
   return(LoopIndexList(ans))
 }
 
-.get_idx_of_loops_from_dbdfl <- function(dbdfl, type, warn.type.drops){
+.get_idx_of_loops_from_dbdfl <- function(dbdfl, type, warn.type.drops)
+{
   type <- .norm_bracket_type(dbdfl,type)
   assertive::assert_is_a_bool(warn.type.drops)
   if(is(dbdfl,"CompressedDataFrameList")){
@@ -394,7 +402,8 @@ setMethod("getLoopIndices",
 NULL
 
 #' @importFrom stringi stri_locate_all_regex
-.str_replace_all_custom_c <- function(string, pattern, replacement){
+.str_replace_all_custom <- function(string, pattern, replacement)
+{
   locations <- stringi::stri_locate_all_regex(string, pattern,
                                               omit_no_match = TRUE)
   f <- which(!vapply(locations,function(l){nrow(l) == 0},logical(1)))
@@ -402,16 +411,14 @@ NULL
   for(i in f){
     loc <- locations[[i]]
     for(j in seq_len(nrow(loc))){
-      stringi::stri_sub(string,loc[j,"start"],loc[j,"end"]) <- 
-        replacement
+      stringi::stri_sub(string,loc[j,"start"],loc[j,"end"]) <- replacement
     }
   }
   string
 }
-.str_replace_all_custom <- 
-  compiler::cmpfun(.str_replace_all_custom_c)
 
-.convert_db_annotation <- function(x, from, to){
+.convert_db_annotation <- function(x, from, to)
+{
   if(missing(from) ||
      missing(to) ||
      length(from) > 1L || 

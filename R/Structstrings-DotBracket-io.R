@@ -43,31 +43,18 @@ NULL
 
 #' @rdname DotBracketStringSet-io
 #' @export
-readDotBracketStringSet <- function(filepath,
-                                    format = "fasta",
-                                    nrec = -1L,
-                                    skip = 0L,
-                                    seek.first.rec = FALSE,
-                                    use.names = TRUE,
-                                    with.qualities = FALSE){
-  ans <- Biostrings::readBStringSet(filepath,
-                                    format,
-                                    nrec,
-                                    skip,
-                                    seek.first.rec,
-                                    use.names,
-                                    with.qualities)
+readDotBracketStringSet <- function(filepath, format = "fasta", nrec = -1L,
+                                    skip = 0L, seek.first.rec = FALSE,
+                                    use.names = TRUE, with.qualities = FALSE){
+  ans <- Biostrings::readBStringSet(filepath, format, nrec, skip,
+                                    seek.first.rec, use.names, with.qualities)
   as(ans,"DotBracketStringSet")
 }
 
 #' @rdname DotBracketStringSet-io
 #' @export
-writeDotBracketStringSet <- function(x,
-                                     filepath, 
-                                     append = FALSE,
-                                     compress = FALSE,
-                                     format = "fasta",
-                                     ...){
+writeDotBracketStringSet <- function(x, filepath, append = FALSE,
+                                     compress = FALSE, format = "fasta", ...){
   if(2L %in% .get_db_types(x)){
     stop("The dot bracket type '<>' cannot be saved as a fasta file, since it ",
          "interferes with the fasta nomenclature. Please convert it into ",
@@ -75,26 +62,15 @@ writeDotBracketStringSet <- function(x,
          "save it in the fastq format.",
          call. = FALSE)
   }
-  Biostrings::writeXStringSet(x,
-                              filepath, 
-                              append,
-                              compress,
-                              compression_level = NA,
-                              format,
-                              ...)
+  Biostrings::writeXStringSet(x, filepath, append, compress, 
+                              compression_level = NA, format, ...)
 }
 
 #' @rdname DotBracketStringSet-io
 #' @export
-saveDotBracketStringSet <- function(x,
-                                    objname,
-                                    dirpath = ".",
-                                    save.dups = FALSE,
-                                    verbose = TRUE){
-  Biostrings::saveXStringSet(x,
-                             objname = objname,
-                             dirpath = dirpath,
-                             save.dups = save.dups,
-                             verbose = verbose)
+saveDotBracketStringSet <- function(x, objname, dirpath = ".",
+                                    save.dups = FALSE, verbose = TRUE){
+  Biostrings::saveXStringSet(x, objname = objname, dirpath = dirpath,
+                             save.dups = save.dups, verbose = verbose)
 }
 
