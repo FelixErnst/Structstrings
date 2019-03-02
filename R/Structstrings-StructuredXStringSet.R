@@ -25,7 +25,7 @@ NULL
 #' vector, or an \code{RNAString}, \code{RNAStringSet} object. 
 #' For \code{writeQualityScaledXStringSet}: A \code{StructuredRNAStringSet} 
 #' derivative.
-#' @param structure A \code{\link{DotBracketStringSet}}
+#' @param structure,value A \code{\link{DotBracketStringSet}}
 #' @param bracket.type \code{getLoopIndices}: Which dot bracket annotation type 
 #' should be converted into loop indices? Only usable, if more than one is 
 #' present.
@@ -82,8 +82,25 @@ setValidity2("StructuredXStringSet", .valid.StructuredXStringSet)
 
 #' @rdname StructuredXStringSet
 #' @export
-setGeneric("dotbracket", function(x) standardGeneric("dotbracket"), 
-           useAsDefault = function(x) x@structure)
+setMethod("dotbracket","StructuredXStringSet",
+          function(x) x@structure)
+
+#' @rdname StructuredXStringSet
+#' @export
+setReplaceMethod("dotbracket","StructuredXStringSet",
+                 function(x, value){
+                   if(is.null(value)){
+                     return(as(x,paste0(seqtype(x),"StringSet")))
+                   }
+                   if(!is(value,"DotBracketStringSet")){
+                     value <- as(value,"DotBracketStringSet")
+                   }
+                   if(any(nchar(value) != nchar(x))){
+                     stop("'value' does not match the dimensions of 'x'")
+                   }
+                   x@structure <- value
+                   x
+                 })
 
 # constructors -----------------------------------------------------------------
 
@@ -194,7 +211,8 @@ setMethod("show", "StructuredXStringSet",
 # read and writing functions ---------------------------------------------------
 
 .read_StructuredXStringSet <- function(type = "RNA", filepath, nrec, skip,
-                                       seek.first.rec, use.names){
+                                       seek.first.rec, use.names)
+{
   className <- paste0("Structured",type,"StringSet")
   methodName <- paste0("read",type,"StringSet")
   x <- do.call(methodName, list(filepath, format = "fastq", nrec, skip,
@@ -214,7 +232,8 @@ readStructuredRNAStringSet <- function(filepath, nrec = -1L, skip = 0L,
 #' @rdname StructuredXStringSet
 #' @export
 writeStructuredXStringSet <- function(x, filepath, append = FALSE,
-                                      compress = FALSE){
+                                      compress = FALSE)
+{
   if(is.null(names(x)) && is.null(names(dotbracket(x)))){
     stop("either 'x' or 'dotbracket' must have names")
   }
