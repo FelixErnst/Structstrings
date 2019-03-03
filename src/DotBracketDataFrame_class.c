@@ -375,28 +375,66 @@ SEXP new_LoopIndexList_from_CHARACTER(SEXP x, SEXP type)
   if(LENGTH(type) != 1 || IS_INTEGER(type) == FALSE){
     error("'type' must be a single integer value.");
   }
-  int bracket_type = asInteger(type);
-  int length = LENGTH(x);
-  SEXP ans = PROTECT(allocVector(VECSXP, length));
-  
-  for(int i = 0; i < length; i++){
-    SET_VECTOR_ELT(ans, i, new_loopids_from_CHARACTER(VECTOR_ELT(x, i), 
-                                                      bracket_type));
+  int bracket_type, length, i, j, *pans_breakpoints;
+  /* get loop ids */
+  bracket_type = asInteger(type);
+  length = LENGTH(x);
+  SEXP intVec = PROTECT(allocVector(VECSXP, length));
+  for(i = 0; i < length; i++){
+    SET_VECTOR_ELT(intVec, i, new_loopids_from_CHARACTER(VECTOR_ELT(x, i), 
+                                                         bracket_type));
   }
-  
   UNPROTECT(1);
+  /* get unlistData and partitioningByEnd */
+  SEXP ans_breakpoints, ans_partitioning, ans_names, ans_unlistData, ans;
+  PROTECT(ans_unlistData = R_tryEval(lang2(install("unlist"), intVec), 
+                                     R_GlobalEnv, NULL));
+  /* get breakpoints for partitioningByEnd */
+  PROTECT(ans_breakpoints = NEW_INTEGER(length));
+  pans_breakpoints = INTEGER(ans_breakpoints);
+  j = 0;
+  for (i = 0; i < length; i++) {
+    j = j + LENGTH(VECTOR_ELT(intVec, i));
+    pans_breakpoints[i] = j;
+  }
+  PROTECT(ans_names = getAttrib(x,install("names")));
+  PROTECT(ans_partitioning = new_PartitioningByEnd("PartitioningByEnd",
+                                                   ans_breakpoints, ans_names));
+  /* construct LoopIndexList */
+  PROTECT(ans = new_CompressedList("LoopIndexList",ans_unlistData,
+                                        ans_partitioning));
+  UNPROTECT(5);
   return ans;
 }
 
 SEXP new_LoopIndexList_from_INTEGER(SEXP x)
 {
-  int length = LENGTH(x);
-  SEXP ans = PROTECT(allocVector(VECSXP, length));
-  
-  for(int i = 0; i < length; i++){
-    SET_VECTOR_ELT(ans, i, new_loopids_from_INTEGER(VECTOR_ELT(x, i)));
+  int length, j, i, *pans_breakpoints;
+  /* get loop ids */
+  length = LENGTH(x);
+  SEXP intVec = PROTECT(allocVector(VECSXP, length));
+  for(i = 0; i < length; i++){
+    SET_VECTOR_ELT(intVec, i, new_loopids_from_INTEGER(VECTOR_ELT(x, i)));
   }
-  
   UNPROTECT(1);
+  /* get unlistData and partitioningByEnd */
+  SEXP ans_breakpoints, ans_partitioning, ans_names, ans_unlistData, ans;
+  PROTECT(ans_unlistData = R_tryEval(lang2(install("unlist"), intVec), 
+                                     R_GlobalEnv, NULL));
+  /* get breakpoints for partitioningByEnd */
+  PROTECT(ans_breakpoints = NEW_INTEGER(length));
+  pans_breakpoints = INTEGER(ans_breakpoints);
+  j = 0;
+  for (i = 0; i < length; i++) {
+    j = j + LENGTH(VECTOR_ELT(intVec, i));
+    pans_breakpoints[i] = j;
+  }
+  PROTECT(ans_names = getAttrib(x,install("names")));
+  PROTECT(ans_partitioning = new_PartitioningByEnd("PartitioningByEnd",
+                                                   ans_breakpoints, ans_names));
+  /* construct LoopIndexList */
+  PROTECT(ans = new_CompressedList("LoopIndexList",ans_unlistData,
+                                   ans_partitioning));
+  UNPROTECT(5);
   return ans;
 }

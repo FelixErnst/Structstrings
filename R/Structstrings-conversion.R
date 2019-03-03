@@ -298,11 +298,10 @@ setMethod("getDotBracket",
     }
   }
   # selection of loop types is implemented in C function.
-  ans <- .Call2("new_LoopIndexList_from_CHARACTER",
-                x,
-                type,
-                PACKAGE = "Structstrings")
-  return(LoopIndexList(ans))
+  .Call2("new_LoopIndexList_from_CHARACTER",
+         x,
+         type,
+         PACKAGE = "Structstrings")
 }
 
 .get_idx_of_loops_from_dbdfl <- function(dbdfl, type, warn.type.drops)
@@ -315,10 +314,9 @@ setMethod("getDotBracket",
     dbdfl <- lapply(dbdfl, .norm_dbdf_bracket_type, type, warn.type.drops)
   }
   x <- lapply(dbdfl,"[[","reverse")
-  ans <- .Call2("new_LoopIndexList_from_INTEGER",
-                x,
-                PACKAGE = "Structstrings")
-  return(LoopIndexList(ans))
+  .Call2("new_LoopIndexList_from_INTEGER",
+         x,
+         PACKAGE = "Structstrings")
 }
 
 #' @rdname getBasePairing
