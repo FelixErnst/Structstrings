@@ -298,7 +298,7 @@ setMethod("getDotBracket",
     }
   }
   # selection of loop types is implemented in C function.
-  .Call2("new_LoopIndexList_from_CHARACTER",
+  .Call2("new_LoopIndexList_from_CHARACTER_LIST",
          x,
          type,
          PACKAGE = "Structstrings")
@@ -314,7 +314,7 @@ setMethod("getDotBracket",
     dbdfl <- lapply(dbdfl, .norm_dbdf_bracket_type, type, warn.type.drops)
   }
   x <- lapply(dbdfl,"[[","reverse")
-  .Call2("new_LoopIndexList_from_INTEGER",
+  .Call2("new_LoopIndexList_from_INTEGER_LIST",
          x,
          PACKAGE = "Structstrings")
 }

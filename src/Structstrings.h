@@ -52,11 +52,20 @@ SEXP new_DotBracket_from_INTEGER(
     SEXP x
 );
 
-SEXP new_LoopIndexList_from_CHARACTER(
+SEXP new_LoopIndexList_from_CHARACTER_LIST(
     SEXP x,
     SEXP type
 );
 
-SEXP new_LoopIndexList_from_INTEGER(
+SEXP new_LoopIndexList_from_INTEGER_LIST(
     SEXP x
+);
+
+SEXP new_LoopIndexList_from_LIST(
+    SEXP list
+);
+
+SEXP new_LoopIndexList(
+    SEXP list,
+    SEXP partitioning
 );

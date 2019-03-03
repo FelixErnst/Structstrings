@@ -43,16 +43,26 @@ DEFINE_CCALLABLE_STUB(SEXP, new_DotBracketDataFrameList_from_CHARACTER,
                       (     x,      partitioning)
 )
 
-DEFINE_CCALLABLE_STUB(SEXP, new_LoopIndexList_from_CHARACTER,
+DEFINE_CCALLABLE_STUB(SEXP, new_LoopIndexList_from_CHARACTER_LIST,
                       (SEXP x, SEXP type),
                       (     x,      type)
 )
   
-DEFINE_CCALLABLE_STUB(SEXP, new_LoopIndexList_from_INTEGER,
+DEFINE_CCALLABLE_STUB(SEXP, new_LoopIndexList_from_INTEGER_LIST,
                       (SEXP x),
                       (     x)
 )
 
+DEFINE_CCALLABLE_STUB(SEXP, new_LoopIndexList,
+                      (SEXP list, SEXP partitioning),
+                      (     list,      partitioning)
+)
+
+DEFINE_CCALLABLE_STUB(SEXP, new_LoopIndexList_from_LIST,
+                      (SEXP list),
+                      (     list)
+)
+  
 DEFINE_CCALLABLE_STUB(SEXP, new_DotBracket_from_INTEGER,
                       (SEXP x),
                       (     x)
