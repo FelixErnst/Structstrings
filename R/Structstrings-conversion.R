@@ -451,16 +451,12 @@ NULL
   to_open_chr <- gsub("\\\\","",STRUCTURE_OPEN_CHR[to])
   to_close_chr <- gsub("\\\\","",STRUCTURE_CLOSE_CHR[to])
   x_chr_ans <- paste0(x_chr,collapse = "")
-  x_chr_ans <- .str_replace_all_custom(x_chr_ans,
-                                       from_open_chr,
-                                       to_open_chr)
-  x_chr_ans <- .str_replace_all_custom(x_chr_ans,
-                                       from_close_chr,
-                                       to_close_chr)
+  x_chr_ans <- .str_replace_all_custom(x_chr_ans, from_open_chr, to_open_chr)
+  x_chr_ans <- .str_replace_all_custom(x_chr_ans, from_close_chr, to_close_chr)
   partitioning <- PartitioningByWidth(x)
-  DotBracketStringSet(stringr::str_sub(x_chr_ans,
-                                       start(partitioning),
-                                       end(partitioning)))
+  ans <- stringr::str_sub(x_chr_ans, start(partitioning), end(partitioning))
+  names(ans) <- names(x)
+  DotBracketStringSet(ans)
 }
 
 #' @rdname convertAnnotation
