@@ -370,33 +370,86 @@ SEXP new_loopids_from_INTEGER(SEXP x)
   return ans;
 }
 
-SEXP new_LoopIndexList_from_CHARACTER(SEXP x, SEXP type)
+SEXP new_LoopIndexList(SEXP list, SEXP partitioning)
 {
-  if(LENGTH(type) != 1 || IS_INTEGER(type) == FALSE){
-    error("'type' must be a single integer value.");
+  SEXP ans_unlistData, ans;
+  /* get unlistData */
+  PROTECT(ans_unlistData = R_tryEval(lang2(install("unlist"), list), 
+                                     R_GlobalEnv, NULL));
+  SET_NAMES(ans_unlistData, R_NilValue);
+  /* input check */
+  if(IS_INTEGER(ans_unlistData) == FALSE){
+    error("Input list must contain integer values only.");
   }
-  int bracket_type = asInteger(type);
-  int length = LENGTH(x);
-  SEXP ans = PROTECT(allocVector(VECSXP, length));
-  
-  for(int i = 0; i < length; i++){
-    SET_VECTOR_ELT(ans, i, new_loopids_from_CHARACTER(VECTOR_ELT(x, i), 
-                                                      bracket_type));
-  }
-  
-  UNPROTECT(1);
+  /* construct LoopIndexList */
+  PROTECT(ans = new_CompressedList("LoopIndexList",ans_unlistData,
+                                   partitioning));
+  UNPROTECT(2);
   return ans;
 }
 
-SEXP new_LoopIndexList_from_INTEGER(SEXP x)
+SEXP new_LoopIndexList_from_LIST(SEXP list)
 {
-  int length = LENGTH(x);
-  SEXP ans = PROTECT(allocVector(VECSXP, length));
-  
-  for(int i = 0; i < length; i++){
-    SET_VECTOR_ELT(ans, i, new_loopids_from_INTEGER(VECTOR_ELT(x, i)));
+  /* get unlistData and partitioningByEnd */
+  SEXP ans_breakpoints, ans_partitioning, ans_names;
+  int length, j, i, *pans_breakpoints;
+  length = LENGTH(list);
+  /* get breakpoints for partitioningByEnd */
+  PROTECT(ans_breakpoints = NEW_INTEGER(length));
+  pans_breakpoints = INTEGER(ans_breakpoints);
+  j = 0;
+  for (i = 0; i < length; i++) {
+    j = j + LENGTH(VECTOR_ELT(list, i));
+    pans_breakpoints[i] = j;
   }
-  
+  PROTECT(ans_names = GET_NAMES(list));
+  PROTECT(ans_partitioning = new_PartitioningByEnd("PartitioningByEnd",
+                                                   ans_breakpoints, ans_names));
+  UNPROTECT(3);
+  return new_LoopIndexList(list, ans_partitioning);
+}
+
+SEXP new_LoopIndexList_from_CHARACTER_LIST(SEXP x, SEXP type)
+{
+  int bracket_type, length, i;
+  length = LENGTH(x);
+  /* input check */
+  if(LENGTH(type) != 1 || IS_INTEGER(type) == FALSE){
+    error("'type' must be a single integer value.");
+  }
+  for(i = 0; i < length; i++){
+    if(IS_CHARACTER(VECTOR_ELT(x, i)) == FALSE){
+      error("Elements of input list must all be integer values.");
+    }
+  }
+  /* get loop ids */
+  bracket_type = asInteger(type);
+  SEXP list = PROTECT(allocVector(VECSXP, length));
+  for(i = 0; i < length; i++){
+    SET_VECTOR_ELT(list, i, new_loopids_from_CHARACTER(VECTOR_ELT(x, i),
+                                                       bracket_type));
+  }
+  namesgets(list, GET_NAMES(x));
   UNPROTECT(1);
-  return ans;
+  return new_LoopIndexList_from_LIST(list);
+}
+
+SEXP new_LoopIndexList_from_INTEGER_LIST(SEXP x)
+{
+  int length, i;
+  length = LENGTH(x);
+  /* input check */
+  for(i = 0; i < length; i++){
+    if(IS_INTEGER(VECTOR_ELT(x, i)) == FALSE){
+      error("Elements of input list must all be integer values.");
+    }
+  }
+  /* get loop ids */
+  SEXP list = PROTECT(allocVector(VECSXP, length));
+  for(i = 0; i < length; i++){
+    SET_VECTOR_ELT(list, i, new_loopids_from_INTEGER(VECTOR_ELT(x, i)));
+  }
+  namesgets(list, GET_NAMES(x));
+  UNPROTECT(1);
+  return new_LoopIndexList_from_LIST(list);
 }

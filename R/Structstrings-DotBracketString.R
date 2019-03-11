@@ -71,34 +71,28 @@ setReplaceMethod("subseq", "DotBracketString",
 
 #' @rdname DotBracketString
 #' @export
-DotBracketString <- function(x = character(),
-                             start = 1,
-                             nchar = NA){
-  as(BString(x,
-             start,
-             nchar), "DotBracketString")
+DotBracketString <- function(x = character(), start = 1, nchar = NA)
+{
+  as(BString(x, start, nchar), "DotBracketString")
 }
 #' @rdname DotBracketString
 #' @export
-DB <- function(x = character(),
-               start = 1,
-               nchar = NA){
-  DotBracketString(x = x,
-                   start = start,
-                   nchar = nchar)
+DB <- function(x = character(), start = 1, nchar = NA)
+{
+  DotBracketString(x = x, start = start, nchar = nchar)
 }
 
-.valid.DotBracketString <- function(x){
+.valid.DotBracketString <- function(x)
+{
   return(.valid.DotBracketStringSet(list(x)))
 }
 
-S4Vectors:::setValidity2("DotBracketString",
-                         .valid.DotBracketString)
+S4Vectors:::setValidity2("DotBracketString", .valid.DotBracketString)
 
 # constructor ------------------------------------------------------------------
 
-.check_for_invalid_db_letters <- function(string,
-                                          alphabet){
+.check_for_invalid_db_letters <- function(string, alphabet)
+{
   if(length(string) > 0L){
     if(is.list(string)){
       string <- unlist(string)
@@ -113,8 +107,8 @@ S4Vectors:::setValidity2("DotBracketString",
     }
   }
 }
-.check_for_invalid_db_values <- function(values,
-                                         alphabet_values){
+.check_for_invalid_db_values <- function(values, alphabet_values)
+{
   if(any(!(values %in% alphabet_values))){
     print(paste(
       values[!(values %in% alphabet_values)],
@@ -124,7 +118,8 @@ S4Vectors:::setValidity2("DotBracketString",
   }
 }
 
-.BStringToDotBracketString <- function(from){
+.BStringToDotBracketString <- function(from)
+{
   string <- .norm_letters(as.character(from))
   .check_for_invalid_db_letters(string,DOTBRACKET_ALPHABET)
   from <- BString(string)
@@ -132,7 +127,8 @@ S4Vectors:::setValidity2("DotBracketString",
   validObject(from)
   from
 }
-.integerToDotBracketString <- function(from){
+.integerToDotBracketString <- function(from)
+{
   if (length(from) == 0){
     ans <- DotBracketString()
   } else {

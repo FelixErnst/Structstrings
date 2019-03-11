@@ -25,7 +25,7 @@ NULL
 #' vector, or an \code{RNAString}, \code{RNAStringSet} object. 
 #' For \code{writeQualityScaledXStringSet}: A \code{StructuredRNAStringSet} 
 #' derivative.
-#' @param structure A \code{\link{DotBracketStringSet}}
+#' @param structure,value A \code{\link{DotBracketStringSet}}
 #' @param bracket.type \code{getLoopIndices}: Which dot bracket annotation type 
 #' should be converted into loop indices? Only usable, if more than one is 
 #' present.
@@ -67,33 +67,45 @@ setClass("StructuredRNAStringSet",
 
 # checking validity ------------------------------------------------------------
 
-.valid.StructuredXStringSet <- function(object){
-  message <- NULL
+.valid.StructuredXStringSet <- function(object)
+{
   if (!all(nchar(object@structure) == 1 ||
            nchar(object@structure) == nchar(object))){
-    message <- c(message,
-                 "'nchar(structure)' must equal 1 or nchar of 'XStringSet'")
+    return("'nchar(structure)' must equal 1 or nchar of 'XStringSet'")
   }
-  message
+  NULL
 }
 
-setValidity2("StructuredXStringSet",
-            function(object){
-              problems <- .valid.StructuredXStringSet(object)
-              if (is.null(problems)) TRUE else problems
-            }
-)
+setValidity2("StructuredXStringSet", .valid.StructuredXStringSet)
 
 # accessors --------------------------------------------------------------------
 
 #' @rdname StructuredXStringSet
 #' @export
-setGeneric("dotbracket", function(x) standardGeneric("dotbracket"), 
-           useAsDefault = function(x) x@structure)
+setMethod("dotbracket","StructuredXStringSet",
+          function(x) x@structure)
+
+#' @rdname StructuredXStringSet
+#' @export
+setReplaceMethod("dotbracket","StructuredXStringSet",
+                 function(x, value){
+                   if(is.null(value)){
+                     return(as(x,paste0(seqtype(x),"StringSet")))
+                   }
+                   if(!is(value,"DotBracketStringSet")){
+                     value <- as(value,"DotBracketStringSet")
+                   }
+                   if(any(nchar(value) != nchar(x))){
+                     stop("'value' does not match the dimensions of 'x'")
+                   }
+                   x@structure <- value
+                   x
+                 })
 
 # constructors -----------------------------------------------------------------
 
-.normarg_structure <- function(structure, x){
+.normarg_structure <- function(structure, x)
+{
   if (!is(structure, "DotBracketStringSet")){
     stop("'structure' must be of class 'DotBracketStringSet' or be ",
          "coercible to one.",
@@ -132,7 +144,8 @@ setGeneric("dotbracket", function(x) standardGeneric("dotbracket"),
   stop("'length(structure)' must equal 'length(x)' or 1")
 }
 
-StructuredXStringSet <- function(x, structure) {
+StructuredXStringSet <- function(x, structure)
+{
   if (!is(x, "XStringSet")){
     stop("'x' must be of class 'XStringSet'")
   }
@@ -151,18 +164,16 @@ StructuredXStringSet <- function(x, structure) {
 
 #' @rdname StructuredXStringSet
 #' @export
-StructuredRNAStringSet <- function(x, structure){
-  StructuredXStringSet(RNAStringSet(x),
-                       as(structure,"DotBracketStringSet"))
+StructuredRNAStringSet <- function(x, structure)
+{
+  StructuredXStringSet(RNAStringSet(x), as(structure,"DotBracketStringSet"))
 }
 
 # overwrite some functions to work with StructuredXStringSet -------------------
 setMethod("windows", "StructuredXStringSet",
           function(x, start = NA, end = NA, width = NA){
             x <- callNextMethod()
-            x@structure <- windows(x@structure,
-                                   start = start,
-                                   end = end,
+            x@structure <- windows(x@structure, start = start, end = end,
                                    width = width)
             x
           }
@@ -199,115 +210,94 @@ setMethod("show", "StructuredXStringSet",
 
 # read and writing functions ---------------------------------------------------
 
-.read_StructuredXStringSet <- function(type = "RNA",
-                                       filepath,
-                                       nrec,
-                                       skip,
-                                       seek.first.rec,
-                                       use.names){
+.read_StructuredXStringSet <- function(type = "RNA", filepath, nrec, skip,
+                                       seek.first.rec, use.names)
+{
   className <- paste0("Structured",type,"StringSet")
   methodName <- paste0("read",type,"StringSet")
-  x <- do.call(methodName, list(filepath,
-                                format = "fastq",
-                                nrec,
-                                skip,
-                                seek.first.rec,
-                                use.names,
+  x <- do.call(methodName, list(filepath, format = "fastq", nrec, skip,
+                                seek.first.rec, use.names,
                                 with.qualities = TRUE))
   structure <- DotBracketStringSet(mcols(x)[ , "qualities"])
   do.call(className, list(x, structure))
 }
 #' @rdname StructuredXStringSet
 #' @export
-readStructuredRNAStringSet <- function(filepath,
-                                       nrec = -1L,
-                                       skip = 0L,
-                                       seek.first.rec = FALSE,
-                                       use.names = TRUE){
-  .read_StructuredXStringSet("RNA",
-                             filepath,
-                             nrec,
-                             skip,
-                             seek.first.rec,
+readStructuredRNAStringSet <- function(filepath, nrec = -1L, skip = 0L,
+                                       seek.first.rec = FALSE, use.names = TRUE)
+{
+  .read_StructuredXStringSet("RNA", filepath, nrec, skip, seek.first.rec,
                              use.names)
 }
 #' @rdname StructuredXStringSet
 #' @export
-writeStructuredXStringSet <- function(x,
-                                      filepath,
-                                      append = FALSE,
-                                      compress = FALSE){
+writeStructuredXStringSet <- function(x, filepath, append = FALSE,
+                                      compress = FALSE)
+{
   if(is.null(names(x)) && is.null(names(dotbracket(x)))){
     stop("either 'x' or 'dotbracket' must have names")
   }
   if (!is(x, "StructuredXStringSet")){
     stop("'x' must be a StructuredXStringSet object")
   }
-  writeXStringSet(x,
-                  filepath,
-                  append,
-                  compress,
-                  compression_level = NA,
-                  format = "fastq",
-                  qualities = dotbracket(x))
+  writeXStringSet(x, filepath, append, compress, compression_level = NA,
+                  format = "fastq", qualities = dotbracket(x))
 }
 
 # conversion -------------------------------------------------------------------
 
 #' @rdname StructuredXStringSet
 #' @export
-setMethod("getBasePairing", "StructuredXStringSet",
-          function(x,
-                   compress = TRUE,
-                   return.sequence = FALSE) {
-            ans <- getBasePairing(dotbracket(x),
-                                  compress = compress)
-            names(ans) <- names(x)
-            # if sequence should not be save in the DotBracketDataFrame
-            if(return.sequence){
-              return(ans)
-            }
-            # downgrade to sequence only object
-            seq <- as(x, "XStringSet")
-            classNameSeq <- class(seq)
-            seqs <- lapply(seq,
-                           function(z){
-                             as(Views(z,
-                                      start = seq_len(length(z)),
-                                      width = 1),
-                                classNameSeq)
-                           })
-            if(is(ans,"CompressedList")){
-              seqList <- unlist(do.call(paste0(classNameSeq,"List"),
-                                 seqs))
-              df <- as(ans@unlistData,"DataFrame")
-              df$base <- seqList
-              ans@unlistData <- as(df,"DotBracketDataFrame")
-            } else {
-              ans <- do.call("SplitDotBracketDataFrameList",
-                             c(mapply(
-                                 function(z,s){
-                                   zz <- as(z,"DataFrame")
-                                   zz$base <- s
-                                   as(zz,"DotBracketDataFrame")
-                                 },
-                                 ans,
-                                 seqs),
-                             list(compress = FALSE)))
-            }
-            ans
-          }
+setMethod(
+  "getBasePairing", "StructuredXStringSet",
+  function(x, compress = TRUE, return.sequence = FALSE) 
+  {
+    ans <- getBasePairing(dotbracket(x),
+                          compress = compress)
+    names(ans) <- names(x)
+    # if sequence should not be save in the DotBracketDataFrame
+    if(return.sequence){
+      return(ans)
+    }
+    # downgrade to sequence only object
+    seq <- as(x, "XStringSet")
+    classNameSeq <- class(seq)
+    seqs <- lapply(seq,
+                   function(z){
+                     as(Views(z,
+                              start = seq_len(length(z)),
+                              width = 1),
+                        classNameSeq)
+                   })
+    if(is(ans,"CompressedList")){
+      seqList <- unlist(do.call(paste0(classNameSeq,"List"),
+                                seqs))
+      df <- as(ans@unlistData,"DataFrame")
+      df$base <- seqList
+      ans@unlistData <- as(df,"DotBracketDataFrame")
+    } else {
+      ans <- SplitDotBracketDataFrameList(
+        mapply(
+          function(z,s){
+            zz <- as(z,"DataFrame")
+            zz$base <- s
+            as(zz,"DotBracketDataFrame")
+          },
+          ans,
+          seqs,
+          SIMPLIFY = FALSE),
+        compress = FALSE)
+    }
+    ans
+  }
 )
 
 #' @rdname StructuredXStringSet
 #' @export
-setMethod("getLoopIndices", 
-          "StructuredXStringSet",
-          function(x,
-                   bracket.type,
-                   warn.type.drops = TRUE) {
-            getLoopIndices(dotbracket(x),
-                       bracket.type,
-                       warn.type.drops)
-          }
+setMethod(
+  "getLoopIndices", "StructuredXStringSet",
+  function(x, bracket.type, warn.type.drops = TRUE)
+  {
+    getLoopIndices(dotbracket(x), bracket.type, warn.type.drops)
+  }
 )

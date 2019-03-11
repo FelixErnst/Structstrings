@@ -11,8 +11,10 @@ static const R_CallMethodDef callMethods[] = {
   CALLMETHOD_DEF(new_DotBracketDataFrameList, 2),
   CALLMETHOD_DEF(new_DotBracketDataFrameList_from_CHARACTER, 2),
   CALLMETHOD_DEF(new_DotBracket_from_INTEGER, 1),
-  CALLMETHOD_DEF(new_LoopIndexList_from_CHARACTER, 2),
-  CALLMETHOD_DEF(new_LoopIndexList_from_INTEGER, 1),
+  CALLMETHOD_DEF(new_LoopIndexList_from_CHARACTER_LIST, 2),
+  CALLMETHOD_DEF(new_LoopIndexList_from_INTEGER_LIST, 1),
+  CALLMETHOD_DEF(new_LoopIndexList_from_LIST, 1),
+  CALLMETHOD_DEF(new_LoopIndexList, 2),
   {NULL, NULL, 0}
 };
 

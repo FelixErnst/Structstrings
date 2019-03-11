@@ -86,7 +86,8 @@ setClass("CompressedSplitDotBracketDataFrameList",
          contains = c("SplitDataFrameList",
                       "CompressedDotBracketDataFrameList"))
 
-.valid.DotBracketDataFrame <- function(x) {
+.valid.DotBracketDataFrame <- function(x)
+{
   message <- paste0("At least 3 inputs are expected. If unnamed they are used ",
                     "in this order: pos, forward, reverse. The fourth and fifth ",
                     "are optional and must be character and XStringSet.")
@@ -123,7 +124,8 @@ setClass("CompressedSplitDotBracketDataFrameList",
   NULL
 }
 
-.valid.DotBracketDataFrameList <- function(x) {
+.valid.DotBracketDataFrameList <- function(x)
+{
   if(length(x) > 0L) {
     if(!all(vapply(as.list(x),is,logical(1),"DotBracketDataFrame"))){
       return(paste0("Only 'DotBracketDataFrame' are supported as elements."))
@@ -141,8 +143,7 @@ setClass("CompressedSplitDotBracketDataFrameList",
   }
   NULL
 }
-S4Vectors:::setValidity2("DotBracketDataFrame",
-                         .valid.DotBracketDataFrame)
+S4Vectors:::setValidity2("DotBracketDataFrame", .valid.DotBracketDataFrame)
 S4Vectors:::setValidity2("DotBracketDataFrameList",
                          .valid.DotBracketDataFrameList)
 S4Vectors:::setValidity2("SplitDotBracketDataFrameList",
@@ -156,7 +157,8 @@ setMethod("relistToClass", "DotBracketDataFrame",
           function(x) "CompressedSplitDotBracketDataFrameList"
 )
 
-.adjust_DotBracketDataFrame_col_types <- function(from){
+.adjust_DotBracketDataFrame_col_types <- function(from)
+{
   if(all(colnames(from) %in% DOTBRACKET_DATAFRAME_COLNAMES) && ncol(from) > 5L){
     from[,DOTBRACKET_DATAFRAME_COLNAMES]
   }
@@ -179,26 +181,30 @@ setMethod("relistToClass", "DotBracketDataFrame",
   from
 }
 
-.DataFrame_To_DotBracketDataFrame <- function(from){
+.DataFrame_To_DotBracketDataFrame <- function(from)
+{
   class(from) <- "DotBracketDataFrame"
   from <- .adjust_DotBracketDataFrame_col_types(from)
   validObject(from)
   from
 }
 
-.SimpleDataFrameList_To_DotBracketDataFrameList <- function(from){
+.SimpleDataFrameList_To_DotBracketDataFrameList <- function(from)
+{
   from@listData <- .norm_DotBracketDataFrame_input(from@listData)
   class(from) <- "DotBracketDataFrameList"
   validObject(from)
   from
 }
-.SimpleSplitDataFrameList_To_SplitDotBracketDataFrameList <- function(from){
+.SimpleSplitDataFrameList_To_SplitDotBracketDataFrameList <- function(from)
+{
   from@listData <- .norm_DotBracketDataFrame_input(from@listData)
   class(from) <- "SplitDotBracketDataFrameList"
   validObject(from)
   from
 }
-.CSDataFrameList_To_CSDotBracketDataFrameList <- function(from){
+.CSDataFrameList_To_CSDotBracketDataFrameList <- function(from)
+{
   ans <- unlist(from, use.names = FALSE)
   ans <- .DataFrame_To_DotBracketDataFrame(ans)
   ans <- relist(ans, from)
@@ -230,30 +236,28 @@ setAs("list", "DotBracketDataFrameList",
 #' @export
 setAs("list", "SplitDotBracketDataFrameList",
       function(from) do.call("SplitDotBracketDataFrameList",
-                             c(from,
-                               list(compress = FALSE))))
+                             c(from, list(compress = FALSE))))
 #' @name DotBracketDataFrame
 #' @export
 setAs("list", "CompressedSplitDotBracketDataFrameList",
       function(from) do.call("SplitDotBracketDataFrameList",
-                             c(from,
-                               list(compress = TRUE))))
+                             c(from, list(compress = TRUE))))
 #' @name DotBracketDataFrame
 #' @export
 setAs("CompressedSplitDotBracketDataFrameList", "DotBracketDataFrameList",
-      function(from) do.call("DotBracketDataFrameList",as.list(from)))
+      function(from) DotBracketDataFrameList(as.list(from)))
 
 #' @name DotBracketDataFrame
 #' @export
 setAs("CompressedSplitDotBracketDataFrameList", "SplitDotBracketDataFrameList",
-      function(from) do.call("SplitDotBracketDataFrameList",
-                             c(as.list(from),
-                               compress = FALSE)))
+      function(from) SplitDotBracketDataFrameList(as.list(from),
+                                                  compress = FALSE))
 
 
 # DotBracketDataFrame constructor ----------------------------------------------
 
-.norm_DotBracketDataFrame_input <- function(x){
+.norm_DotBracketDataFrame_input <- function(x)
+{
   if(length(x) == 0L){
     return(x)
   }
@@ -265,21 +269,24 @@ setAs("CompressedSplitDotBracketDataFrameList", "SplitDotBracketDataFrameList",
   x
 }
 
-.rename_unnamed_cols <- function(x){
+.rename_unnamed_cols <- function(x)
+{
   if(is.null(names(x)) && ncol(x) <= 4L){
     colnames(x) <- DOTBRACKET_DATAFRAME_COLNAMES[seq_len(ncol(x))]
   }
   x
 }
 
-.rename_unnamed_args <- function(x){
+.rename_unnamed_args <- function(x)
+{
   if(is.null(names(x)) && length(x) <= 4L){
     names(x) <- DOTBRACKET_DATAFRAME_COLNAMES[seq_along(x)]
   }
   x
 }
 
-.flatten_input_list <- function(x){
+.flatten_input_list <- function(x)
+{
   if(length(x) == 0L){
     return(x)
   }
@@ -292,7 +299,8 @@ setAs("CompressedSplitDotBracketDataFrameList", "SplitDotBracketDataFrameList",
 
 #' @rdname DotBracketDataFrame
 #' @export
-DotBracketDataFrame <- function(...){
+DotBracketDataFrame <- function(...)
+{
   args <- list(...)
   args <- .flatten_input_list(args)
   f <- vapply(args,is,logical(1),"DataFrame")
@@ -311,31 +319,27 @@ DotBracketDataFrame <- function(...){
 }
 #' @rdname DotBracketDataFrame
 #' @export
-DBDF <- function(...){
-  DotBracketDataFrame(..., 
-                      row.names = NULL, 
-                      check.names = TRUE)
+DBDF <- function(...)
+{
+  DotBracketDataFrame(..., row.names = NULL,check.names = TRUE)
 }
 #' @rdname DotBracketDataFrame
 #' @export
-DotBracketDataFrameList <- function(...){
+DotBracketDataFrameList <- function(...)
+{
   args <- list(...)
   args <- .flatten_input_list(args)
   args <- .norm_DotBracketDataFrame_input(args)
-  .SimpleDataFrameList_To_DotBracketDataFrameList(
-    do.call(DataFrameList,
-            c(args)))
+  .SimpleDataFrameList_To_DotBracketDataFrameList(DataFrameList(args))
 }
 #' @rdname DotBracketDataFrame
 #' @export
-DBDFL <- function(...){
-  DotBracketDataFrameList(...)
-}
+DBDFL <- function(...) DotBracketDataFrameList(...)
 #' @rdname DotBracketDataFrame
 #' @export
-SplitDotBracketDataFrameList <- function(...,
-                                         compress = TRUE,
-                                         cbindArgs = FALSE){
+SplitDotBracketDataFrameList <- function(..., compress = TRUE, 
+                                         cbindArgs = FALSE)
+{
   args <- list(...)
   args <- .flatten_input_list(args)
   ans <- IRanges::SplitDataFrameList(args,
@@ -348,26 +352,26 @@ SplitDotBracketDataFrameList <- function(...,
 }
 #' @rdname DotBracketDataFrame
 #' @export
-SDBDFL <- function(..., 
-                   compress = TRUE,
-                   cbindArgs = FALSE){
-  SplitDotBracketDataFrameList(..., 
-                               compress = compress, 
-                               cbindArgs = cbindArgs)
+SDBDFL <- function(..., compress = TRUE, cbindArgs = FALSE)
+{
+  SplitDotBracketDataFrameList(...,  compress = compress, cbindArgs = cbindArgs)
 }
 
 #' @rdname Structstrings-internals
 #' @param x,i,j,...,value See \link{DataFrame}.
 #' @export
-setReplaceMethod("[", "DotBracketDataFrame",
-                 function(x, i, j, ..., value){
-                   # Starting from Bioc 3.6, value is of class 
-                   # DotBracketDataFrame instead of DataFrame. 
-                   # this is a problem since missing columns get autopopulated.
-                   # So its need to be converted to a DataFrame again.
-                   # 
-                   # Reason/place for this conversion unknown. Maybe directly 
-                   # Base C since DataFrame derives from list.
-                   value <- as(value[,seq_along(i),drop = FALSE],"DataFrame")
-                   callNextMethod(x, i, value = value)
-                 })
+setReplaceMethod(
+  "[", "DotBracketDataFrame",
+  function(x, i, j, ..., value)
+  {
+    # Starting from Bioc 3.6, value is of class 
+    # DotBracketDataFrame instead of DataFrame. 
+    # this is a problem since missing columns get autopopulated.
+    # So its need to be converted to a DataFrame again.
+    # 
+    # Reason/place for this conversion unknown. Maybe directly 
+    # Base C since DataFrame derives from list.
+    value <- as(value[,seq_along(i),drop = FALSE],"DataFrame")
+    callNextMethod(x, i, value = value)
+  }
+)

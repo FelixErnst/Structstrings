@@ -19,18 +19,11 @@ setMethod("relistToClass", "DotBracketStringSet",
 
 #' @rdname DotBracketString
 #' @export
-DotBracketStringSetList <- function(...,
-                                    use.names = TRUE){
-  Biostrings:::XStringSetList("DotBracket", 
-                              ..., 
-                              use.names = use.names)
+DotBracketStringSetList <- function(..., use.names = TRUE)
+{
+  .XStringSetList("DotBracket", ..., use.names = use.names)
 }
   
 #' @rdname DotBracketString
 #' @export
-DBSL <- function(...,
-                 use.names = TRUE){
-  DotBracketStringSetList(...,
-                          use.names)
-}
-
+DBSL <- function(..., use.names = TRUE) DotBracketStringSetList(...,use.names)
