@@ -30,11 +30,13 @@ to a large extent inspired by the
 This package was developed as a requirement for the \code{tRNA} package. 
 However, other projects might benefit as well, so it was split of and 
 improved upon.
+}
+\section{Manual}{
 
-#' @section Manual:
 Please refer to the Structstrings vignette for an example how to work and 
 use the package: \href{../doc/Structstrings.html}{Structstrings}.
 }
+
 \references{
 Lorenz, Ronny; Bernhart, Stephan H.; Höner zu Siederdissen, Christian; Tafer,
 Hakim; Flamm, Christoph; Stadler, Peter F.; Hofacker, Ivo L. (2011):

@@ -35,8 +35,6 @@ STRUCTURE_CLOSE_CHR
 Analog to \code{Biostrings} there are a few objects, which should only be 
 used internally, but may be of use to other package developers.
 Otherwise take care.
-
-\link{getBasePairing}
 }
 \examples{
 DOTBRACKET_CHAR_VALUES

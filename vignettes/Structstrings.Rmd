@@ -192,7 +192,7 @@ dbdfl[[1]]
 # Session info
 
 ```{r}
-sessionInfo()
+sessioninfo::session_info()
 ```
 
 <a name="References"></a>

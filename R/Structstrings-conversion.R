@@ -250,8 +250,8 @@ setMethod("getDotBracket",
 {
   non_dbtype <- 
     paste0(
-      STRUCTURE_OPEN_CHR[!(STRUCTURE_OPEN_CHR %in% STRUCTURE_OPEN_CHR[type])],
-      STRUCTURE_CLOSE_CHR[!(STRUCTURE_CLOSE_CHR %in% STRUCTURE_CLOSE_CHR[type])])
+    STRUCTURE_OPEN_CHR[!(STRUCTURE_OPEN_CHR %in% STRUCTURE_OPEN_CHR[type])],
+    STRUCTURE_CLOSE_CHR[!(STRUCTURE_CLOSE_CHR %in% STRUCTURE_CLOSE_CHR[type])])
   non_dbtype <- gsub("\\\\","",non_dbtype)
   if(any(x$character %in% non_dbtype)){
     return(FALSE)

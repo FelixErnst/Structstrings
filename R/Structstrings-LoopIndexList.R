@@ -5,9 +5,9 @@
 #' @title LoopIndexList: base pairing information as a list of integer values
 #' 
 #' @description 
-#' With loop indeces base pairing information can be represented by giving each base
-#' pair a number and increasing/decreasing it with each opened/closed base
-#' pair. This information can be used for further analysis of the represented 
+#' With loop indeces base pairing information can be represented by giving each
+#' base pair a number and increasing/decreasing it with each opened/closed base
+#' pair. This information can be used for further analysis of the represented
 #' structure.
 #' 
 #' @param ... the \code{integer} input vectors.
