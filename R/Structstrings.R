@@ -111,8 +111,10 @@ STRUCTURE_CLOSE_CHR <- c("\\)",">","\\]","\\}")
 #' @name Structstrings-data
 #' @title Structstrings example data
 #' @description Example data for using the Structstrings package
-#' @source tRNAscan-SE output for S. cerevisiae imported using 
-#' \code{\link[tRNAscanImport:tRNAscanImport]{tRNAscanImport}}
+#' @source sequence and  dot bracket annotation of tRNAscan-SE output for 
+#' *S. cerevisiae* imported using 
+#' \code{\link[tRNAscanImport:tRNAscanImport]{tRNAscanImport}}. The example file
+#' is part of the \code{tRNAscanImport} package.
 #' @docType data
 #' @format object of class \code{\link{DotBracketStringSet}} and 
 #' \code{\link{DNAStringSet}}
