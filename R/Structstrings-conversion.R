@@ -12,7 +12,7 @@ NULL
 #' @description
 #' \code{getBasePairing} converts a dot bracket annotation from a 
 #' \code{\link{DotBracketString}} into a base pair table as 
-#' \code{\link{DotBracketDataFrame}}. Base pairing is indicated by corresponding 
+#' \code{\link{DotBracketDataFrame}}. Base pairing is indicated by corresponding
 #' numbers in the forward and reverse columns.
 #'
 #' \code{getDotBracket} converts the dot bracket annotation from a

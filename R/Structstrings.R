@@ -28,6 +28,10 @@
 #' However, other projects might benefit as well, so it was split of and 
 #' improved upon.
 #' 
+#' @section Manual:
+#' Please refer to the Structstrings vignette for an example how to work and 
+#' use the package: \href{../doc/Structstrings.html}{Structstrings}.
+#' 
 #' @references
 #' Lorenz, Ronny; Bernhart, Stephan H.; Höner zu Siederdissen, Christian; Tafer,
 #' Hakim; Flamm, Christoph; Stadler, Peter F.; Hofacker, Ivo L. (2011):
@@ -62,8 +66,26 @@ requireNamespace("Biostrings")
 #' @title Structstrings internals
 #' 
 #' @description 
-#' Analog to \code{Biostrings} there are a few functions, which should only be 
-#' used internally. Otherwise take care.
+#' Analog to \code{Biostrings} there are a few objects, which should only be 
+#' used internally, but may be of use to other package developers.
+#' Otherwise take care.
+#' 
+#' @examples 
+#' DOTBRACKET_CHAR_VALUES
+#' DOTBRACKET_ALPHABET
+#' STRUCTURE_NEUTRAL_CHR
+#' STRUCTURE_OPEN_CHR
+#' STRUCTURE_CLOSE_CHR
+#' 
+#' # the replace method for a DotBracketDataFrame had to be reimplemented
+#' # because of the requirement of columns for a DotBracketDataFrameList and
+#' # DotBracketDataFrame
+#' data("dbs", package = "Structstrings", envir = environment())
+#' dbdfl <- getBasePairing(dbs)
+#' # Elements are returned as DotBracketDataFrames
+#' dbdf <- dbdfl[[1]]
+#' dbdfl[[1]] <- dbdf
+#' dbdfl[1] <- dbdfl[1]
 NULL
 
 # this must match the defines in inst/include/Structstrings_defines.h
@@ -89,10 +111,12 @@ STRUCTURE_CLOSE_CHR <- c("\\)",">","\\]","\\}")
 #' @name Structstrings-data
 #' @title Structstrings example data
 #' @description Example data for using the Structstrings package
+#' @source tRNAscan-SE output for S. cerevisiae imported using 
+#' \code{\link[tRNAscanImport:tRNAscanImport]{tRNAscanImport}}
 #' @docType data
-#' @usage dbs
 #' @format object of class \code{\link{DotBracketStringSet}} and 
 #' \code{\link{DNAStringSet}}
+#' @usage dbs
 #' @keywords datasets Structstrings
 "dbs"
 #' @name Structstrings-data

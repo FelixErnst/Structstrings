@@ -23,19 +23,19 @@ BiocStyle::markdown(css.files = c('custom.css'))
 
 # Introduction
 
-The `Structstrings` package implements the widely used to bracket annotation for
-storing base pairing information in structured RNA. For example it is used in
-the ViennaRNA package [@Lorenz.2011], the tRNAscan-SE software [@Lowe.1997] and
-the tRNAdb [@Juhling.2009].
+The `Structstrings` package implements the widely used dot bracket annotation 
+to store base pairing information in structured RNA. For example it is used
+in the ViennaRNA package [@Lorenz.2011], the tRNAscan-SE software [@Lowe.1997] 
+and the tRNAdb [@Juhling.2009].
 
 `Structstrings` uses the infrastructure provided by the
-[Biostrings](#References) package and derives the class `DotBracketString` and
-related classes from the `BString` class. From these base pair tables can be
-produced for in depth analysis, for which the `DotBracketDataFrame` class
-is derived from the `DataFrame` class. In addition, the loop indices of the base
-pairs can be retrieved as a `LoopIndexList`, a derivate if the `IntegerList`
-class. Generally, all classes check automatically for the validity of the base
-pairing information.
+[Biostrings](#References) package [@Pages] and derives the class
+`DotBracketString` and related classes from the `BString` class. From these base
+pair tables can be produced for in depth analysis, for which the
+`DotBracketDataFrame` class is derived from the `DataFrame` class. In addition,
+the loop indices of the base pairs can be retrieved as a `LoopIndexList`, a
+derivate if the `IntegerList` class. Generally, all classes check automatically
+for the validity of the base pairing information.
 
 The conversion of the `DotBracketString` to the base pair table and the loop 
 indices is implemented in C for efficiency. The C implementation to a large 
@@ -51,7 +51,13 @@ suppressPackageStartupMessages({
   library(Structstrings)
 })
 ```
+
+The package is installed from Bioconductor and loaded.
+
 ```{r package2, eval=FALSE}
+if(!requireNamespace("BiocManager", quietly = TRUE))
+	install.packages("BiocManager")
+BiocManager::install("Structstrings")
 library(Structstrings)
 ```
 
@@ -182,5 +188,13 @@ dbdfl[[1]]
 dbdfl <- getBasePairing(sdbs, return.sequence = TRUE)
 dbdfl[[1]]
 ```
+
+# Session info
+
+```{r}
+sessionInfo()
+```
+
+<a name="References"></a>
 
 # References

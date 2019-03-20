@@ -15,9 +15,10 @@ Description: The Structstrings package implements the widely used dot bracket
 License: Artistic-2.0
 Encoding: UTF-8
 biocViews:
-    DataImport, DataRepresentation, Infrastructure, Sequencing, Software
+    DataImport, DataRepresentation, Infrastructure, Sequencing, Software, 
+    Alignment, SequenceMatching
 Depends:
-    R (>= 3.6),
+    R (>= 3.5),
     S4Vectors,
     IRanges,
     Biostrings

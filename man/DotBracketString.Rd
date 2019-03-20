@@ -61,11 +61,12 @@ The \code{DotBracketString} extends the
 implemented accordingly.
 
 The alphabet consists of the letters
-\code{"(",")",".","<",">","[","]","\{","\}"}, which describes base pairing
-between positions. The \code{.} letter describes an unpaired position. The
-number of opening and closing letters need to be equal within a
-\code{DotBracketString} to be a valid dot bracket annotation. This is checked
-upon creation and modificiation of the object. 
+\code{(}, \code{)}, \code{.}, \code{<}, \code{>}, \code{[}, \code{]},
+\code{\{} and \code{\}}, which describes base pairing between positions. The
+\code{.} letter describes an unpaired position. The number of opening and
+closing letters need to be equal within a \code{DotBracketString} to be a
+valid dot bracket annotation. This is checked upon creation and modificiation
+of the object.
 
 The objects can also be created using the shorter function names \code{DB},
 \code{DBS} and \code{DBSL}.

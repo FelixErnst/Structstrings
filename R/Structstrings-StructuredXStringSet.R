@@ -76,7 +76,7 @@ setClass("StructuredRNAStringSet",
   NULL
 }
 
-setValidity2("StructuredXStringSet", .valid.StructuredXStringSet)
+setValidity("StructuredXStringSet", .valid.StructuredXStringSet)
 
 # accessors --------------------------------------------------------------------
 
@@ -173,8 +173,8 @@ StructuredRNAStringSet <- function(x, structure)
 setMethod("windows", "StructuredXStringSet",
           function(x, start = NA, end = NA, width = NA){
             x <- callNextMethod()
-            x@structure <- windows(x@structure, start = start, end = end,
-                                   width = width)
+            dotbracket(x) <- windows(dotbracket(x), start = start, end = end, 
+                                     width = width)
             x
           }
 )
@@ -182,7 +182,7 @@ setMethod("windows", "StructuredXStringSet",
 setMethod("reverse", "StructuredXStringSet",
           function(x){
             x <- callNextMethod()
-            x@structure <- reverse(x@structure)
+            dotbracket(x) <- reverse(dotbracket(x))
             x
           }
 )
@@ -190,7 +190,7 @@ setMethod("reverse", "StructuredXStringSet",
 setMethod("reverseComplement", "StructuredXStringSet",
           function(x){
             x <- callNextMethod()
-            x@structure <- reverse(x@structure)
+            dotbracket(x) <- reverse(dotbracket(x))
             x
           }
 )
