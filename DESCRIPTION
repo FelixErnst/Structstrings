@@ -1,7 +1,7 @@
 Package: Structstrings
 Title: Structstrings: implementation of the dot bracket annotations with Biostrings
-Version: 0.99.6
-Date: 2018-03-03
+Version: 0.99.7
+Date: 2018-03-20
 Authors@R: person("Felix GM","Ernst", email = "felix.gm.ernst@outlook.com",
                   role = c("aut", "cre"))
 Description: The Structstrings package implements the widely used dot bracket 
@@ -15,7 +15,8 @@ Description: The Structstrings package implements the widely used dot bracket
 License: Artistic-2.0
 Encoding: UTF-8
 biocViews:
-    DataImport, DataRepresentation, Infrastructure, Sequencing, Software
+    DataImport, DataRepresentation, Infrastructure, Sequencing, Software, 
+    Alignment, SequenceMatching
 Depends:
     R (>= 3.6),
     S4Vectors,
@@ -35,6 +36,8 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
+    sessioninfo,
+    tRNAscanImport,
     BiocStyle
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1

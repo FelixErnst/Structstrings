@@ -5,9 +5,9 @@
 #' @title LoopIndexList: base pairing information as a list of integer values
 #' 
 #' @description 
-#' With loop indeces base pairing information can be represented by giving each base
-#' pair a number and increasing/decreasing it with each opened/closed base
-#' pair. This information can be used for further analysis of the represented 
+#' With loop indeces base pairing information can be represented by giving each
+#' base pair a number and increasing/decreasing it with each opened/closed base
+#' pair. This information can be used for further analysis of the represented
 #' structure.
 #' 
 #' @param ... the \code{integer} input vectors.
@@ -30,22 +30,22 @@ setClass(Class = "LoopIndexList",
 #' @export
 LoopIndexList <- function(...) as(IRanges::IntegerList(...),"LoopIndexList")
 
-.valid.LoopIndexList <- function(x)
+.valid.LoopIndexList <- function(object)
 {
   # shift values
   y <- IntegerList(
     mapply(function(i,j){
       c(i,j)
     },
-    IntegerList(as.list(rep(0,length(x)))),
-    x,
+    IntegerList(as.list(rep(0,length(object)))),
+    object,
     SIMPLIFY = FALSE))
   z <- IntegerList(
     mapply(function(i,j){
       c(i,j)
     },
-    x,
-    IntegerList(as.list(rep(0,length(x)))),
+    object,
+    IntegerList(as.list(rep(0,length(object)))),
     SIMPLIFY = FALSE))
   a <- y - z
   message <- "Unmatched positions."
@@ -56,14 +56,14 @@ LoopIndexList <- function(...) as(IRanges::IntegerList(...),"LoopIndexList")
   # ... however there are case were omitting one bracket can cause the sumsum
   # of the shift to be zero as well. In these cases one value occurs only once,
   # which can never be the case (except 0)
-  a <- table(unlist(x))
+  a <- table(unlist(object))
   if(any(a < 2L) && names(a[a < 2L]) != "0"){
     return(message)
   }
   NULL
 }
 
-S4Vectors:::setValidity2("LoopIndexList", .valid.LoopIndexList)
+setValidity("LoopIndexList", .valid.LoopIndexList)
 
 #' @name LoopIndexList
 #' @export

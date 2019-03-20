@@ -10,6 +10,7 @@
 \alias{STRUCTURE_OPEN_CHR}
 \alias{STRUCTURE_CLOSE_CHR}
 \alias{[<-,DotBracketDataFrame-method}
+\alias{colnames<-,CompressedSplitDotBracketDataFrameList-method}
 \title{Structstrings internals}
 \format{An object of class \code{integer} of length 9.}
 \usage{
@@ -24,12 +25,32 @@ STRUCTURE_OPEN_CHR
 STRUCTURE_CLOSE_CHR
 
 \S4method{[}{DotBracketDataFrame}(x, i, j, ...) <- value
+
+\S4method{colnames}{CompressedSplitDotBracketDataFrameList}(x) <- value
 }
 \arguments{
 \item{x, i, j, ..., value}{See \link{DataFrame}.}
 }
 \description{
-Analog to \code{Biostrings} there are a few functions, which should only be 
-used internally. Otherwise take care.
+Analog to \code{Biostrings} there are a few objects, which should only be 
+used internally, but may be of use to other package developers.
+Otherwise take care.
+}
+\examples{
+DOTBRACKET_CHAR_VALUES
+DOTBRACKET_ALPHABET
+STRUCTURE_NEUTRAL_CHR
+STRUCTURE_OPEN_CHR
+STRUCTURE_CLOSE_CHR
+
+# the replace method for a DotBracketDataFrame had to be reimplemented
+# because of the requirement of columns for a DotBracketDataFrameList and
+# DotBracketDataFrame
+data("dbs", package = "Structstrings", envir = environment())
+dbdfl <- getBasePairing(dbs)
+# Elements are returned as DotBracketDataFrames
+dbdf <- dbdfl[[1]]
+dbdfl[[1]] <- dbdf
+dbdfl[1] <- dbdfl[1]
 }
 \keyword{datasets}

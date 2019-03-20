@@ -86,54 +86,54 @@ setClass("CompressedSplitDotBracketDataFrameList",
          contains = c("SplitDataFrameList",
                       "CompressedDotBracketDataFrameList"))
 
-.valid.DotBracketDataFrame <- function(x)
+.valid.DotBracketDataFrame <- function(object)
 {
   message <- paste0("At least 3 inputs are expected. If unnamed they are used ",
-                    "in this order: pos, forward, reverse. The fourth and fifth ",
-                    "are optional and must be character and XStringSet.")
+                    "in this order: pos, forward, reverse. The fourth and ",
+                    "fifth are optional and must be character and XStringSet.")
   messageType <- paste0("The types of the input are expected to be ",
                         "'integer', 'integer', 'integer', 'character' and ",
                         "optionally 'XStringSet'.")
-  if((ncol(x) > 1L && ncol(x) < 3L) || ncol(x) > 5L ){
+  if((ncol(object) > 1L && ncol(object) < 3L) || ncol(object) > 5L ){
     return(paste0(message,messageType))
   }
-  if(!all(colnames(x) %in% DOTBRACKET_DATAFRAME_COLNAMES)){
+  if(!all(colnames(object) %in% DOTBRACKET_DATAFRAME_COLNAMES)){
     return(paste0(message))
   }
-  if(any(x$forward < 0) || 
-     any(x$reverse < 0) || 
-     sum(x$forward) != sum(x$reverse)){
-    return(paste0("Unmatched position in 'DotBracketDataFrame' object. Invalid ",
-         "DotBracket annotation"))
+  if(any(object$forward < 0) || 
+     any(object$reverse < 0) || 
+     sum(object$forward) != sum(object$reverse)){
+    return(paste0("Unmatched position in 'DotBracketDataFrame' object. Invalid",
+           " DotBracket annotation"))
   }
-  colTypes <- lapply(x, classNameForDisplay)
+  colTypes <- lapply(object, classNameForDisplay)
   if(!all(unlist(colTypes[DOTBRACKET_DATAFRAME_INT_COLS]) == "integer")){
     return(paste0(messageType))
   }
-  if(ncol(x) >= 4L){
+  if(ncol(object) >= 4L){
     if(!all(unlist(colTypes[DOTBRACKET_DATAFRAME_CHR_COLS]) == "character")){
       return(paste0(messageType))
     }
   }
-  if(ncol(x) == 5L){
-    if(colnames(x)[5L] != DOTBRACKET_DATAFRAME_NUCLEOTIDE_COLS || 
-       !is(x[,5L],"XStringSet")){
+  if(ncol(object) == 5L){
+    if(colnames(object)[5L] != DOTBRACKET_DATAFRAME_NUCLEOTIDE_COLS || 
+       !is(object[,5L],"XStringSet")){
       return(paste0(messageType))
     }
   }
   NULL
 }
 
-.valid.DotBracketDataFrameList <- function(x)
+.valid.DotBracketDataFrameList <- function(object)
 {
-  if(length(x) > 0L) {
-    if(!all(vapply(as.list(x),is,logical(1),"DotBracketDataFrame"))){
+  if(length(object) > 0L) {
+    if(!all(vapply(as.list(object),is,logical(1),"DotBracketDataFrame"))){
       return(paste0("Only 'DotBracketDataFrame' are supported as elements."))
     }
-    if(is(x,"CompressedList")){
-      return(.valid.DotBracketDataFrame(x@unlistData))
+    if(is(object,"CompressedList")){
+      return(.valid.DotBracketDataFrame(object@unlistData))
     } else {
-      ans <- lapply(x,.valid.DotBracketDataFrame)
+      ans <- lapply(object,.valid.DotBracketDataFrame)
       f <- !vapply(ans,is.null,logical(1))
       if(any(f)){
         return(ans[f])
@@ -143,13 +143,11 @@ setClass("CompressedSplitDotBracketDataFrameList",
   }
   NULL
 }
-S4Vectors:::setValidity2("DotBracketDataFrame", .valid.DotBracketDataFrame)
-S4Vectors:::setValidity2("DotBracketDataFrameList",
-                         .valid.DotBracketDataFrameList)
-S4Vectors:::setValidity2("SplitDotBracketDataFrameList",
-                         .valid.DotBracketDataFrameList)
-S4Vectors:::setValidity2("CompressedSplitDotBracketDataFrameList",
-                         .valid.DotBracketDataFrameList)
+setValidity("DotBracketDataFrame", .valid.DotBracketDataFrame)
+setValidity("DotBracketDataFrameList", .valid.DotBracketDataFrameList)
+setValidity("SplitDotBracketDataFrameList", .valid.DotBracketDataFrameList)
+setValidity("CompressedSplitDotBracketDataFrameList",
+            .valid.DotBracketDataFrameList)
 
 # DotBracketDataFrame conversion -----------------------------------------------
 
@@ -223,7 +221,8 @@ setAs("SimpleDataFrameList", "DotBracketDataFrameList",
 #' @name DotBracketDataFrame
 #' @export
 setAs("SimpleSplitDataFrameList", "SplitDotBracketDataFrameList",
-      function(from) .SimpleSplitDataFrameList_To_SplitDotBracketDataFrameList(from))
+      function(from) 
+        .SimpleSplitDataFrameList_To_SplitDotBracketDataFrameList(from))
 #' @name DotBracketDataFrame
 #' @export
 setAs("CompressedSplitDataFrameList", "CompressedSplitDotBracketDataFrameList",
@@ -373,5 +372,30 @@ setReplaceMethod(
     # Base C since DataFrame derives from list.
     value <- as(value[,seq_along(i),drop = FALSE],"DataFrame")
     callNextMethod(x, i, value = value)
+  }
+)
+
+#' @rdname Structstrings-internals
+#' @export
+setReplaceMethod(
+  "colnames", "CompressedSplitDotBracketDataFrameList",
+  function(x, value)
+  {
+    # must be implemented. Otherwise a loop occurs, rooted in the 
+    # normalizeSingleBracketReplacementValue,CompressedSplitDataFrameList-method
+    # of the IRanges package due to inheritance from different classes.
+    if (is.null(value)) {
+      colnames(x@unlistData) <- NULL
+    } else if (is.character(value)) {
+      colnames(x@unlistData) <- value
+    } else if (is(value, "CharacterList")){
+      if (length(x) != length(value))
+        stop("replacement value must be the same length as x")
+      if (length(x) > 0)
+        colnames(x@unlistData) <- unlist(value[[1L]])
+    } else {
+      stop("replacement value must either be NULL or a CharacterList")
+    }
+    x
   }
 )

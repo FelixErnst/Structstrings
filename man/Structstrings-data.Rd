@@ -8,6 +8,12 @@
 \title{Structstrings example data}
 \format{object of class \code{\link{DotBracketStringSet}} and 
 \code{\link{DNAStringSet}}}
+\source{
+sequence and  dot bracket annotation of tRNAscan-SE output for 
+*S. cerevisiae* imported using 
+\code{\link[tRNAscanImport:tRNAscanImport]{tRNAscanImport}}. The example file
+is part of the \code{tRNAscanImport} package.
+}
 \usage{
 dbs
 

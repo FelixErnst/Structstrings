@@ -2,6 +2,7 @@
 NULL
 
 #' @name DotBracketStringSet-io
+#' @aliases readDotBracketStringSet readDotBracketStringSet
 #' 
 #' @title Reading and writing DotBracketStringSet objects
 #' 
@@ -10,9 +11,9 @@ NULL
 #' functions to read and write dot bracket strings from/to file. Since the
 #' \code{<>} is in conflict with the fasta format, saving to fastq file is
 #' sometimes the only option. Saving a string with a \code{<>} bracket type to a
-#' fasta file will throw an error,
+#' fasta file will throw an error.
 #' 
-#' The functions uses the underlying \code{Biostrings} infrastructure and shares
+#' The functions use the underlying \code{Biostrings} infrastructure and share
 #' most of its parameters. For a more detailed look has a look 
 #' \code{\link[Biostrings:XStringSet-io]{here}}.
 #' 

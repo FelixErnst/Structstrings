@@ -12,7 +12,7 @@ NULL
 #' @description
 #' \code{getBasePairing} converts a dot bracket annotation from a 
 #' \code{\link{DotBracketString}} into a base pair table as 
-#' \code{\link{DotBracketDataFrame}}. Base pairing is indicated by corresponding 
+#' \code{\link{DotBracketDataFrame}}. Base pairing is indicated by corresponding
 #' numbers in the forward and reverse columns.
 #'
 #' \code{getDotBracket} converts the dot bracket annotation from a
@@ -250,8 +250,8 @@ setMethod("getDotBracket",
 {
   non_dbtype <- 
     paste0(
-      STRUCTURE_OPEN_CHR[!(STRUCTURE_OPEN_CHR %in% STRUCTURE_OPEN_CHR[type])],
-      STRUCTURE_CLOSE_CHR[!(STRUCTURE_CLOSE_CHR %in% STRUCTURE_CLOSE_CHR[type])])
+    STRUCTURE_OPEN_CHR[!(STRUCTURE_OPEN_CHR %in% STRUCTURE_OPEN_CHR[type])],
+    STRUCTURE_CLOSE_CHR[!(STRUCTURE_CLOSE_CHR %in% STRUCTURE_CLOSE_CHR[type])])
   non_dbtype <- gsub("\\\\","",non_dbtype)
   if(any(x$character %in% non_dbtype)){
     return(FALSE)

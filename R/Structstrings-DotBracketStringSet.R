@@ -237,9 +237,9 @@ setAs("ANY", "DotBracketStringSet", function(from) DotBracketStringSet(from))
   }
   NULL
 }
-.valid.DotBracketStringSet <- function(x)
+.valid.DotBracketStringSet <- function(object)
 {
-  validMatches <- .check_matched_postions(x)
+  validMatches <- .check_matched_postions(object)
   if(!is.null(validMatches) &&
      is.list(validMatches) &&
      any(lengths(validMatches) > 0L)){
@@ -251,4 +251,4 @@ setAs("ANY", "DotBracketStringSet", function(from) DotBracketStringSet(from))
   NULL
 }
 
-S4Vectors:::setValidity2("DotBracketStringSet",.valid.DotBracketStringSet)
+setValidity("DotBracketStringSet",.valid.DotBracketStringSet)
