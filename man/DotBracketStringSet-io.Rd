@@ -47,7 +47,7 @@ sometimes the only option. Saving a string with a \code{<>} bracket type to a
 fasta file will throw an error.
 
 The functions use the underlying \code{Biostrings} infrastructure and share
-most of its parameters. For a more detailed look has a look 
+most of its parameters. For a more detailed look have a look 
 \code{\link[Biostrings:XStringSet-io]{here}}.
 }
 \examples{
