@@ -1,9 +1,11 @@
 Package: Structstrings
 Title: Structstrings: implementation of the dot bracket annotations with Biostrings
-Version: 1.1.0
-Date: 2018-03-26
-Authors@R: person("Felix GM","Ernst", email = "felix.gm.ernst@outlook.com",
-                  role = c("aut", "cre"))
+Version: 1.1.1
+Date: 2018-06-11
+Authors@R: person("Felix GM","Ernst",
+                  email = "felix.gm.ernst@outlook.com",
+                  role = c("aut", "cre"),
+                  comment = c(ORCID = "0000-0001-5064-0928"))
 Description: The Structstrings package implements the widely used dot bracket 
     annotation for storing base pairing information in structured RNA.
     Structstrings uses the infrastructure provided by the Biostrings package and 
@@ -55,3 +57,4 @@ Collate:
     'zzz.R'
 NeedsCompilation: yes
 BugReports: https://github.com/FelixErnst/Structstrings/issues
+URL: https://github.com/FelixErnst/Structstrings
