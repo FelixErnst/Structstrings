@@ -66,7 +66,7 @@ DOTBRACKET_DATAFRAME_NUCLEOTIDE_COLS <- c("base")
 #' @rdname DotBracketDataFrame
 #' @export
 setClass(Class = "DotBracketDataFrame",
-         contains = c("DataFrame"))
+         contains = c("DFrame"))
 #' @rdname DotBracketDataFrame
 #' @export
 setClass(Class = "DotBracketDataFrameList",
