@@ -42,7 +42,7 @@ writeStructuredXStringSet(x, filepath, append = FALSE,
 \arguments{
 \item{x}{For the \code{Structured*StringSet} constructors: Either a character
 vector, or an \code{RNAString}, \code{RNAStringSet} object. 
-For \code{writeQualityScaledXStringSet}: A \code{StructuredRNAStringSet} 
+For \code{writeStructuredXStringSet}: A \code{StructuredRNAStringSet} 
 derivative.}
 
 \item{structure, value}{A \code{\link{DotBracketStringSet}}}

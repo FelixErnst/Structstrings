@@ -1,14 +1,6 @@
 #' @include Structstrings.R
 NULL
 
-#' @rdname StructuredXStringSet
-#' @export
-setGeneric(name = "dotbracket",
-           def = function(x) standardGeneric("dotbracket"))
-#' @rdname StructuredXStringSet
-#' @export
-setGeneric(name = "dotbracket<-",
-           def = function(x, value) standardGeneric("dotbracket<-"))
 
 #' @rdname getBasePairing
 #' @export

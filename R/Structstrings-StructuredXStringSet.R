@@ -3,7 +3,8 @@
 NULL
 
 #' @name StructuredXStringSet
-#' @aliases StructuredRNAStringSet
+#' @aliases StructuredRNAStringSet StructuredXStringSet dotbracket 
+#' writeStructuredXStringSet readStructuredRNAStringSet
 #' 
 #' @title StructuredRNAStringSet for storing DotBracketAnnotation alongside 
 #' nucleotide sequences
@@ -23,7 +24,7 @@ NULL
 #' 
 #' @param x For the \code{Structured*StringSet} constructors: Either a character
 #' vector, or an \code{RNAString}, \code{RNAStringSet} object. 
-#' For \code{writeQualityScaledXStringSet}: A \code{StructuredRNAStringSet} 
+#' For \code{writeStructuredXStringSet}: A \code{StructuredRNAStringSet} 
 #' derivative.
 #' @param structure,value A \code{\link{DotBracketStringSet}}
 #' @param bracket.type \code{getLoopIndices}: Which dot bracket annotation type 
@@ -77,30 +78,6 @@ setClass("StructuredRNAStringSet",
 }
 
 setValidity("StructuredXStringSet", .valid.StructuredXStringSet)
-
-# accessors --------------------------------------------------------------------
-
-#' @rdname StructuredXStringSet
-#' @export
-setMethod("dotbracket","StructuredXStringSet",
-          function(x) x@structure)
-
-#' @rdname StructuredXStringSet
-#' @export
-setReplaceMethod("dotbracket","StructuredXStringSet",
-                 function(x, value){
-                   if(is.null(value)){
-                     return(as(x,paste0(seqtype(x),"StringSet")))
-                   }
-                   if(!is(value,"DotBracketStringSet")){
-                     value <- as(value,"DotBracketStringSet")
-                   }
-                   if(any(nchar(value) != nchar(x))){
-                     stop("'value' does not match the dimensions of 'x'")
-                   }
-                   x@structure <- value
-                   x
-                 })
 
 # constructors -----------------------------------------------------------------
 
@@ -207,6 +184,39 @@ setMethod("show", "StructuredXStringSet",
             cat("\n")
           }
 )
+
+# accessors --------------------------------------------------------------------
+
+#' @rdname StructuredXStringSet
+#' @export
+setGeneric(name = "dotbracket",
+           def = function(x) standardGeneric("dotbracket"))
+#' @rdname StructuredXStringSet
+#' @export
+setGeneric(name = "dotbracket<-",
+           def = function(x, value) standardGeneric("dotbracket<-"))
+
+#' @rdname StructuredXStringSet
+#' @export
+setMethod("dotbracket","StructuredXStringSet",
+          function(x) x@structure)
+
+#' @rdname StructuredXStringSet
+#' @export
+setReplaceMethod("dotbracket","StructuredXStringSet",
+                 function(x, value){
+                   if(is.null(value)){
+                     return(as(x,paste0(seqtype(x),"StringSet")))
+                   }
+                   if(!is(value,"DotBracketStringSet")){
+                     value <- as(value,"DotBracketStringSet")
+                   }
+                   if(any(nchar(value) != nchar(x))){
+                     stop("'value' does not match the dimensions of 'x'")
+                   }
+                   x@structure <- value
+                   x
+                 })
 
 # read and writing functions ---------------------------------------------------
 
