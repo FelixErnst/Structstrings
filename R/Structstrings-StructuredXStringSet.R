@@ -262,11 +262,10 @@ setMethod(
   "getBasePairing", "StructuredXStringSet",
   function(x, compress = TRUE, return.sequence = FALSE) 
   {
-    ans <- getBasePairing(dotbracket(x),
-                          compress = compress)
+    ans <- getBasePairing(dotbracket(x), compress = compress)
     names(ans) <- names(x)
     # if sequence should not be save in the DotBracketDataFrame
-    if(return.sequence){
+    if(!return.sequence){
       return(ans)
     }
     # downgrade to sequence only object

@@ -4,6 +4,7 @@
 \name{DotBracketDataFrame}
 \alias{DotBracketDataFrame}
 \alias{DotBracketDataFrameList}
+\alias{DotBracket-class}
 \alias{DotBracketDataFrame-class}
 \alias{DotBracketDataFrameList-class}
 \alias{SplitDotBracketDataFrameList-class}
@@ -45,9 +46,13 @@ element in the result.}
 a \code{DotBracketDataFrame*} object.
 }
 \description{
-The \code{DotBracketDataFrame} object is derived from the
-\code{\link[S4Vectors:DataFrame-class]{DataFrame}} class. The
-\code{DotBracketDataFrameList} is implemented analogous, which is also
+The \code{DotBracket} and \code{DotBracketDataFrame} object is derived from
+the \code{\link[S4Vectors:DataFrame-class]{DataFrame}} and 
+\code{\link[S4Vectors:DataFrame-class]{DFrame}} classes. \code{DotBracket}
+implents the concept and can be used to implement other backends than the
+in-memory one as done by \code{DotBracketDataFrame}. 
+
+The \code{DotBracketDataFrameList} is implemented analogous, which is also
 available as \code{CompressedSplitDotBracketDataFrameList}. Since the names
 are quite long, the following short cut functions are available for object
 creation: \code{DBDF}, \code{DBDFL} and \code{SDBDFL}.

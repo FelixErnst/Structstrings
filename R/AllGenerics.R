@@ -1,7 +1,6 @@
 #' @include Structstrings.R
 NULL
 
-
 #' @rdname getBasePairing
 #' @export
 setGeneric(name = "getBasePairing",

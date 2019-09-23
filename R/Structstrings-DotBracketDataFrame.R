@@ -7,9 +7,13 @@ NULL
 #' @title DataFrame for storing base pairing information
 #' 
 #' @description 
-#' The \code{DotBracketDataFrame} object is derived from the
-#' \code{\link[S4Vectors:DataFrame-class]{DataFrame}} class. The
-#' \code{DotBracketDataFrameList} is implemented analogous, which is also
+#' The \code{DotBracket} and \code{DotBracketDataFrame} object is derived from
+#' the \code{\link[S4Vectors:DataFrame-class]{DataFrame}} and 
+#' \code{\link[S4Vectors:DataFrame-class]{DFrame}} classes. \code{DotBracket}
+#' implents the concept and can be used to implement other backends than the
+#' in-memory one as done by \code{DotBracketDataFrame}. 
+#' 
+#' The \code{DotBracketDataFrameList} is implemented analogous, which is also
 #' available as \code{CompressedSplitDotBracketDataFrameList}. Since the names
 #' are quite long, the following short cut functions are available for object
 #' creation: \code{DBDF}, \code{DBDFL} and \code{SDBDFL}.
@@ -56,17 +60,35 @@ NULL
 #' dbdfl[[1]]
 NULL
 
-# DotBracketDataFrame ----------------------------------------------------------
+# DotBracket & DotBracketDataFrame ---------------------------------------------
 
 DOTBRACKET_DATAFRAME_COLNAMES <- c("pos","forward","reverse","character","base")
 DOTBRACKET_DATAFRAME_INT_COLS <- c("pos","forward","reverse")
 DOTBRACKET_DATAFRAME_CHR_COLS <- c("character")
 DOTBRACKET_DATAFRAME_NUCLEOTIDE_COLS <- c("base")
 
+################################################################################
+# DotBracket - concept 
+################################################################################
+
+#' @rdname DotBracketDataFrame
+#' @export
+setClass(Class = "DotBracket",
+         contains = c("VIRTUAL","DataFrame"))
+
+################################################################################
+# DotBracketDataFrame - implementation 
+################################################################################
+
 #' @rdname DotBracketDataFrame
 #' @export
 setClass(Class = "DotBracketDataFrame",
-         contains = c("DFrame"))
+         contains = c("DotBracket","DFrame"))
+
+################################################################################
+# DotBracketDataFrame - implementation 
+################################################################################
+
 #' @rdname DotBracketDataFrame
 #' @export
 setClass(Class = "DotBracketDataFrameList",
@@ -76,8 +98,8 @@ setClass(Class = "DotBracketDataFrameList",
 setClass(Class = "SplitDotBracketDataFrameList",
          contains = c("SimpleSplitDataFrameList"))
 
-
 setClass("CompressedDotBracketDataFrameList",
+         slots = c(unlistData = "DataFrame"),
          prototype = prototype(unlistData = new("DotBracketDataFrame")),
          contains = c("CompressedDataFrameList"))
 #' @rdname DotBracketDataFrame
@@ -86,7 +108,7 @@ setClass("CompressedSplitDotBracketDataFrameList",
          contains = c("SplitDataFrameList",
                       "CompressedDotBracketDataFrameList"))
 
-.valid.DotBracketDataFrame <- function(object)
+.valid.DotBracket <- function(object)
 {
   message <- paste0("At least 3 inputs are expected. If unnamed they are used ",
                     "in this order: pos, forward, reverse. The fourth and ",
@@ -131,9 +153,9 @@ setClass("CompressedSplitDotBracketDataFrameList",
       return(paste0("Only 'DotBracketDataFrame' are supported as elements."))
     }
     if(is(object,"CompressedList")){
-      return(.valid.DotBracketDataFrame(object@unlistData))
+      return(.valid.DotBracket(object@unlistData))
     } else {
-      ans <- lapply(object,.valid.DotBracketDataFrame)
+      ans <- lapply(object,.valid.DotBracket)
       f <- !vapply(ans,is.null,logical(1))
       if(any(f)){
         return(ans[f])
@@ -143,13 +165,16 @@ setClass("CompressedSplitDotBracketDataFrameList",
   }
   NULL
 }
-setValidity("DotBracketDataFrame", .valid.DotBracketDataFrame)
+
+setValidity("DotBracket", .valid.DotBracket)
 setValidity("DotBracketDataFrameList", .valid.DotBracketDataFrameList)
 setValidity("SplitDotBracketDataFrameList", .valid.DotBracketDataFrameList)
 setValidity("CompressedSplitDotBracketDataFrameList",
             .valid.DotBracketDataFrameList)
 
-# DotBracketDataFrame conversion -----------------------------------------------
+################################################################################
+# DotBracketDataFrame conversion
+################################################################################
 
 setMethod("relistToClass", "DotBracketDataFrame",
           function(x) "CompressedSplitDotBracketDataFrameList"
@@ -181,7 +206,9 @@ setMethod("relistToClass", "DotBracketDataFrame",
 
 .DataFrame_To_DotBracketDataFrame <- function(from)
 {
-  class(from) <- "DotBracketDataFrame"
+  if(!is(from,"DotBracket")){
+    class(from) <- "DotBracketDataFrame"
+  }
   from <- .adjust_DotBracketDataFrame_col_types(from)
   validObject(from)
   from
@@ -252,8 +279,9 @@ setAs("CompressedSplitDotBracketDataFrameList", "SplitDotBracketDataFrameList",
       function(from) SplitDotBracketDataFrameList(as.list(from),
                                                   compress = FALSE))
 
-
-# DotBracketDataFrame constructor ----------------------------------------------
+################################################################################
+# DotBracketDataFrame constructor
+################################################################################
 
 .norm_DotBracketDataFrame_input <- function(x)
 {
@@ -261,7 +289,7 @@ setAs("CompressedSplitDotBracketDataFrameList", "SplitDotBracketDataFrameList",
     return(x)
   }
   f <- vapply(x,is,logical(1),"DataFrame") & 
-    !vapply(x,is,logical(1),"DotBracketDataFrame")
+    !vapply(x,is,logical(1),"DotBracket")
   if(any(f)){
     x[f] <- lapply(x[f], .DataFrame_To_DotBracketDataFrame)
   }
