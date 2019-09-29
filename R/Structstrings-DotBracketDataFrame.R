@@ -99,9 +99,9 @@ setClass(Class = "SplitDotBracketDataFrameList",
          contains = c("SimpleSplitDataFrameList"))
 
 setClass("CompressedDotBracketDataFrameList",
-         slots = c(unlistData = "DataFrame"),
-         prototype = prototype(unlistData = new("DotBracketDataFrame")),
-         contains = c("CompressedDataFrameList"))
+         contains = c("CompressedDataFrameList"),
+         slots = c(unlistData = "DotBracket"),
+         prototype = prototype(unlistData = new("DotBracketDataFrame")))
 #' @rdname DotBracketDataFrame
 #' @export
 setClass("CompressedSplitDotBracketDataFrameList",
