@@ -90,6 +90,7 @@ DB <- function(x = character(), start = 1, nchar = NA)
 
 setValidity("DotBracketString", .valid.DotBracketString)
 
+
 # constructor ------------------------------------------------------------------
 
 .check_for_invalid_db_letters <- function(string, alphabet)
@@ -152,3 +153,60 @@ setAs("BString", "DotBracketString",
 #' @export
 setAs("integer", "DotBracketString",
       function(from) .integerToDotBracketString(from))
+
+
+# Show 
+
+### Placeholder, initialized in .onLoad()
+DOTBRACKET_COLORED_LETTERS <- NULL
+
+### Called in .onLoad() to initialize DOTBRACKET_COLORED_LETTERS
+#' @importFrom crayon make_style inverse
+make_DOTBRACKET_COLORED_LETTERS <- function()
+{
+  # base colours
+  ans <- c()
+  ans["("] <- make_style("greenyellow", bg=TRUE)(make_style("black")("("))
+  ans["["] <- make_style("green2", bg=TRUE)(make_style("black")("["))
+  ans["<"] <- make_style("green3", bg=TRUE)(make_style("black")("<"))
+  ans["{"] <- make_style("limegreen", bg=TRUE)(make_style("black")("{"))
+  ans["."] <- make_style(rgb(0.2,0.2,0.2), bg=TRUE)(make_style("white")("."))
+  ans[")"] <- make_style("orangered", bg=TRUE)(make_style("black")(")"))
+  ans["]"] <- make_style("red2", bg=TRUE)(make_style("black")("]"))
+  ans[">"] <- make_style("red3", bg=TRUE)(make_style("black")(">"))
+  ans["}"] <- make_style("red4", bg=TRUE)(make_style("black")("}"))
+  ans
+}
+
+.add_DotBracket_colors <- function(x)
+{
+  ans <- vapply(x,
+                function(xi){
+                  xi <- strsplit(xi,"")[[1L]]
+                  m <- match(xi, names(DOTBRACKET_COLORED_LETTERS))
+                  match_idx <- which(!is.na(m))
+                  xi[match_idx] <- DOTBRACKET_COLORED_LETTERS[m[match_idx]]
+                  paste0(xi, collapse="")
+                },
+                character(1),
+                USE.NAMES=FALSE
+  )
+  x_names <- names(x)
+  if (!is.null(x_names))
+    names(ans) <- x_names
+  ans
+}
+
+add_colors <- function(x) UseMethod("add_colors")
+add_colors.default <- identity
+add_colors.DotBracket <- .add_DotBracket_colors
+
+setMethod("show", "DotBracketString",
+          function(object)
+          {
+            object_len <- object@length
+            cat(object_len, "-letter ", class(object), " object\n", sep="")
+            snippet <- .toSeqSnippet(object, getOption("width") - 5L)
+            cat("seq: ", add_colors(snippet), "\n", sep="")
+          }
+)

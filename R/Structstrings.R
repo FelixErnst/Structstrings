@@ -127,3 +127,4 @@ STRUCTURE_CLOSE_CHR <- c("\\)",">","\\]","\\}")
 
 # Import of non-exported functions
 .XStringSetList <- Biostrings:::XStringSetList
+.toSeqSnippet <- Biostrings:::toSeqSnippet

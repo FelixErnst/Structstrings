@@ -252,3 +252,75 @@ setAs("ANY", "DotBracketStringSet", function(from) DotBracketStringSet(from))
 }
 
 setValidity("DotBracketStringSet",.valid.DotBracketStringSet)
+
+# Show 
+
+.DotBracketStringSet.show_frame_line <- function(x, i, iW, widthW)
+{
+  width <- nchar(x)[i]
+  snippet_width <- getOption("width") - 2L - iW - widthW
+  if (!is.null(names(x)))
+    snippet_width <- snippet_width - .namesW - 1L
+  snippet <- .toSeqSnippet(x[[i]], snippet_width)
+  if (!is.null(names(x))) {
+    snippet_class <- class(snippet)
+    snippet <- format(snippet, width=snippet_width)
+    class(snippet) <- snippet_class
+  }
+  cat(format(paste("[", i,"]", sep=""), width=iW, justify="right"), " ",
+      format(width, width=widthW, justify="right"), " ",
+      add_colors(snippet),
+      sep="")
+  if (!is.null(names(x))) {
+    snippet_name <- names(x)[i]
+    if (is.na(snippet_name))
+      snippet_name <- "<NA>"
+    else if (nchar(snippet_name) > .namesW)
+      snippet_name <- paste0(substr(snippet_name, 1L, .namesW - 1L),
+                             compact_ellipsis)
+    cat(" ", snippet_name, sep="")
+  }
+  cat("\n")
+}
+
+### 'half_nrow' must be >= 1
+.DotBracketStringSet.show_frame <- function(x, half_nrow=5L)
+{
+  if (is.null(head_nrow <- getOption("showHeadLines")))
+    head_nrow <- half_nrow 
+  if (is.null(tail_nrow <- getOption("showTailLines")))
+    tail_nrow <- half_nrow
+  
+  lx <- length(x)
+  iW <- nchar(as.character(lx)) + 2 # 2 for the brackets
+  ncharMax <- max(nchar(x))
+  widthW <- max(nchar(ncharMax), nchar("width"))
+  Biostrings:::.XStringSet.show_frame_header(iW, widthW, !is.null(names(x)))
+  if (lx < (2*half_nrow+1L) | (lx < (head_nrow+tail_nrow+1L))) {
+    for (i in seq_len(lx))
+      .DotBracketStringSet.show_frame_line(x, i, iW, widthW)
+  } else {
+    if (head_nrow > 0)
+      for (i in 1:head_nrow)
+        .DotBracketStringSet.show_frame_line(x, i, iW, widthW)
+    cat(format("...", width=iW, justify="right"),
+        format("...", width=widthW, justify="right"),
+        "...\n")
+    if (tail_nrow > 0)
+      for (i in (lx-tail_nrow+1L):lx)
+        .DotBracketStringSet.show_frame_line(x, i, iW, widthW)
+  }
+}
+
+setMethod("show", "DotBracketStringSet",
+          function(object)
+          {
+            object_len <- length(object)
+            cat(class(object), " object of length ", length(object), sep="")
+            if (object_len != 0L)
+              cat(":")
+            cat("\n")
+            if (object_len != 0L)
+              .DotBracketStringSet.show_frame(object)
+          }
+)

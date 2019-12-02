@@ -26,17 +26,19 @@ dotbracket(x) <- value
 
 \S4method{dotbracket}{StructuredXStringSet}(x) <- value
 
-readStructuredRNAStringSet(filepath, nrec = -1L, skip = 0L,
-  seek.first.rec = FALSE, use.names = TRUE)
+readStructuredRNAStringSet(
+  filepath,
+  nrec = -1L,
+  skip = 0L,
+  seek.first.rec = FALSE,
+  use.names = TRUE
+)
 
-writeStructuredXStringSet(x, filepath, append = FALSE,
-  compress = FALSE)
+writeStructuredXStringSet(x, filepath, append = FALSE, compress = FALSE)
 
-\S4method{getBasePairing}{StructuredXStringSet}(x, compress = TRUE,
-  return.sequence = FALSE)
+\S4method{getBasePairing}{StructuredXStringSet}(x, compress = TRUE, return.sequence = FALSE)
 
-\S4method{getLoopIndices}{StructuredXStringSet}(x, bracket.type,
-  warn.type.drops = TRUE)
+\S4method{getLoopIndices}{StructuredXStringSet}(x, bracket.type, warn.type.drops = TRUE)
 }
 \arguments{
 \item{x}{For the \code{Structured*StringSet} constructors: Either a character

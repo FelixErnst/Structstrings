@@ -3,7 +3,6 @@
 \docType{package}
 \name{Structstrings}
 \alias{Structstrings}
-\alias{Structstrings-package}
 \title{Structstrings: implementation of the dot bracket annotations with 
 Biostrings}
 \description{

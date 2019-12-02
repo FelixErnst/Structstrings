@@ -7,15 +7,32 @@
 \alias{saveDotBracketStringSet}
 \title{Reading and writing DotBracketStringSet objects}
 \usage{
-readDotBracketStringSet(filepath, format = "fasta", nrec = -1L,
-  skip = 0L, seek.first.rec = FALSE, use.names = TRUE,
-  with.qualities = FALSE)
+readDotBracketStringSet(
+  filepath,
+  format = "fasta",
+  nrec = -1L,
+  skip = 0L,
+  seek.first.rec = FALSE,
+  use.names = TRUE,
+  with.qualities = FALSE
+)
 
-writeDotBracketStringSet(x, filepath, append = FALSE, compress = FALSE,
-  format = "fasta", ...)
+writeDotBracketStringSet(
+  x,
+  filepath,
+  append = FALSE,
+  compress = FALSE,
+  format = "fasta",
+  ...
+)
 
-saveDotBracketStringSet(x, objname, dirpath = ".", save.dups = FALSE,
-  verbose = TRUE)
+saveDotBracketStringSet(
+  x,
+  objname,
+  dirpath = ".",
+  save.dups = FALSE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{filepath}{The file name, when writing, or file name(s) when reading.}
