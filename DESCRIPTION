@@ -34,7 +34,8 @@ Imports:
     XVector,
     stringr,
     stringi,
-    crayon
+    crayon,
+    grDevices
 Suggests: 
     testthat,
     knitr,

@@ -162,6 +162,7 @@ DOTBRACKET_COLORED_LETTERS <- NULL
 
 ### Called in .onLoad() to initialize DOTBRACKET_COLORED_LETTERS
 #' @importFrom crayon make_style inverse
+#' @importFrom grDevices rgb
 make_DOTBRACKET_COLORED_LETTERS <- function()
 {
   # base colours
