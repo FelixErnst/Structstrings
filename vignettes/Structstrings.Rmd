@@ -85,9 +85,9 @@ DotBracketString("((((....)))")
 Annotations can be converted using the `convertAnnotation` function.
 
 ```{r annotation_convert}
-dbs[[2]] <- convertAnnotation(dbs[[2]],from = 2L, to = 1L)
-dbs[[3]] <- convertAnnotation(dbs[[3]],from = 3L, to = 1L)
-dbs[[4]] <- convertAnnotation(dbs[[4]],from = 4L, to = 1L)
+dbs[[2L]] <- convertAnnotation(dbs[[2L]],from = 2L, to = 1L)
+dbs[[3L]] <- convertAnnotation(dbs[[3L]],from = 3L, to = 1L)
+dbs[[4L]] <- convertAnnotation(dbs[[4L]],from = 4L, to = 1L)
 # Note: convertAnnotation checks for presence of annotation and stops
 # if there is any conflict.
 dbs
@@ -105,7 +105,7 @@ optional.
 ```{r base_pairing}
 # base pairing table
 dbdfl <- getBasePairing(dbs)
-dbdfl[[1]]
+dbdfl[[1L]]
 ```
 
 The types of each column are also fixed as shown in the example above. The fifth 
@@ -116,7 +116,7 @@ These information can also be used to distinguish structure elements.
 
 ```{r loopindices}
 loopids <- getLoopIndices(dbs, bracket.type = 1L)
-loopids[[1]]
+loopids[[1L]]
 # can also be constructed from DotBracketDataFrame and contains the same 
 # information
 loopids2 <- getLoopIndices(dbdfl, bracket.type = 1L)
@@ -139,9 +139,9 @@ dbdfl2 <- relist(dbdf,dbdfl)
 # even if the character column is not set, the dot bracket string can be created
 rec_dbs2 <- getDotBracket(dbdfl2)
 rec_dbs3 <- getDotBracket(dbdfl, force = TRUE)
-rec_dbs[[1]]
-rec_dbs2[[1]]
-rec_dbs3[[1]]
+rec_dbs[[1L]]
+rec_dbs2[[1L]]
+rec_dbs3[[1L]]
 ```
 
 Please be aware that `getDotBracket()` might return a different output than 
@@ -169,11 +169,11 @@ To store a nucleotide sequence and a structure in one object, the classes
 data("dbs", package = "Structstrings", envir = environment())
 data("seq", package = "Structstrings", envir = environment())
 sdbs <- StructuredRNAStringSet(seq,dbs)
-sdbs[1]
+sdbs[1L]
 # subsetting to element returns the sequence
-sdbs[[1]]
+sdbs[[1L]]
 # dotbracket() gives access to the DotBracketStringSet
-dotbracket(sdbs)[[1]]
+dotbracket(sdbs)[[1L]]
 ```
 
 The base pair table can be directly accessed using `getBasePairing()`. The 
@@ -183,10 +183,10 @@ omitted by setting `return.sequence` to `FALSE`.
 
 ```{r structured_rna_string_base_pairing}
 dbdfl <- getBasePairing(sdbs)
-dbdfl[[1]]
+dbdfl[[1L]]
 # returns the result without sequence information
 dbdfl <- getBasePairing(sdbs, return.sequence = TRUE)
-dbdfl[[1]]
+dbdfl[[1L]]
 ```
 
 # Session info
