@@ -277,7 +277,7 @@ setValidity("DotBracketStringSet",.valid.DotBracketStringSet)
       snippet_name <- "<NA>"
     else if (nchar(snippet_name) > .namesW)
       snippet_name <- paste0(substr(snippet_name, 1L, .namesW - 1L),
-                             compact_ellipsis)
+                             .compact_ellipsis)
     cat(" ", snippet_name, sep="")
   }
   cat("\n")
