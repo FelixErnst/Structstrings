@@ -118,13 +118,16 @@ STRUCTURE_CLOSE_CHR <- c("\\)",">","\\]","\\}")
 #' @docType data
 #' @format object of class \code{\link{DotBracketStringSet}} and 
 #' \code{\link{DNAStringSet}}
-#' @usage dbs
-#' @keywords datasets Structstrings
+#' 
+#' @usage data(dbs)
+#' @keywords datasets
 "dbs"
 #' @name Structstrings-data
-#' @usage seq
+#' @usage data(seq)
 "seq"
 
 # Import of non-exported functions
+.namesW <- Biostrings:::.namesW
 .XStringSetList <- Biostrings:::XStringSetList
 .toSeqSnippet <- Biostrings:::toSeqSnippet
+.compact_ellipsis <- Biostrings:::compact_ellipsis

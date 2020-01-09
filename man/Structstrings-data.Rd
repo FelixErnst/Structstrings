@@ -15,12 +15,11 @@ sequence and  dot bracket annotation of tRNAscan-SE output for
 is part of the \code{tRNAscanImport} package.
 }
 \usage{
-dbs
+data(dbs)
 
-seq
+data(seq)
 }
 \description{
 Example data for using the Structstrings package
 }
-\keyword{Structstrings}
 \keyword{datasets}
