@@ -1,0 +1,21 @@
+language: r
+r:
+  - bioc-devel
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y libpoppler-cpp-dev libmagick++-dev
+# for codecov
+r_packages:
+  - covr
+  - magick
+cache:
+  packages: true
+  directories:
+  - docs
+warnings_are_errors: false
+after_success:
+  - Rscript -e 'covr::codecov()'
+notifications:
+  email:
+    on_success: felix.gm.ernst-travis@outlook.com
+    on_failure: felix.gm.ernst-travis@outlook.com

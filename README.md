@@ -1,6 +1,6 @@
-# Structstrings: implementation of the dot bracket annotations with Biostrings
+# Structstrings: implementation of the dot bracket annotations with Biostrings [![Build Status](https://travis-ci.com/FelixErnst/Structstrings.svg?branch=master)](https://travis-ci.com/FelixErnst/Structstrings) [![codecov](https://codecov.io/gh/FelixErnst/Structstrings/branch/master/graph/badge.svg)](https://codecov.io/gh/FelixErnst/Structstrings)
 
-<img src="https://github.com/FelixErnst/BiocStickers/blob/Structstrings/Structstrings/Structstrings.png" height="300" align="right">
+<img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/Structstrings/Structstrings.png" height="300" align="right">
 
 The `Structstrings` package implements the widely used dot bracket annotation for 
 storing base pairing information in structured RNA. For example it is heavily 
