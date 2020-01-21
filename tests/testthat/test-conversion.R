@@ -1,6 +1,6 @@
 context("DotBracketStringSet conversion")
 test_that("DotBracketStringSet conversion:",{
-  data("dbs", package = "Structstrings", envir = environment())
+  data("dbs", package = "Structstrings")
   dbdfl <- getBasePairing(dbs)
   dbs2 <- getDotBracket(dbdfl)
   expect_equal(as.character(dbs),as.character(dbs2))
@@ -53,7 +53,7 @@ test_that("DotBracketStringSet conversion:",{
 })
 context("DotBracketStringSet type conversion")
 test_that("DotBracketStringSet type conversion:",{
-  data("dbs", package = "Structstrings", envir = environment())
+  data("dbs", package = "Structstrings")
   actual <- xvcopy(dbs[[1]])
   bs <- as(dbs,"BStringSet")
   expect_equal(dbs,as(bs,"DotBracketStringSet"))

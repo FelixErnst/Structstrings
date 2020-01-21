@@ -4,7 +4,7 @@
 \name{Structstrings-data}
 \alias{Structstrings-data}
 \alias{dbs}
-\alias{seq}
+\alias{nseq}
 \title{Structstrings example data}
 \format{object of class \code{\link{DotBracketStringSet}} and 
 \code{\link{DNAStringSet}}}
@@ -17,7 +17,7 @@ is part of the \code{tRNAscanImport} package.
 \usage{
 data(dbs)
 
-data(seq)
+data(nseq)
 }
 \description{
 Example data for using the Structstrings package

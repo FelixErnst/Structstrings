@@ -101,7 +101,7 @@ after another. Example: "(((<<<>>>)))" will be returned as
 \code{\link{LoopIndexList}}.
 }
 \examples{
-data("dbs", package = "Structstrings", envir = environment())
+data("dbs", package = "Structstrings")
 # conversion
 dbdf <- getBasePairing(dbs)
 # ... and the round trip

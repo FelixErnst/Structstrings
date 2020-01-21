@@ -46,7 +46,7 @@ STRUCTURE_CLOSE_CHR
 # the replace method for a DotBracketDataFrame had to be reimplemented
 # because of the requirement of columns for a DotBracketDataFrameList and
 # DotBracketDataFrame
-data("dbs", package = "Structstrings", envir = environment())
+data("dbs", package = "Structstrings")
 dbdfl <- getBasePairing(dbs)
 # Elements are returned as DotBracketDataFrames
 dbdf <- dbdfl[[1]]

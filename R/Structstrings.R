@@ -80,7 +80,7 @@ requireNamespace("Biostrings")
 #' # the replace method for a DotBracketDataFrame had to be reimplemented
 #' # because of the requirement of columns for a DotBracketDataFrameList and
 #' # DotBracketDataFrame
-#' data("dbs", package = "Structstrings", envir = environment())
+#' data("dbs", package = "Structstrings")
 #' dbdfl <- getBasePairing(dbs)
 #' # Elements are returned as DotBracketDataFrames
 #' dbdf <- dbdfl[[1]]
@@ -123,8 +123,8 @@ STRUCTURE_CLOSE_CHR <- c("\\)",">","\\]","\\}")
 #' @keywords datasets
 "dbs"
 #' @name Structstrings-data
-#' @usage data(seq)
-"seq"
+#' @usage data(nseq)
+"nseq"
 
 # Import of non-exported functions
 .namesW <- Biostrings:::.namesW

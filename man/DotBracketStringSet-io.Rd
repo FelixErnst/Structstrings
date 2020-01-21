@@ -68,7 +68,7 @@ most of its parameters. For a more detailed look have a look
 \code{\link[Biostrings:XStringSet-io]{here}}.
 }
 \examples{
-data("dbs", package = "Structstrings", envir = environment())
+data("dbs", package = "Structstrings")
 file <- tempfile()
 # works both since a DotBracketStringSet is a BStringSet
 writeXStringSet(dbs,file)

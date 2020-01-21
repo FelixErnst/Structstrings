@@ -1,6 +1,6 @@
 context("DotBracket")
 test_that("DotBracket:",{
-  data("dbs", package = "Structstrings", envir = environment())
+  data("dbs", package = "Structstrings")
   # DotBracketString
   str <- as.character(dbs)
   db <- DotBracketString(str[1])
@@ -35,7 +35,7 @@ test_that("DotBracket:",{
 })
 context("DotBracket errors")
 test_that("DotBracket errors:",{
-  data("dbs", package = "Structstrings", envir = environment())
+  data("dbs", package = "Structstrings")
   expect_error(expect_message({
     DotBracketString("abcd")
   },"Invalid character"))

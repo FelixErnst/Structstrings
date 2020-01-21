@@ -166,9 +166,9 @@ To store a nucleotide sequence and a structure in one object, the classes
 `StructuredRNAStringSet` are implemented.
 
 ```{r structured_rna_string}
-data("dbs", package = "Structstrings", envir = environment())
-data("seq", package = "Structstrings", envir = environment())
-sdbs <- StructuredRNAStringSet(seq,dbs)
+data("dbs", package = "Structstrings")
+data("nseq", package = "Structstrings")
+sdbs <- StructuredRNAStringSet(nseq,dbs)
 sdbs[1L]
 # subsetting to element returns the sequence
 sdbs[[1L]]

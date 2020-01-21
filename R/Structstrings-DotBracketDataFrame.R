@@ -54,7 +54,7 @@ NULL
 #' dbdfl <- DotBracketDataFrame(df,df,df,df)
 #' 
 #' # Creation from a DotBracketString object is probably more common
-#' data("dbs", package = "Structstrings", envir = environment())
+#' data("dbs", package = "Structstrings")
 #' dbdfl <- getBasePairing(dbs)
 #' # Elements are returned as DotBracketDataFrames
 #' dbdfl[[1]]

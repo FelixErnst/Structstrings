@@ -17,5 +17,7 @@ after_success:
   - Rscript -e 'covr::codecov()'
 notifications:
   email:
-    on_success: felix.gm.ernst-travis@outlook.com
-    on_failure: felix.gm.ernst-travis@outlook.com
+    recipients:
+      - felix.gm.ernst-travis@outlook.com
+    on_success: change
+    on_failure: always

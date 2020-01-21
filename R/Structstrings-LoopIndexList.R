@@ -1,4 +1,5 @@
 #' @include Structstrings.R
+NULL
 
 #' @name LoopIndexList
 #' 

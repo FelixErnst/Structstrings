@@ -59,7 +59,7 @@ NULL
 #'   returned in the \code{base} column.
 #' 
 #' @examples 
-#' data("dbs", package = "Structstrings", envir = environment())
+#' data("dbs", package = "Structstrings")
 #' # conversion
 #' dbdf <- getBasePairing(dbs)
 #' # ... and the round trip

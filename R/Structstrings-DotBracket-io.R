@@ -33,7 +33,7 @@ NULL
 #' object, \code{writeDotBracketStringSet} returns \code{NULL} invisibly.
 #' 
 #' @examples
-#' data("dbs", package = "Structstrings", envir = environment())
+#' data("dbs", package = "Structstrings")
 #' file <- tempfile()
 #' # works both since a DotBracketStringSet is a BStringSet
 #' writeXStringSet(dbs,file)
