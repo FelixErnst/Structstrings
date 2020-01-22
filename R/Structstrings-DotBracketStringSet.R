@@ -95,11 +95,7 @@ setReplaceMethod(
 }
 .DotBracketStringSetToIntegerList <- function(from)
 {
-  if (length(from) == 0){
-    ans <- integer(0)
-  } else {
-    ans <- lapply(lapply(as.character(from),charToRaw),as.integer)
-  }
+  ans <- lapply(lapply(as.character(from),charToRaw),as.integer)
   as(ans,"CompressedIntegerList")
 }
 

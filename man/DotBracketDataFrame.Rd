@@ -18,7 +18,7 @@
 \alias{SDBDFL}
 \title{DataFrame for storing base pairing information}
 \usage{
-DotBracketDataFrame(..., row.names = NULL, check.names = TRUE)
+DotBracketDataFrame(..., row.names = NULL)
 
 DBDF(...)
 
@@ -35,9 +35,11 @@ SDBDFL(..., compress = TRUE, cbindArgs = FALSE)
 \code{DotBracketDataFrameList} the \code{DataFrame} or the 
 \code{DotBracketDataFrame} objects.}
 
+\item{row.names}{See \code{\link[S4Vectors:DataFrame-class]{DataFrame}}}
+
 \item{compress}{If \code{compress = TRUE}, returns a 
-\code{CompressedSplitDataFrameList} else returns a 
-\code{SimpleSplitDataFrameList}.}
+\code{CompressedSplitDotBracketDataFrameList} else returns a 
+\code{SimpleSplitDotBracketDataFrameList}.}
 
 \item{cbindArgs}{If \code{cbindArgs = FALSE}, the ... arguments are coerced 
 to \code{DotBracketDataFrame} objects and concatenated to form the result. If

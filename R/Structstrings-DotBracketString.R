@@ -72,10 +72,11 @@ setReplaceMethod("subseq", "DotBracketString",
 
 #' @rdname DotBracketString
 #' @export
-DotBracketString <- function(x = character(), start = 1, nchar = NA)
+DotBracketString <- function(x = "", start = 1, nchar = NA)
 {
-  as(BString(x, start, nchar), "DotBracketString")
+  as(BString(x, start = start, nchar = nchar), "DotBracketString")
 }
+
 #' @rdname DotBracketString
 #' @export
 DB <- function(x = character(), start = 1, nchar = NA)

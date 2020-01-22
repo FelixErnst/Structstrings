@@ -18,7 +18,7 @@
 \title{The DotBracketString, DotBracketStringSet and DotBracketStringSetList
 classes}
 \usage{
-DotBracketString(x = character(), start = 1, nchar = NA)
+DotBracketString(x = "", start = 1, nchar = NA)
 
 DB(x = character(), start = 1, nchar = NA)
 

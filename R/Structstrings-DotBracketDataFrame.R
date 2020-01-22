@@ -32,13 +32,14 @@ NULL
 #' \code{DotBracketDataFrameList} the \code{DataFrame} or the 
 #' \code{DotBracketDataFrame} objects.
 #' @param compress If \code{compress = TRUE}, returns a 
-#' \code{CompressedSplitDataFrameList} else returns a 
-#' \code{SimpleSplitDataFrameList}.
+#' \code{CompressedSplitDotBracketDataFrameList} else returns a 
+#' \code{SimpleSplitDotBracketDataFrameList}.
 #' @param cbindArgs If \code{cbindArgs = FALSE}, the ... arguments are coerced 
 #' to \code{DotBracketDataFrame} objects and concatenated to form the result. If
 #' \code{cbindArgs = TRUE}, the arguments are combined as columns. The arguments
 #' must then be the same length, with each element of an argument mapping to an 
 #' element in the result.
+#' @param row.names See \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
 #' 
 #' @return a \code{DotBracketDataFrame*} object.
 #' 
@@ -204,23 +205,30 @@ setMethod("relistToClass", "DotBracketDFrame",
 
 .adjust_DotBracketDataFrame_col_types <- function(from)
 {
-  if(all(colnames(from) %in% DOTBRACKET_DATAFRAME_COLNAMES) && ncol(from) > 5L){
-    from[,DOTBRACKET_DATAFRAME_COLNAMES]
+  if(!all(colnames(from) %in% DOTBRACKET_DATAFRAME_COLNAMES) && 
+     ncol(from) > 3L){
+    COLNAMES <- DOTBRACKET_DATAFRAME_COLNAMES %in% colnames(from)
+    COLNAMES <- DOTBRACKET_DATAFRAME_COLNAMES[COLNAMES]
+    from <- from[,COLNAMES]
   }
-  f <- !vapply(from@listData[DOTBRACKET_DATAFRAME_INT_COLS],
+  INT_COLS <- DOTBRACKET_DATAFRAME_INT_COLS %in% colnames(from)
+  INT_COLS <- DOTBRACKET_DATAFRAME_INT_COLS[INT_COLS]
+  f <- !vapply(from@listData[INT_COLS],
                is.integer,
                logical(1))
   if(any(f)){
-    from@listData[DOTBRACKET_DATAFRAME_INT_COLS][f] <- 
-      lapply(from@listData[DOTBRACKET_DATAFRAME_INT_COLS][f],as.integer)
+    from@listData[INT_COLS][f] <- 
+      lapply(from@listData[INT_COLS][f],as.integer)
   }
   if(length(from@listData) >= 4L){
-    f <- !vapply(from@listData[DOTBRACKET_DATAFRAME_CHR_COLS],
+    CHR_COLS <- DOTBRACKET_DATAFRAME_CHR_COLS %in% colnames(from)
+    CHR_COLS <- DOTBRACKET_DATAFRAME_CHR_COLS[CHR_COLS]
+    f <- !vapply(from@listData[CHR_COLS],
                  is.character,
                  logical(1))
     if(any(f)){
-      from@listData[DOTBRACKET_DATAFRAME_CHR_COLS][f] <- 
-        lapply(from@listData[DOTBRACKET_DATAFRAME_CHR_COLS][f],as.character)
+      from@listData[CHR_COLS][f] <- 
+        lapply(from@listData[CHR_COLS][f],as.character)
     }
   }
   from
@@ -292,6 +300,29 @@ setAs("list", "SimpleSplitDotBracketDataFrameList",
 setAs("list", "CompressedSplitDotBracketDataFrameList",
       function(from) do.call("SplitDotBracketDataFrameList",
                              c(from, list(compress = TRUE))))
+
+#' @name DotBracketDataFrame
+#' @export
+setAs("DotBracketDataFrameList",
+      "SimpleSplitDotBracketDataFrameList",
+      function(from) SplitDotBracketDataFrameList(as.list(from),
+                                                  compress = FALSE))
+#' @name DotBracketDataFrame
+#' @export
+setAs("DotBracketDataFrameList", "CompressedSplitDotBracketDataFrameList",
+      function(from) SplitDotBracketDataFrameList(as.list(from)))
+
+#' @name DotBracketDataFrame
+#' @export
+setAs("SimpleSplitDotBracketDataFrameList", "DotBracketDataFrameList",
+      function(from) DotBracketDataFrameList(as.list(from)))
+
+#' @name DotBracketDataFrame
+#' @export
+setAs("SimpleSplitDotBracketDataFrameList",
+      "CompressedSplitDotBracketDataFrameList",
+      function(from) SplitDotBracketDataFrameList(as.list(from),
+                                                  compress = TRUE))
 #' @name DotBracketDataFrame
 #' @export
 setAs("CompressedSplitDotBracketDataFrameList", "DotBracketDataFrameList",
@@ -321,14 +352,6 @@ setAs("CompressedSplitDotBracketDataFrameList",
   x
 }
 
-.rename_unnamed_cols <- function(x)
-{
-  if(is.null(names(x)) && ncol(x) <= 4L){
-    colnames(x) <- DOTBRACKET_DATAFRAME_COLNAMES[seq_len(ncol(x))]
-  }
-  x
-}
-
 .rename_unnamed_args <- function(x)
 {
   if(is.null(names(x)) && length(x) <= 4L){
@@ -351,7 +374,7 @@ setAs("CompressedSplitDotBracketDataFrameList",
 
 #' @rdname DotBracketDataFrame
 #' @export
-DotBracketDataFrame <- function(..., row.names = NULL, check.names = TRUE){
+DotBracketDataFrame <- function(..., row.names = NULL){
   args <- list(...)
   args <- .flatten_input_list(args)
   f <- vapply(args,is,logical(1),"DataFrame")
@@ -365,7 +388,7 @@ DotBracketDataFrame <- function(..., row.names = NULL, check.names = TRUE){
     stop("Mixed inputs. Use either vectors per column or a DataFrame.")
   }
   args <- .rename_unnamed_args(args)
-  ans <- DataFrame(args, row.names = row.names, check.names = check.names)
+  ans <- DataFrame(args, row.names = row.names, check.names = TRUE)
   .DataFrame_To_DotBracketDataFrame(ans)
 }
 
@@ -425,6 +448,15 @@ setMethod("classNameForDisplay", "DotBracketDFrame",
           }
 )
 
+setMethod("classNameForDisplay", "DotBracketDFrameList",
+          function(x) {
+            if (class(x) == "DotBracketDFrameList") 
+              "DotBracketDataFrameList" 
+            else 
+              class(x)
+          }
+)
+
 # misc functions ---------------------------------------------------------------
 
 #' @rdname Structstrings-internals
@@ -452,21 +484,7 @@ setReplaceMethod(
   "colnames", "CompressedSplitDotBracketDataFrameList",
   function(x, value)
   {
-    # must be implemented. Otherwise a loop occurs, rooted in the 
-    # normalizeSingleBracketReplacementValue,CompressedSplitDataFrameList-method
-    # of the IRanges package due to inheritance from different classes.
-    if (is.null(value)) {
-      colnames(x@unlistData) <- NULL
-    } else if (is.character(value)) {
-      colnames(x@unlistData) <- value
-    } else if (is(value, "CharacterList")){
-      if (length(x) != length(value))
-        stop("replacement value must be the same length as x")
-      if (length(x) > 0)
-        colnames(x@unlistData) <- unlist(value[[1L]])
-    } else {
-      stop("replacement value must either be NULL or a CharacterList")
-    }
+    x <- callNextMethod()
     validObject(x)
     x
   }

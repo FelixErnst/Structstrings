@@ -94,7 +94,8 @@ setValidity("StructuredXStringSet", .valid.StructuredXStringSet)
     recycle_me <- structure_width != x_width
     if (any(recycle_me & structure_width != 1L)){
       stop("the DotBracket strings must be of length 1 or have the ",
-           "same length as their corresponding string in 'x'")
+           "same length as their corresponding string in 'x'",
+           call. = FALSE)
     }
     recycle_idx <- which(recycle_me)
     width2 <- x_width[recycle_idx]
@@ -110,7 +111,8 @@ setValidity("StructuredXStringSet", .valid.StructuredXStringSet)
     if (structure_width != 1L) {
       stop("when 'structure' is a single string it must be ",
            "a single letter or have the same width as all ",
-           "the strings in 'x'")
+           "the strings in 'x'",
+           call. = FALSE)
     }
     structure <- DotBracketStringSet(BStringSet(rep.int(structure[[1L]],
                                                         max(x_width)),
@@ -132,8 +134,8 @@ StructuredXStringSet <- function(x, structure)
      !is.null(names(structure))){
     names(output) <- names(structure)
   }
-  if(!is.null(names(structure))){
-    names(structure) <- NULL
+  if(!is.null(names(output))){
+    names(structure) <- names(output)
   }
   slot(output, "structure", check = FALSE) <- structure
   output
@@ -199,7 +201,11 @@ setGeneric(name = "dotbracket<-",
 #' @rdname StructuredXStringSet
 #' @export
 setMethod("dotbracket","StructuredXStringSet",
-          function(x) x@structure)
+          function(x) {
+            ans <- x@structure
+            names(ans) <- names(x)
+            ans
+          })
 
 #' @rdname StructuredXStringSet
 #' @export

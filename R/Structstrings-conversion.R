@@ -102,6 +102,10 @@ setAs("DotBracketString","DotBracketDataFrame",
       function(from){
         .get_pairing(DotBracketStringSet(from))[[1L]]
       })
+setAs("DotBracketStringSet","DotBracketDataFrameList",
+      function(from){
+        as(.get_pairing(from),"DotBracketDataFrameList")
+      })
 setAs("DotBracketStringSet","SimpleSplitDotBracketDataFrameList",
       function(from){
         as(.get_pairing(from),"SimpleSplitDotBracketDataFrameList")
@@ -362,7 +366,7 @@ setMethod("getLoopIndices",
 setMethod("getLoopIndices",
           signature = "DotBracketDataFrameList",
           definition = function(x, bracket.type, warn.type.drops = TRUE){
-            getLoopIndices(as(x,"SimpleSplitDotBracketDataFrameList"),
+            getLoopIndices(as(x,"CompressedSplitDotBracketDataFrameList"),
                            bracket.type = bracket.type,
                            warn.type.drops = warn.type.drops)
           })
@@ -372,7 +376,8 @@ setMethod("getLoopIndices",
 setMethod("getLoopIndices",
           signature = "SimpleSplitDotBracketDataFrameList",
           definition = function(x, bracket.type, warn.type.drops = TRUE){
-            .get_idx_of_loops_from_dbdfl(x, bracket.type, warn.type.drops)
+            getLoopIndices(as(x,"CompressedSplitDotBracketDataFrameList"),
+                           bracket.type, warn.type.drops)
           })
 
 #' @rdname getBasePairing
