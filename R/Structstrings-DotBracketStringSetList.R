@@ -26,4 +26,5 @@ DotBracketStringSetList <- function(..., use.names = TRUE)
   
 #' @rdname DotBracketString
 #' @export
-DBSL <- function(..., use.names = TRUE) DotBracketStringSetList(...,use.names)
+DBSL <- function(..., use.names = TRUE)
+  DotBracketStringSetList(..., use.names = use.names)

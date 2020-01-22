@@ -6,6 +6,7 @@ test_that("DotBracket:",{
   db <- DotBracketString(str[1])
   expect_s4_class(db,class = "DotBracketString")
   expect_equal(unname(str[1]),as.character(db))
+  expect_equal(db,DB(str[1]))
   b <- BString(db)
   expect_s4_class(b,class = "BString")
   expect_equal(as.character(b),as.character(db))
@@ -14,6 +15,11 @@ test_that("DotBracket:",{
   expect_type(i,"integer")
   expect_true(all(unique(i) %in% Structstrings::DOTBRACKET_CHAR_VALUES))
   expect_equal(as(i,"DotBracketString"),db)
+  #
+  expect_equal(alphabet(db),
+               c("(",")",".","<",">","[","]","{","}"))
+  expect_equal(encoding(db),
+               c(40L,41L,46L,60L,62L,91L,93L,123L,125L))
   # DotBracketStringSet
   dbs <- DotBracketStringSet(str)
   dbs2 <- DBS(str)
@@ -25,13 +31,31 @@ test_that("DotBracket:",{
   expect_equal(as(bs,"DotBracketStringSet"),dbs)
   expect_equal(as(b,"DotBracketStringSet")[[1]],as(dbs[[1]],"DotBracketStringSet")[[1]])
   expect_equal(as(i,"DotBracketStringSet")[[1]],as(dbs[[1]],"DotBracketStringSet")[[1]])
+  expect_equal(unname(dbs[1]),DotBracketStringSet(bs[[1]]))
+  expect_output(show(dbs))
   il <- IntegerList(dbs)
   expect_s4_class(il,class = "IntegerList")
   expect_equal(as(il,"DotBracketStringSet"),dbs)
   expect_equal(il,as(dbs,"IntegerList"))
+  expect_equal(DotBracketStringSet(),as(integer(0),"DotBracketStringSet"))
   # DotBracketStringSetList
   dbsl <- DotBracketStringSetList(dbs,dbs)
   expect_s4_class(dbsl,class = "DotBracketStringSetList")
+  expect_equal(dbsl,DBSL(dbs,dbs))
+  # windows
+  expect_equal(windows(dbs),dbs)
+  expect_error(windows(dbs,1,2),'invalid class "DotBracketString" object:')
+  # subseq
+  expect_equal(subseq(dbs),dbs)
+  expect_error(threebands(dbs,2,3),'invalid class "DotBracketString" object:')
+  expect_error(subseq(dbs,1,2),'invalid class "DotBracketString" object:')
+  expect_error(subseq(dbs[[1]],1,2),'invalid class "DotBracketString" object:')
+  #
+  expect_null(Structstrings:::.check_for_invalid_db_letters(list(str[1]),
+                                                            DOTBRACKET_ALPHABET))
+  #
+  expect_equal(as.character(DotBracketString(">>>>....<<<<")),
+               "<<<<....>>>>")
 })
 context("DotBracket errors")
 test_that("DotBracket errors:",{
@@ -46,5 +70,7 @@ test_that("DotBracket errors:",{
     DotBracketStringSetList(DotBracketStringSet(c("abcd","abcd")),
                             DotBracketStringSet(c("abcd","abcd")))
   },"Invalid character"))
-  
+  expect_output(expect_error(Structstrings:::.check_for_invalid_db_values("a",
+                                                                          DOTBRACKET_CHAR_VALUES),
+                             "Invalid values"))
 })

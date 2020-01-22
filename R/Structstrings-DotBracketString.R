@@ -55,17 +55,17 @@ setClass("DotBracketString", contains = "BString")
 setMethod("seqtype", "DotBracketString", function(x) "DotBracket")
 
 # modified version, since the results might be invalid
-setMethod("windows", "DotBracketString",
+setMethod("subseq", "DotBracketString",
           function(x, start = NA, end = NA, width = NA){
             x <- callNextMethod()
-            .subsetting_validity_check(as(x,"DotBracketStringSet"))
+            validObject(x)
             x
           }
 )
 setReplaceMethod("subseq", "DotBracketString",
                  function(x, start = NA, end = NA, width = NA, value){
                    x <- callNextMethod()
-                   .subsetting_validity_check(as(x,"DotBracketStringSet"))
+                   validObject(x)
                    x
                  }
 )

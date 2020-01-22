@@ -110,8 +110,8 @@ setClass("CompressedSplitDotBracketDataFrameList",
 
 .valid.DotBracket <- function(object)
 {
-  message <- paste0("At least 3 inputs are expected. If unnamed they are used ",
-                    "in this order: pos, forward, reverse. The fourth and ",
+  message <- paste0("At least 3 columns are expected. If unnamed they are used",
+                    " in this order: pos, forward, reverse. The fourth and ",
                     "fifth are optional and must be character and XStringSet.")
   messageType <- paste0("The types of the input are expected to be ",
                         "'integer', 'integer', 'integer', 'character' and ",
@@ -206,7 +206,7 @@ setMethod("relistToClass", "DotBracketDataFrame",
 
 .DataFrame_To_DotBracketDataFrame <- function(from)
 {
-  if(!is(from,"DotBracket")){
+  if(!is(from,"DotBracketDataFrame")){
     class(from) <- "DotBracketDataFrame"
   }
   from <- .adjust_DotBracketDataFrame_col_types(from)
@@ -239,7 +239,7 @@ setMethod("relistToClass", "DotBracketDataFrame",
 
 #' @name DotBracketDataFrame
 #' @export
-setAs("DataFrame", "DotBracketDataFrame",
+setAs("DFrame", "DotBracketDataFrame",
       function(from) .DataFrame_To_DotBracketDataFrame(from))
 #' @name DotBracketDataFrame
 #' @export
@@ -326,8 +326,7 @@ setAs("CompressedSplitDotBracketDataFrameList", "SplitDotBracketDataFrameList",
 
 #' @rdname DotBracketDataFrame
 #' @export
-DotBracketDataFrame <- function(...)
-{
+DotBracketDataFrame <- function(..., row.names = NULL, check.names = TRUE){
   args <- list(...)
   args <- .flatten_input_list(args)
   f <- vapply(args,is,logical(1),"DataFrame")
@@ -341,15 +340,16 @@ DotBracketDataFrame <- function(...)
     stop("Mixed inputs. Use either vectors per column or a DataFrame.")
   }
   args <- .rename_unnamed_args(args)
-  ans <- DataFrame(args, row.names = NULL, check.names = TRUE)
+  ans <- DataFrame(args, row.names = row.names, check.names = check.names)
   .DataFrame_To_DotBracketDataFrame(ans)
 }
+
 #' @rdname DotBracketDataFrame
 #' @export
-DBDF <- function(...)
-{
-  DotBracketDataFrame(..., row.names = NULL,check.names = TRUE)
+DBDF <- function(...){
+  DotBracketDataFrame(..., row.names = NULL, check.names = TRUE)
 }
+
 #' @rdname DotBracketDataFrame
 #' @export
 DotBracketDataFrameList <- function(...)
@@ -359,9 +359,13 @@ DotBracketDataFrameList <- function(...)
   args <- .norm_DotBracketDataFrame_input(args)
   .SimpleDataFrameList_To_DotBracketDataFrameList(DataFrameList(args))
 }
+
 #' @rdname DotBracketDataFrame
 #' @export
-DBDFL <- function(...) DotBracketDataFrameList(...)
+DBDFL <- function(...){
+  DotBracketDataFrameList(...)
+}  
+
 #' @rdname DotBracketDataFrame
 #' @export
 SplitDotBracketDataFrameList <- function(..., compress = TRUE, 
@@ -377,6 +381,7 @@ SplitDotBracketDataFrameList <- function(..., compress = TRUE,
   }
   .SimpleSplitDataFrameList_To_SplitDotBracketDataFrameList(ans)
 }
+
 #' @rdname DotBracketDataFrame
 #' @export
 SDBDFL <- function(..., compress = TRUE, cbindArgs = FALSE)
@@ -424,6 +429,7 @@ setReplaceMethod(
     } else {
       stop("replacement value must either be NULL or a CharacterList")
     }
+    validObject(x)
     x
   }
 )

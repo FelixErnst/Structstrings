@@ -15,10 +15,6 @@ setReplaceMethod(
   function(x, value)
   {
     ans_class <- paste(value, "StringSet", sep = "")
-    lkup <- get_seqtype_conversion_lookup(seqtype(x), value)
-    if (!is.null(lkup)){
-      x <- XVector::xvcopy(x, lkup = lkup)
-    }
     new2(ans_class,
          pool = x@pool,
          ranges = x@ranges,
@@ -27,24 +23,12 @@ setReplaceMethod(
 )
 
 # modified version, since the results might be invalid
-
-.subsetting_validity_check <- function(x)
-{
-  validMatches <- .check_matched_postions(x)
-  if(!is.null(validMatches) &&
-     is.list(validMatches) &&
-     any(lengths(validMatches) > 0L)){
-    stop("Subsetting produced invalid structure information.",
-         call. = FALSE)
-  }
-}
-
 setMethod(
   "windows", "DotBracketStringSet",
   function(x, start = NA, end = NA, width = NA)
   {
     x <- callNextMethod()
-    .subsetting_validity_check(x)
+    validObject(x)
     x
   }
 )
@@ -54,7 +38,7 @@ setMethod(
   function(x, start = NA, end = NA, width = NA)
   {
     x <- callNextMethod()
-    lapply(x, .subsetting_validity_check)
+    lapply(x,validObject)
     x
   }
 )
@@ -64,7 +48,7 @@ setReplaceMethod(
   function(x, start = NA, end = NA, width = NA, value)
   {
     x <- callNextMethod()
-    .subsetting_validity_check(x)
+    validObject(x)
     x
   }
 )

@@ -15,7 +15,7 @@
 \alias{SDBDFL}
 \title{DataFrame for storing base pairing information}
 \usage{
-DotBracketDataFrame(...)
+DotBracketDataFrame(..., row.names = NULL, check.names = TRUE)
 
 DBDF(...)
 
