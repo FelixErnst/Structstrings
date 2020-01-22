@@ -210,6 +210,10 @@ setMethod("relistToClass", "DotBracketDFrame",
     COLNAMES <- DOTBRACKET_DATAFRAME_COLNAMES %in% colnames(from)
     COLNAMES <- DOTBRACKET_DATAFRAME_COLNAMES[COLNAMES]
     from <- from[,COLNAMES]
+    if(ncol(from) < 3L){
+      stop("Input could not be courced to a meaningful DotBracketDataFrame. ",
+           "Please check the names and length of the input.", call. = FALSE)
+    }
   }
   INT_COLS <- DOTBRACKET_DATAFRAME_INT_COLS %in% colnames(from)
   INT_COLS <- DOTBRACKET_DATAFRAME_INT_COLS[INT_COLS]
@@ -354,7 +358,7 @@ setAs("CompressedSplitDotBracketDataFrameList",
 
 .rename_unnamed_args <- function(x)
 {
-  if(is.null(names(x)) && length(x) <= 4L){
+  if(is.null(names(x)) && length(x) <= 5L){
     names(x) <- DOTBRACKET_DATAFRAME_COLNAMES[seq_along(x)]
   }
   x
@@ -395,7 +399,7 @@ DotBracketDataFrame <- function(..., row.names = NULL){
 #' @rdname DotBracketDataFrame
 #' @export
 DBDF <- function(...){
-  DotBracketDataFrame(..., row.names = NULL, check.names = TRUE)
+  DotBracketDataFrame(..., row.names = NULL)
 }
 
 #' @rdname DotBracketDataFrame

@@ -63,9 +63,13 @@ test_that("DotBracketDataFrame:",{
   expect_error(DotBracketDataFrame(),
                'invalid class "DotBracketDFrame" object: At least')
   #
-  actual <- DotBracketDataFrame(df2)
+  actual <- DotBracketDataFrame(df2[c(1,2,3)])
   expect_s4_class(actual,"DotBracketDataFrame")
-  expect_equal(actual,DBDF(df2))
+  expect_equal(actual,DBDF(df2[c(1,2,3)]))
+  expect_error(DotBracketDataFrame(df2),
+               "Input could not be courced to a meaningful")
+  expect_error(DBDF(df2),
+               "Input could not be courced to a meaningful")
   rm(df2)
   #
   dbdf <- as(df,"DotBracketDataFrame")
