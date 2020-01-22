@@ -1,5 +1,5 @@
-context("DotBracket")
-test_that("DotBracket:",{
+context("DotBracketString")
+test_that("DotBracketString:",{
   data("dbs", package = "Structstrings")
   # DotBracketString
   str <- as.character(dbs)

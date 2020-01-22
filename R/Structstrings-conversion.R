@@ -44,8 +44,8 @@ NULL
 #' @param x a \code{\link{DotBracketString}} or
 #'   \code{\link{DotBracketStringSet}} object
 #' @param compress \code{getBasePairing}: whether to return a
-#'   \code{CompressedDotBracketDataFrameList} or a
-#'   \code{SplitDotBracketDataFrameList}
+#'   \code{CompressedSplitDotBracketDataFrameList} or a
+#'   \code{SimpleSplitDotBracketDataFrameList}
 #' @param force \code{getDotBracket}: Should the dot bracket string be
 #'   generated from the base pairing, if the \code{character} column is present?
 #' @param bracket.type \code{getLoopIndices}: Which dot bracket annotation type
@@ -88,7 +88,7 @@ NULL
   # since functions are not available from Biostrings package externally
   chr <- lapply(x,as.character)
   partitioning <- IRanges::PartitioningByEnd(cumsum(width(x)))
-  ans <- .Call2("new_DotBracketDataFrameList_from_CHARACTER",
+  ans <- .Call2("new_DotBracketDFrameList_from_CHARACTER",
                 paste0(chr,collapse = ""),
                 partitioning,
                 PACKAGE = "Structstrings")
@@ -102,9 +102,9 @@ setAs("DotBracketString","DotBracketDataFrame",
       function(from){
         .get_pairing(DotBracketStringSet(from))[[1L]]
       })
-setAs("DotBracketStringSet","SplitDotBracketDataFrameList",
+setAs("DotBracketStringSet","SimpleSplitDotBracketDataFrameList",
       function(from){
-        as(.get_pairing(from),"SplitDotBracketDataFrameList")
+        as(.get_pairing(from),"SimpleSplitDotBracketDataFrameList")
       })
 setAs("DotBracketStringSet","CompressedSplitDotBracketDataFrameList",
       function(from){
@@ -126,7 +126,7 @@ setMethod("getBasePairing",
             if(compress){
               return(as(x,"CompressedSplitDotBracketDataFrameList"))
             }
-            as(x,"SplitDotBracketDataFrameList")
+            as(x,"SimpleSplitDotBracketDataFrameList")
           })
 
 # DotBracketDataFrame conversion to DotBracketStringSet ------------------------
@@ -157,7 +157,11 @@ setAs("DotBracketDataFrameList","DotBracketStringSet",
       function(from){
         .get_dot_bracket(from)
       })
-setAs("CompressedDotBracketDataFrameList","DotBracketStringSet",
+setAs("SimpleSplitDotBracketDataFrameList","DotBracketStringSet",
+      function(from){
+        .get_dot_bracket(from)
+      })
+setAs("CompressedSplitDotBracketDataFrameList","DotBracketStringSet",
       function(from){
         .get_dot_bracket(from)
       })
@@ -180,7 +184,14 @@ setMethod("getDotBracket",
 #' @rdname getBasePairing
 #' @export
 setMethod("getDotBracket",
-          signature = "CompressedDotBracketDataFrameList",
+          signature = "SimpleSplitDotBracketDataFrameList",
+          definition = function(x, force = FALSE){
+            .get_dot_bracket(x, force)
+          })
+#' @rdname getBasePairing
+#' @export
+setMethod("getDotBracket",
+          signature = "CompressedSplitDotBracketDataFrameList",
           definition = function(x, force = FALSE){
             .get_dot_bracket(x, force)
           })
@@ -191,13 +202,14 @@ setMethod("getDotBracket",
 {
   if(is(input,"DotBracketStringSet")){
     types <- unique(unlist(strsplit(as.character(input),"")))
-  } else if(is(input,"CompressedSplitDotBracketDataFrameList") || 
-            is(input,"DotBracketDataFrameList")) {
+  } else if(is(input,"CompressedSplitDotBracketDataFrameList")) {
     if(ncol(input[[1]]) >= 4L){
       types <- unique(input@unlistData$character)
     } else {
       types <- "("
     }
+  } else {
+    stop(".")
   }
   str_open_chr <- gsub("\\\\","",STRUCTURE_OPEN_CHR)
   types <- types[types != STRUCTURE_NEUTRAL_CHR]
@@ -350,14 +362,15 @@ setMethod("getLoopIndices",
 setMethod("getLoopIndices",
           signature = "DotBracketDataFrameList",
           definition = function(x, bracket.type, warn.type.drops = TRUE){
-            .get_idx_of_loops_from_dbdfl(as(x,"SplitDotBracketDataFrameList"),
-                                         bracket.type, warn.type.drops)
+            getLoopIndices(as(x,"SimpleSplitDotBracketDataFrameList"),
+                           bracket.type = bracket.type,
+                           warn.type.drops = warn.type.drops)
           })
 
 #' @rdname getBasePairing
 #' @export
 setMethod("getLoopIndices",
-          signature = "SplitDotBracketDataFrameList",
+          signature = "SimpleSplitDotBracketDataFrameList",
           definition = function(x, bracket.type, warn.type.drops = TRUE){
             .get_idx_of_loops_from_dbdfl(x, bracket.type, warn.type.drops)
           })

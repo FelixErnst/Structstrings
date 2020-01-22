@@ -7,9 +7,9 @@ R_RegisterCCallable("Structstrings", #fun, (DL_FUNC) &fun)        \
   
 static const R_CallMethodDef callMethods[] = {
   /* DotBracketDataFrame.c */
-  CALLMETHOD_DEF(new_DotBracketDataFrame, 3),
-  CALLMETHOD_DEF(new_DotBracketDataFrameList, 2),
-  CALLMETHOD_DEF(new_DotBracketDataFrameList_from_CHARACTER, 2),
+  CALLMETHOD_DEF(new_DotBracketDFrame, 3),
+  CALLMETHOD_DEF(new_DotBracketDFrameList, 2),
+  CALLMETHOD_DEF(new_DotBracketDFrameList_from_CHARACTER, 2),
   CALLMETHOD_DEF(new_DotBracket_from_INTEGER, 1),
   CALLMETHOD_DEF(new_LoopIndexList_from_CHARACTER_LIST, 2),
   CALLMETHOD_DEF(new_LoopIndexList_from_INTEGER_LIST, 1),

@@ -29,16 +29,16 @@ void stubname Targs                                                             
 /*
  * Stubs for callables defined in DotBracketDataFrame_class.c
  */
-DEFINE_CCALLABLE_STUB(SEXP, new_DotBracketDataFrame,
+DEFINE_CCALLABLE_STUB(SEXP, new_DotBracketDFrame,
                       (SEXP vars, SEXP rownames, SEXP nrows),
                       (     vars,      rownames,      nrows)
 )
-DEFINE_CCALLABLE_STUB(SEXP, new_DotBracketDataFrameList,
+DEFINE_CCALLABLE_STUB(SEXP, new_DotBracketDFrameList,
                       (SEXP unlistData, SEXP partitioning),
                       (     unlistData,      partitioning)
 )
 
-DEFINE_CCALLABLE_STUB(SEXP, new_DotBracketDataFrameList_from_CHARACTER,
+DEFINE_CCALLABLE_STUB(SEXP, new_DotBracketDFrameList_from_CHARACTER,
                       (SEXP x, SEXP partitioning),
                       (     x,      partitioning)
 )

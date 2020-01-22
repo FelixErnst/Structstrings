@@ -17,18 +17,18 @@ void* util_mem_alloc(
 );
 
 /* DotBracketDataFrame_class.c */
-SEXP new_DotBracketDataFrame(
+SEXP new_DotBracketDFrame(
     SEXP vars,
     SEXP rownames,
     SEXP nrows
 );
 
-SEXP new_DotBracketDataFrameList(
+SEXP new_DotBracketDFrameList(
     SEXP unlistData,
     SEXP partitioning
 );
   
-SEXP new_DotBracketDataFrame_from_CHARACTER(
+SEXP new_DotBracketDFrame_from_CHARACTER(
     const char *chr,
     SEXP offset
 );
@@ -39,7 +39,7 @@ SEXP construct_offset_from_ends(
     SEXP offset
 );
   
-SEXP new_DotBracketDataFrameList_from_CHARACTER(
+SEXP new_DotBracketDFrameList_from_CHARACTER(
     SEXP x,
     SEXP partitioning
 );

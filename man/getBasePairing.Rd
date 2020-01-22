@@ -8,12 +8,13 @@
 \alias{getBasePairing,DotBracketStringSet-method}
 \alias{getDotBracket,DotBracketDataFrame-method}
 \alias{getDotBracket,DotBracketDataFrameList-method}
-\alias{getDotBracket,CompressedDotBracketDataFrameList-method}
+\alias{getDotBracket,SimpleSplitDotBracketDataFrameList-method}
+\alias{getDotBracket,CompressedSplitDotBracketDataFrameList-method}
 \alias{getLoopIndices,DotBracketString-method}
 \alias{getLoopIndices,DotBracketStringSet-method}
 \alias{getLoopIndices,DotBracketDataFrame-method}
 \alias{getLoopIndices,DotBracketDataFrameList-method}
-\alias{getLoopIndices,SplitDotBracketDataFrameList-method}
+\alias{getLoopIndices,SimpleSplitDotBracketDataFrameList-method}
 \alias{getLoopIndices,CompressedSplitDotBracketDataFrameList-method}
 \title{Accessing Dot Bracket annotation}
 \usage{
@@ -31,7 +32,9 @@ getLoopIndices(x, bracket.type, warn.type.drops = TRUE)
 
 \S4method{getDotBracket}{DotBracketDataFrameList}(x, force = FALSE)
 
-\S4method{getDotBracket}{CompressedDotBracketDataFrameList}(x, force = FALSE)
+\S4method{getDotBracket}{SimpleSplitDotBracketDataFrameList}(x, force = FALSE)
+
+\S4method{getDotBracket}{CompressedSplitDotBracketDataFrameList}(x, force = FALSE)
 
 \S4method{getLoopIndices}{DotBracketString}(x, bracket.type, warn.type.drops = TRUE)
 
@@ -41,7 +44,7 @@ getLoopIndices(x, bracket.type, warn.type.drops = TRUE)
 
 \S4method{getLoopIndices}{DotBracketDataFrameList}(x, bracket.type, warn.type.drops = TRUE)
 
-\S4method{getLoopIndices}{SplitDotBracketDataFrameList}(x, bracket.type, warn.type.drops = TRUE)
+\S4method{getLoopIndices}{SimpleSplitDotBracketDataFrameList}(x, bracket.type, warn.type.drops = TRUE)
 
 \S4method{getLoopIndices}{CompressedSplitDotBracketDataFrameList}(x, bracket.type, warn.type.drops = TRUE)
 }
@@ -50,8 +53,8 @@ getLoopIndices(x, bracket.type, warn.type.drops = TRUE)
 \code{\link{DotBracketStringSet}} object}
 
 \item{compress}{\code{getBasePairing}: whether to return a
-\code{CompressedDotBracketDataFrameList} or a
-\code{SplitDotBracketDataFrameList}}
+\code{CompressedSplitDotBracketDataFrameList} or a
+\code{SimpleSplitDotBracketDataFrameList}}
 
 \item{return.sequence}{if the input is a \code{StructuredXStringSet}:
 \code{TRUE}(default) or \code{FALSE}: Whether the sequence should be

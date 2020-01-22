@@ -7,11 +7,11 @@ NULL
 #' @title DataFrame for storing base pairing information
 #' 
 #' @description 
-#' The \code{DotBracket} and \code{DotBracketDataFrame} object is derived from
-#' the \code{\link[S4Vectors:DataFrame-class]{DataFrame}} and 
-#' \code{\link[S4Vectors:DataFrame-class]{DFrame}} classes. \code{DotBracket}
-#' implents the concept and can be used to implement other backends than the
-#' in-memory one as done by \code{DotBracketDataFrame}. 
+#' The \code{DotBracketDataFrame} and \code{DotBracketDFrame} object is derived 
+#' from the \code{\link[S4Vectors:DataFrame-class]{DataFrame}} and 
+#' \code{\link[S4Vectors:DataFrame-class]{DFrame}} classes. 
+#' \code{DotBracketDataFrame} implents the concept and can be used to implement
+#' other backends than the in-memory one as done by \code{DotBracketDFrame}. 
 #' 
 #' The \code{DotBracketDataFrameList} is implemented analogous, which is also
 #' available as \code{CompressedSplitDotBracketDataFrameList}. Since the names
@@ -73,7 +73,7 @@ DOTBRACKET_DATAFRAME_NUCLEOTIDE_COLS <- c("base")
 
 #' @rdname DotBracketDataFrame
 #' @export
-setClass(Class = "DotBracket",
+setClass(Class = "DotBracketDataFrame",
          contains = c("VIRTUAL","DataFrame"))
 
 ################################################################################
@@ -82,8 +82,8 @@ setClass(Class = "DotBracket",
 
 #' @rdname DotBracketDataFrame
 #' @export
-setClass(Class = "DotBracketDataFrame",
-         contains = c("DotBracket","DFrame"))
+setClass(Class = "DotBracketDFrame",
+         contains = c("DotBracketDataFrame","DFrame"))
 
 ################################################################################
 # DotBracketDataFrame - implementation 
@@ -92,23 +92,44 @@ setClass(Class = "DotBracketDataFrame",
 #' @rdname DotBracketDataFrame
 #' @export
 setClass(Class = "DotBracketDataFrameList",
-         contains = c("DataFrameList", "SimpleList"))
+         contains = c("SimpleDataFrameList"),
+         prototype = list(elementType = "DotBracketDataFrame"))
+
 #' @rdname DotBracketDataFrame
 #' @export
-setClass(Class = "SplitDotBracketDataFrameList",
-         contains = c("SimpleSplitDataFrameList"))
+setClass(Class = "DotBracketDFrameList",
+         contains = c("DFrameList", "DotBracketDataFrameList"),
+         prototype = list(elementType = "DotBracketDFrame"))
 
-setClass("CompressedDotBracketDataFrameList",
-         contains = c("CompressedDataFrameList"),
-         slots = c(unlistData = "DotBracket"),
-         prototype = prototype(unlistData = new("DotBracketDataFrame")))
+#' @rdname DotBracketDataFrame
+#' @export
+setClass(Class = "SimpleSplitDotBracketDataFrameList",
+         contains = c("SimpleSplitDataFrameList"),
+         prototype = list(elementType = "DotBracketDataFrame"))
+
+#' @rdname DotBracketDataFrame
+#' @export
+setClass(Class = "SimpleSplitDotBracketDFrameList",
+         contains = c("SimpleSplitDFrameList",
+                      "SimpleSplitDotBracketDataFrameList"),
+         prototype = list(elementType = "DotBracketDFrame"))
+
 #' @rdname DotBracketDataFrame
 #' @export
 setClass("CompressedSplitDotBracketDataFrameList",
-         contains = c("SplitDataFrameList",
-                      "CompressedDotBracketDataFrameList"))
+         contains = c("CompressedSplitDataFrameList"),
+         slots = c(unlistData = "DotBracketDataFrame"),
+         prototype = list(unlistData = new("DotBracketDFrame")))
 
-.valid.DotBracket <- function(object)
+#' @rdname DotBracketDataFrame
+#' @export
+setClass("CompressedSplitDotBracketDFrameList",
+         contains = c("CompressedSplitDFrameList",
+                      "CompressedSplitDotBracketDataFrameList"),
+         slots = c(unlistData = "DotBracketDFrame"),
+         prototype = list(unlistData = new("DotBracketDFrame")))
+
+.valid.DotBracketDataFrame <- function(object)
 {
   message <- paste0("At least 3 columns are expected. If unnamed they are used",
                     " in this order: pos, forward, reverse. The fourth and ",
@@ -153,9 +174,9 @@ setClass("CompressedSplitDotBracketDataFrameList",
       return(paste0("Only 'DotBracketDataFrame' are supported as elements."))
     }
     if(is(object,"CompressedList")){
-      return(.valid.DotBracket(object@unlistData))
+      return(.valid.DotBracketDataFrame(object@unlistData))
     } else {
-      ans <- lapply(object,.valid.DotBracket)
+      ans <- lapply(object,.valid.DotBracketDataFrame)
       f <- !vapply(ans,is.null,logical(1))
       if(any(f)){
         return(ans[f])
@@ -166,9 +187,10 @@ setClass("CompressedSplitDotBracketDataFrameList",
   NULL
 }
 
-setValidity("DotBracket", .valid.DotBracket)
+setValidity("DotBracketDataFrame", .valid.DotBracketDataFrame)
 setValidity("DotBracketDataFrameList", .valid.DotBracketDataFrameList)
-setValidity("SplitDotBracketDataFrameList", .valid.DotBracketDataFrameList)
+setValidity("SimpleSplitDotBracketDataFrameList",
+            .valid.DotBracketDataFrameList)
 setValidity("CompressedSplitDotBracketDataFrameList",
             .valid.DotBracketDataFrameList)
 
@@ -176,8 +198,8 @@ setValidity("CompressedSplitDotBracketDataFrameList",
 # DotBracketDataFrame conversion
 ################################################################################
 
-setMethod("relistToClass", "DotBracketDataFrame",
-          function(x) "CompressedSplitDotBracketDataFrameList"
+setMethod("relistToClass", "DotBracketDFrame",
+          function(x) "CompressedSplitDotBracketDFrameList"
 )
 
 .adjust_DotBracketDataFrame_col_types <- function(from)
@@ -206,28 +228,30 @@ setMethod("relistToClass", "DotBracketDataFrame",
 
 .DataFrame_To_DotBracketDataFrame <- function(from)
 {
-  if(!is(from,"DotBracketDataFrame")){
-    class(from) <- "DotBracketDataFrame"
-  }
   from <- .adjust_DotBracketDataFrame_col_types(from)
+  if(!is(from,"DotBracketDFrame")){
+    class(from) <- "DotBracketDFrame"
+  }
   validObject(from)
   from
 }
 
 .SimpleDataFrameList_To_DotBracketDataFrameList <- function(from)
 {
-  from@listData <- .norm_DotBracketDataFrame_input(from@listData)
-  class(from) <- "DotBracketDataFrameList"
+  listData <- .norm_DotBracketDataFrame_input(from@listData)
+  from <- S4Vectors:::new_SimpleList_from_list("DotBracketDFrameList", listData)
   validObject(from)
   from
 }
-.SimpleSplitDataFrameList_To_SplitDotBracketDataFrameList <- function(from)
-{
-  from@listData <- .norm_DotBracketDataFrame_input(from@listData)
-  class(from) <- "SplitDotBracketDataFrameList"
+
+.SimpleSplitDataFrameList_To_SimpleSplitDotBracketDataFrameList <- 
+  function(from){
+  listData <- .norm_DotBracketDataFrame_input(from@listData)
+  from <- new("SimpleSplitDotBracketDFrameList", listData = listData)
   validObject(from)
   from
 }
+
 .CSDataFrameList_To_CSDotBracketDataFrameList <- function(from)
 {
   ans <- unlist(from, use.names = FALSE)
@@ -239,7 +263,7 @@ setMethod("relistToClass", "DotBracketDataFrame",
 
 #' @name DotBracketDataFrame
 #' @export
-setAs("DFrame", "DotBracketDataFrame",
+setAs("DataFrame", "DotBracketDataFrame",
       function(from) .DataFrame_To_DotBracketDataFrame(from))
 #' @name DotBracketDataFrame
 #' @export
@@ -247,9 +271,9 @@ setAs("SimpleDataFrameList", "DotBracketDataFrameList",
       function(from) .SimpleDataFrameList_To_DotBracketDataFrameList(from))
 #' @name DotBracketDataFrame
 #' @export
-setAs("SimpleSplitDataFrameList", "SplitDotBracketDataFrameList",
+setAs("SimpleSplitDataFrameList", "SimpleSplitDotBracketDataFrameList",
       function(from) 
-        .SimpleSplitDataFrameList_To_SplitDotBracketDataFrameList(from))
+        .SimpleSplitDataFrameList_To_SimpleSplitDotBracketDataFrameList(from))
 #' @name DotBracketDataFrame
 #' @export
 setAs("CompressedSplitDataFrameList", "CompressedSplitDotBracketDataFrameList",
@@ -260,7 +284,7 @@ setAs("list", "DotBracketDataFrameList",
       function(from) do.call("DotBracketDataFrameList",from))
 #' @name DotBracketDataFrame
 #' @export
-setAs("list", "SplitDotBracketDataFrameList",
+setAs("list", "SimpleSplitDotBracketDataFrameList",
       function(from) do.call("SplitDotBracketDataFrameList",
                              c(from, list(compress = FALSE))))
 #' @name DotBracketDataFrame
@@ -275,7 +299,8 @@ setAs("CompressedSplitDotBracketDataFrameList", "DotBracketDataFrameList",
 
 #' @name DotBracketDataFrame
 #' @export
-setAs("CompressedSplitDotBracketDataFrameList", "SplitDotBracketDataFrameList",
+setAs("CompressedSplitDotBracketDataFrameList",
+      "SimpleSplitDotBracketDataFrameList",
       function(from) SplitDotBracketDataFrameList(as.list(from),
                                                   compress = FALSE))
 
@@ -289,7 +314,7 @@ setAs("CompressedSplitDotBracketDataFrameList", "SplitDotBracketDataFrameList",
     return(x)
   }
   f <- vapply(x,is,logical(1),"DataFrame") & 
-    !vapply(x,is,logical(1),"DotBracket")
+    !vapply(x,is,logical(1),"DotBracketDataFrame")
   if(any(f)){
     x[f] <- lapply(x[f], .DataFrame_To_DotBracketDataFrame)
   }
@@ -356,8 +381,8 @@ DotBracketDataFrameList <- function(...)
 {
   args <- list(...)
   args <- .flatten_input_list(args)
-  args <- .norm_DotBracketDataFrame_input(args)
-  .SimpleDataFrameList_To_DotBracketDataFrameList(DataFrameList(args))
+  ans <- DataFrameList(args)
+  .SimpleDataFrameList_To_DotBracketDataFrameList(ans)
 }
 
 #' @rdname DotBracketDataFrame
@@ -368,7 +393,7 @@ DBDFL <- function(...){
 
 #' @rdname DotBracketDataFrame
 #' @export
-SplitDotBracketDataFrameList <- function(..., compress = TRUE, 
+SplitDotBracketDataFrameList <- function(..., compress = TRUE,
                                          cbindArgs = FALSE)
 {
   args <- list(...)
@@ -379,7 +404,7 @@ SplitDotBracketDataFrameList <- function(..., compress = TRUE,
   if(compress){
     return(.CSDataFrameList_To_CSDotBracketDataFrameList(ans))
   }
-  .SimpleSplitDataFrameList_To_SplitDotBracketDataFrameList(ans)
+  .SimpleSplitDataFrameList_To_SimpleSplitDotBracketDataFrameList(ans)
 }
 
 #' @rdname DotBracketDataFrame
@@ -388,6 +413,19 @@ SDBDFL <- function(..., compress = TRUE, cbindArgs = FALSE)
 {
   SplitDotBracketDataFrameList(...,  compress = compress, cbindArgs = cbindArgs)
 }
+
+# show method ------------------------------------------------------------------
+
+setMethod("classNameForDisplay", "DotBracketDFrame",
+          function(x) {
+            if (class(x) == "DotBracketDFrame") 
+              "DotBracketDataFrame" 
+            else 
+              class(x)
+          }
+)
+
+# misc functions ---------------------------------------------------------------
 
 #' @rdname Structstrings-internals
 #' @param x,i,j,...,value See \link{DataFrame}.

@@ -2,10 +2,10 @@
 
 /* dot bracket string to data frame functions */
 
-SEXP new_DotBracketDataFrame(SEXP vars, SEXP rownames, SEXP nrows)
+SEXP new_DotBracketDFrame(SEXP vars, SEXP rownames, SEXP nrows)
 {
   SEXP ans;
-  PROTECT(ans = new_DataFrame("DotBracketDataFrame", 
+  PROTECT(ans = new_DataFrame("DotBracketDFrame", 
                               vars,
                               rownames, 
                               nrows));
@@ -13,7 +13,7 @@ SEXP new_DotBracketDataFrame(SEXP vars, SEXP rownames, SEXP nrows)
   return ans;
 }
 
-SEXP new_DotBracketDataFrameList(SEXP unlistData, SEXP partitioning)
+SEXP new_DotBracketDFrameList(SEXP unlistData, SEXP partitioning)
 {
   SEXP ans;
   PROTECT(ans = new_CompressedList("CompressedSplitDotBracketDataFrameList",
@@ -62,7 +62,7 @@ long *get_base_pairing_per_char_pair(R_xlen_t length,
   return(table);
 }
 
-SEXP new_DotBracketDataFrame_from_CHARACTER(const char *chr, SEXP offset)
+SEXP new_DotBracketDFrame_from_CHARACTER(const char *chr, SEXP offset)
 {
   R_xlen_t length = (R_xlen_t) strlen(chr);
   if(LENGTH(offset) != length){
@@ -132,7 +132,7 @@ SEXP new_DotBracketDataFrame_from_CHARACTER(const char *chr, SEXP offset)
   SET_STRING_ELT(names, 2, mkChar("reverse"));
   SET_STRING_ELT(names, 3, mkChar("character"));
   SET_NAMES(list, names);
-  PROTECT(ans = new_DotBracketDataFrame(list, NULL_USER_OBJECT, ScalarInteger(length)));
+  PROTECT(ans = new_DotBracketDFrame(list, NULL_USER_OBJECT, ScalarInteger(length)));
   UNPROTECT(7);
   return ans;
 }
@@ -163,7 +163,7 @@ SEXP construct_offset_from_ends(const char *chr, SEXP ends, SEXP offset)
   return offset;
 }
 
-SEXP new_DotBracketDataFrameList_from_CHARACTER(SEXP x, SEXP partitioning)
+SEXP new_DotBracketDFrameList_from_CHARACTER(SEXP x, SEXP partitioning)
 {
   /* 
    * input check
@@ -181,8 +181,8 @@ SEXP new_DotBracketDataFrameList_from_CHARACTER(SEXP x, SEXP partitioning)
   PROTECT(offset = NEW_INTEGER(strlen(chr)));
   PROTECT(ends = get_PartitioningByEnd_end(partitioning));
   offset = construct_offset_from_ends(chr, ends, offset);
-  PROTECT(unlistData = new_DotBracketDataFrame_from_CHARACTER(chr, offset));
-  PROTECT(ans = new_DotBracketDataFrameList(unlistData,partitioning));
+  PROTECT(unlistData = new_DotBracketDFrame_from_CHARACTER(chr, offset));
+  PROTECT(ans = new_DotBracketDFrameList(unlistData,partitioning));
   UNPROTECT(4);
   return ans;
 }

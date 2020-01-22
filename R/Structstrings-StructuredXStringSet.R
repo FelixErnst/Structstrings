@@ -281,16 +281,16 @@ setMethod(
     if(is(ans,"CompressedList")){
       seqList <- unlist(do.call(paste0(classNameSeq,"List"),
                                 seqs))
-      df <- as(ans@unlistData,"DataFrame")
+      df <- as(ans@unlistData,"DFrame")
       df$base <- seqList
-      ans@unlistData <- as(df,"DotBracketDataFrame")
+      ans@unlistData <- as(df,"DotBracketDFrame")
     } else {
       ans <- SplitDotBracketDataFrameList(
         mapply(
           function(z,s){
-            zz <- as(z,"DataFrame")
+            zz <- as(z,"DFrame")
             zz$base <- s
-            as(zz,"DotBracketDataFrame")
+            as(zz,"DotBracketDFrame")
           },
           ans,
           seqs,

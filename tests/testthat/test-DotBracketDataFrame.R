@@ -13,18 +13,18 @@ test_that("DotBracketDataFrame:",{
   expect_type(actual$reverse,"integer")
   #
   expect_error(as(df[,c(1,2)],"DotBracketDataFrame"),
-               'invalid class "DotBracketDataFrame" object')
+               'invalid class "DotBracketDFrame" object')
   expect_error(as(df2,"DotBracketDataFrame"),
-               'invalid class "DotBracketDataFrame" object')
+               'invalid class "DotBracketDFrame" object')
   df2 <- DataFrame(pos = c(1,2,3,4,5,6),
                    forward = c(-6,5,0,0,2,1),
                    reverse = c(1,2,0,0,5,6))
   expect_error(as(df2,"DotBracketDataFrame"),
-               'invalid class "DotBracketDataFrame" object')
+               'invalid class "DotBracketDFrame" object')
   df2 <- df
-  class(df2) <- "DotBracketDataFrame"
+  class(df2) <- "DotBracketDFrame"
   expect_error(validObject(df2),
-               'invalid class "DotBracketDataFrame" object: The types')
+               'invalid class "DotBracketDFrame" object: The types')
   df2 <- list(c(1,2,3,4,5,6),
               c(6,5,0,0,2,1),
               c(1,2,0,0,5,6))
@@ -40,7 +40,7 @@ test_that("DotBracketDataFrame:",{
   expect_equal(DotBracketDataFrame(df),dbdf)
   expect_s4_class(dbdf,"DotBracketDataFrame")
   # subsetting is a bit dangerous
-  expect_error({validObject(dbdf[1,])})
+  expect_error({validObject(dbdf[1,,drop=FALSE])})
   #
   dfl <- DataFrameList(df,df)
   expect_s4_class(dfl,"SimpleDataFrameList")
@@ -51,8 +51,8 @@ test_that("DotBracketDataFrame:",{
   #
   dfl <- SplitDataFrameList(df,df, compress = FALSE)
   expect_s4_class(dfl,"SimpleSplitDataFrameList")
-  dbdfl2 <- as(dfl,"SplitDotBracketDataFrameList")
-  expect_s4_class(dbdfl2,"SplitDotBracketDataFrameList")
+  dbdfl2 <- as(dfl,"SimpleSplitDotBracketDataFrameList")
+  expect_s4_class(dbdfl2,"SimpleSplitDotBracketDataFrameList")
   dbdfl3 <- as(dfl,"DotBracketDataFrameList")
   expect_s4_class(dbdfl3,"DotBracketDataFrameList")
   #
@@ -67,8 +67,8 @@ test_that("DotBracketDataFrame:",{
   expect_type(dfl,"list")
   dbdfl5 <- as(dfl,"DotBracketDataFrameList")
   expect_s4_class(dbdfl5,"DotBracketDataFrameList")
-  dbdfl6 <- as(dfl,"SplitDotBracketDataFrameList")
-  expect_s4_class(dbdfl6,"SplitDotBracketDataFrameList")
+  dbdfl6 <- as(dfl,"SimpleSplitDotBracketDataFrameList")
+  expect_s4_class(dbdfl6,"SimpleSplitDotBracketDataFrameList")
   dbdfl7 <- as(dfl,"CompressedSplitDotBracketDataFrameList")
   expect_s4_class(dbdfl7,"CompressedSplitDotBracketDataFrameList")
   expect_equal(dbdfl7,dbdfl4)
@@ -79,9 +79,10 @@ test_that("DotBracketDataFrame:",{
   dbdfl8 <- dbdfl4
   cn <- IRanges::CharacterList(c("pos","forward","reverse"),
                                c("pos","forward","reverse"))
+  colnames(dbdfl8) <- cn
   expect_equal(dbdfl4,dbdfl8)
   cn <- IRanges::CharacterList(c("pos","forward","reverse2"),
                                c("pos","forward","reverse2"))
   expect_error({colnames(dbdfl8) <- cn},
-               'invalid class "CompressedSplitDotBracketDataFrameList" object')
+               'invalid class "CompressedSplitDotBracketDFrameList" object')
 })

@@ -4,11 +4,14 @@
 \name{DotBracketDataFrame}
 \alias{DotBracketDataFrame}
 \alias{DotBracketDataFrameList}
-\alias{DotBracket-class}
 \alias{DotBracketDataFrame-class}
+\alias{DotBracketDFrame-class}
 \alias{DotBracketDataFrameList-class}
-\alias{SplitDotBracketDataFrameList-class}
+\alias{DotBracketDFrameList-class}
+\alias{SimpleSplitDotBracketDataFrameList-class}
+\alias{SimpleSplitDotBracketDFrameList-class}
 \alias{CompressedSplitDotBracketDataFrameList-class}
+\alias{CompressedSplitDotBracketDFrameList-class}
 \alias{DBDF}
 \alias{DBDFL}
 \alias{SplitDotBracketDataFrameList}
@@ -46,11 +49,11 @@ element in the result.}
 a \code{DotBracketDataFrame*} object.
 }
 \description{
-The \code{DotBracket} and \code{DotBracketDataFrame} object is derived from
-the \code{\link[S4Vectors:DataFrame-class]{DataFrame}} and 
-\code{\link[S4Vectors:DataFrame-class]{DFrame}} classes. \code{DotBracket}
-implents the concept and can be used to implement other backends than the
-in-memory one as done by \code{DotBracketDataFrame}. 
+The \code{DotBracketDataFrame} and \code{DotBracketDFrame} object is derived 
+from the \code{\link[S4Vectors:DataFrame-class]{DataFrame}} and 
+\code{\link[S4Vectors:DataFrame-class]{DFrame}} classes. 
+\code{DotBracketDataFrame} implents the concept and can be used to implement
+other backends than the in-memory one as done by \code{DotBracketDFrame}. 
 
 The \code{DotBracketDataFrameList} is implemented analogous, which is also
 available as \code{CompressedSplitDotBracketDataFrameList}. Since the names
