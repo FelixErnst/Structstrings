@@ -37,6 +37,7 @@ test_that("DotBracketString:",{
   expect_equal(as(i,"DotBracketStringSet")[[1]],as(dbs[[1]],"DotBracketStringSet")[[1]])
   expect_equal(unname(dbs[1]),DotBracketStringSet(bs[[1]]))
   expect_output(show(dbs))
+  expect_type(showAsCell(dbs),"character")
   il <- IntegerList(dbs)
   expect_s4_class(il,class = "IntegerList")
   expect_equal(as(il,"DotBracketStringSet"),dbs)
