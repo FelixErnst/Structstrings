@@ -1,7 +1,7 @@
 Package: Structstrings
 Title: Implementation of the dot bracket annotations with Biostrings
-Version: 1.3.2
-Date: 2020-01-21
+Version: 1.3.3
+Date: 2020-01-30
 Authors@R: person("Felix G.M.","Ernst",
                   email = "felix.gm.ernst@outlook.com",
                   role = c("aut", "cre"),

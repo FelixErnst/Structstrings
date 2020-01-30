@@ -304,3 +304,8 @@ setMethod("show", "DotBracketStringSet",
               .DotBracketStringSet.show_frame(object)
           }
 )
+
+setMethod("showAsCell","DotBracketStringSet",
+          function(object){
+            vapply(object, .toSeqSnippet, character(1), width = 23L)
+          })
