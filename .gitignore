@@ -2,7 +2,10 @@
 .Rhistory
 .RData
 *.Rproj
+*.dll
+*.o
 inst/doc
 docs/
 cache/
-src/
+src-i386/
+src-x64/
