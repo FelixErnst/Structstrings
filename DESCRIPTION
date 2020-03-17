@@ -44,7 +44,7 @@ Suggests:
     tRNAscanImport,
     BiocStyle
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Collate: 
     'Structstrings.R'
     'AllGenerics.R'

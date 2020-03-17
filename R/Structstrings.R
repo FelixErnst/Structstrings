@@ -90,19 +90,29 @@ NULL
 
 # this must match the defines in inst/include/Structstrings_defines.h
 #' @rdname Structstrings-internals
+#' @format a \code{integer} vector of length 9 containing the integer values
+#' of the dotbracket alphabet
 #' @export
 DOTBRACKET_CHAR_VALUES <- c(40L,41L,46L,60L,62L,91L,93L,123L,125L)
 #' @rdname Structstrings-internals
+#' @format a \code{character} vector of length 9 containing the single 
+#' characters of the dotbracket alphabet
 #' @export
 DOTBRACKET_ALPHABET <- strsplit(rawToChar(as.raw(DOTBRACKET_CHAR_VALUES)),
                                 "")[[1]]
 #' @rdname Structstrings-internals
+#' @format a \code{character} vector of length 1 containing the character for
+#' unpaired positions
 #' @export
 STRUCTURE_NEUTRAL_CHR <- c(".")
 #' @rdname Structstrings-internals
+#' @format a \code{character} vector of length 4 containing the opening 
+#' character of the dotbracket alphabet
 #' @export
 STRUCTURE_OPEN_CHR <- c("\\(","<","\\[","\\{")
 #' @rdname Structstrings-internals
+#' @format a \code{character} vector of length 4 containing the closing 
+#' character of the dotbracket alphabet
 #' @export
 STRUCTURE_CLOSE_CHR <- c("\\)",">","\\]","\\}")
 

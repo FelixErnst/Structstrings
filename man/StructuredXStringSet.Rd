@@ -34,7 +34,7 @@ readStructuredRNAStringSet(
   use.names = TRUE
 )
 
-writeStructuredXStringSet(x, filepath, append = FALSE, compress = FALSE)
+writeStructuredXStringSet(x, filepath, append = FALSE, compress = FALSE, ...)
 
 \S4method{getBasePairing}{StructuredXStringSet}(x, compress = TRUE, return.sequence = FALSE)
 

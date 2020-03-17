@@ -12,7 +12,22 @@
 \alias{[<-,DotBracketDataFrame-method}
 \alias{colnames<-,CompressedSplitDotBracketDataFrameList-method}
 \title{Structstrings internals}
-\format{An object of class \code{integer} of length 9.}
+\format{
+a \code{integer} vector of length 9 containing the integer values
+of the dotbracket alphabet
+
+a \code{character} vector of length 9 containing the single 
+characters of the dotbracket alphabet
+
+a \code{character} vector of length 1 containing the character for
+unpaired positions
+
+a \code{character} vector of length 4 containing the opening 
+character of the dotbracket alphabet
+
+a \code{character} vector of length 4 containing the closing 
+character of the dotbracket alphabet
+}
 \usage{
 DOTBRACKET_CHAR_VALUES
 

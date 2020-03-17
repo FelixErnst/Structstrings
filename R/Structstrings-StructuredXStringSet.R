@@ -248,7 +248,7 @@ readStructuredRNAStringSet <- function(filepath, nrec = -1L, skip = 0L,
 #' @rdname StructuredXStringSet
 #' @export
 writeStructuredXStringSet <- function(x, filepath, append = FALSE,
-                                      compress = FALSE)
+                                      compress = FALSE, ...)
 {
   if(is.null(names(x)) && is.null(names(dotbracket(x)))){
     stop("either 'x' or 'dotbracket' must have names")
@@ -257,7 +257,7 @@ writeStructuredXStringSet <- function(x, filepath, append = FALSE,
     stop("'x' must be a StructuredXStringSet object")
   }
   writeXStringSet(x, filepath, append, compress, compression_level = NA,
-                  format = "fastq", qualities = dotbracket(x))
+                  format = "fastq", qualities = dotbracket(x), ...)
 }
 
 # conversion -------------------------------------------------------------------

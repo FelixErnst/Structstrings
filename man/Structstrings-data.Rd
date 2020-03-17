@@ -6,8 +6,12 @@
 \alias{dbs}
 \alias{nseq}
 \title{Structstrings example data}
-\format{object of class \code{\link{DotBracketStringSet}} and 
-\code{\link{DNAStringSet}}}
+\format{
+object of class \code{\link{DotBracketStringSet}} and 
+\code{\link{DNAStringSet}}
+
+An object of class \code{DNAStringSet} of length 299.
+}
 \source{
 sequence and  dot bracket annotation of tRNAscan-SE output for 
 *S. cerevisiae* imported using 
