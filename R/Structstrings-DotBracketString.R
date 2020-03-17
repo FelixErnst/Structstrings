@@ -182,6 +182,8 @@ make_DOTBRACKET_COLORED_LETTERS <- function()
 
 .add_DotBracket_colors <- function(x)
 {
+  if (!isTRUE(getOption("Biostrings.coloring", default=FALSE)))
+    return(x)
   ans <- vapply(x,
                 function(xi){
                   xi <- strsplit(xi,"")[[1L]]
