@@ -23,7 +23,7 @@ biocViews:
 Depends:
     R (>= 3.6),
     S4Vectors (>= 0.25.14),
-    IRanges (2.21.6),
+    IRanges (>= 2.21.6),
     Biostrings (>= 2.55.7)
 LinkingTo:
     IRanges,
