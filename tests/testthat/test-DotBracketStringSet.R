@@ -50,14 +50,14 @@ test_that("DotBracketString:",{
   ##############################################################################
   # windows
   expect_equal(windows(dbs),dbs)
-  expect_error(windows(dbs,1,2),'invalid class "DotBracketString" object:')
+  expect_error(windows(dbs,1,2),'invalid class')
   # subseq
   expect_equal(subseq(dbs),dbs)
-  expect_error(threebands(dbs,2,3),'invalid class "DotBracketString" object:')
+  expect_error(threebands(dbs,2,3),'invalid class')
   actual <- threebands(dbs)
   expect_equal(actual$middle,unname(dbs))
-  expect_error(subseq(dbs,1,2),'invalid class "DotBracketString" object:')
-  expect_error(subseq(dbs[[1]],1,2),'invalid class "DotBracketString" object:')
+  expect_error(subseq(dbs,1,2),'invalid class')
+  expect_error(subseq(dbs[[1]],1,2),'invalid class')
   #
   expect_null(Structstrings:::.check_for_invalid_db_letters(list(str[1]),
                                                             DOTBRACKET_ALPHABET))

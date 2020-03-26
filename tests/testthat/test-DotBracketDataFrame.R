@@ -13,25 +13,25 @@ test_that("DotBracketDataFrame:",{
   expect_type(actual$reverse,"integer")
   #
   expect_error(as(df[,c(1,2)],"DotBracketDataFrame"),
-               'invalid class "DotBracketDFrame" object: At least 3')
+               'invalid class')
   expect_error(as(df2,"DotBracketDataFrame"),
-               'invalid class "DotBracketDFrame" object: At least 3')
+               'invalid class')
   df2 <- DataFrame(pos = c(1,2,3,4,5,6),
                    forward = c(-6,5,0,0,2,1),
                    reverse = c(1,2,0,0,5,6))
   expect_error(as(df2,"DotBracketDataFrame"),
-               'invalid class "DotBracketDFrame" object: Unmatched')
+               'invalid class')
   df2 <- df
   class(df2) <- "DotBracketDFrame"
   expect_error(validObject(df2),
-               'invalid class "DotBracketDFrame" object: The types')
+               'invalid class')
   df2 <- DataFrame(pos = c(1,2,3,4,5,6),
                    forward = c(6,5,0,0,2,1),
                    reverse = c(1,2,0,0,5,6),
                    character = c(1,2,3,4,5,6))
   class(df2) <- "DotBracketDFrame"
   expect_error(validObject(df2),
-               'invalid class "DotBracketDFrame" object: The types')
+               'invalid class')
   df2 <- DataFrame(pos = c(1,2,3,4,5,6),
                    forward = c(6,5,0,0,2,1),
                    reverse = c(1,2,0,0,5,6),
@@ -39,7 +39,7 @@ test_that("DotBracketDataFrame:",{
                    base = c(1,2,0,0,5,6))
   class(df2) <- "DotBracketDFrame"
   expect_error(validObject(df2),
-               'invalid class "DotBracketDFrame" object: The types')
+               'invalid class')
   df2 <- list(c(1,2,3,4,5,6),
               c(6,5,0,0,2,1),
               c(1,2,0,0,5,6))
@@ -61,7 +61,7 @@ test_that("DotBracketDataFrame:",{
                colnames(df))
   #
   expect_error(DotBracketDataFrame(),
-               'invalid class "DotBracketDFrame" object: At least')
+               'invalid class')
   #
   actual <- DotBracketDataFrame(df2[c(1,2,3)])
   expect_s4_class(actual,"DotBracketDataFrame")
@@ -123,7 +123,7 @@ test_that("DotBracketDataFrame:",{
   cn <- IRanges::CharacterList(c("pos","forward","reverse2"),
                                c("pos","forward","reverse2"))
   expect_error({colnames(dbdfl8) <- cn},
-               'invalid class "CompressedSplitDotBracketDFrameList" object')
+               'invalid class')
   expect_error(DotBracketDataFrame(c(as.list(dbdfl4),list(x = TRUE))),
                "Mixed inputs. Use either vectors per column or a DataFrame")
   #
