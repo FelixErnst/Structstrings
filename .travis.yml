@@ -4,13 +4,13 @@ r:
 before_install:
   - sudo apt-get update
   - sudo apt-get install -y libpoppler-cpp-dev libmagick++-dev
+  - 
 # for codecov
 r_packages:
   - covr
   - magick
 before_cache: 
-  - Rscript -e 'remotes::install_cran("pkgdown")'
-  - Rscript -e 'remotes::install_github("r-lib/pkgdown#1276")'
+  Rscript -e 'remotes::install_github("r-lib/pkgdown#1276")'
 cache:
   packages: true
   directories:
