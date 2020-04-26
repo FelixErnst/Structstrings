@@ -24,34 +24,36 @@ jobs:
 
       - name: Install R packages for CI
         run: |
-          install.packages('remotes')
+          install.packages(c('remotes', 'BiocManager'))
           remotes::install_github('r-hub/sysreqs')
         shell: Rscript {0}
         
       - name: Query dependencies
         run: |
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), "depends.Rds", version = 2)
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE, repos = c(getOption('repos'), BiocManager::repositories())), "depends.Rds", version = 2)
         shell: Rscript {0}
 
       - name: Cache R packages
+        if: runner.os != 'Windows'
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ubuntu-r-3.6-pkgdown-${{ hashFiles('depends.Rds') }}
-          restore-keys: ubuntu-r-3.6-pkgdown-
-          
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{ hashFiles('depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-new-
+
       - name: Install system dependencies
+        if: runner.os == 'Linux'
         env:
           RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
         run: |
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs libcurl4-openssl-dev"
         
-      - name: Install dependencies
+      - name: Install R dependencies
         run: |
-          install.packages("remotes")
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_dev("pkgdown")
+          remotes::install_deps(dependencies = TRUE, repos = c(getOption('repos'), BiocManager::repositories()), Ncpu = 2L)
+          remotes::install_cran("rcmdcheck")
+          remotes::install_cran("covr")
           remotes::install_cran("magick")
         shell: Rscript {0}
 
