@@ -40,7 +40,7 @@ jobs:
 
       - name: Install R packages for CI
         run: |
-          install.packages('remotes')
+          install.packages(c('remotes', 'BiocManager'))
           remotes::install_github('r-hub/sysreqs')
         shell: Rscript {0}
         
