@@ -63,7 +63,7 @@ jobs:
           RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
         run: |
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
-          sudo -s eval "$sysreqs libcurl4-openssl-dev"
+          sudo -s eval "$sysreqs libcurl4-openssl-dev libcurl4-gnutls-dev"
         
       - name: Install R dependencies
         run: |
