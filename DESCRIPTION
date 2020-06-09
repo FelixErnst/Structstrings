@@ -1,7 +1,7 @@
 Package: Structstrings
 Title: Implementation of the dot bracket annotations with Biostrings
-Version: 1.5.0
-Date: 2020-03-24
+Version: 1.5.1
+Date: 2020-06-08
 Authors@R: person("Felix G.M.","Ernst",
                   email = "felix.gm.ernst@outlook.com",
                   role = c("aut", "cre"),
@@ -22,9 +22,9 @@ biocViews:
     Alignment, SequenceMatching
 Depends:
     R (>= 3.6),
-    S4Vectors (>= 0.25.14),
-    IRanges (>= 2.21.6),
-    Biostrings (>= 2.55.7)
+    S4Vectors (>= 0.27.12),
+    IRanges (>= 2.23.9),
+    Biostrings (>= 2.57.2)
 LinkingTo:
     IRanges,
     S4Vectors
