@@ -56,7 +56,7 @@ setClass("StructuredXStringSet",
          )
 )
 
-setMethod("vertical_slot_names", "StructuredXStringSet",
+setMethod("parallel_slot_names", "StructuredXStringSet",
           function(x) c("structure", callNextMethod())
 )
 
