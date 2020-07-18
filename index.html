@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">Structstrings</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.2</span>
       </span>
     </div>
 
@@ -77,11 +77,12 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="structstrings-implementation-of-the-dot-bracket-annotations-with-biostrings-build-status-codecov" class="section level1">
+<div id="structstrings-implementation-of-the-dot-bracket-annotations-with-biostrings-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#structstrings-implementation-of-the-dot-bracket-annotations-with-biostrings-build-status-codecov" class="anchor"></a>Structstrings: implementation of the dot bracket annotations with Biostrings <a href="https://travis-ci.com/FelixErnst/Structstrings"><img src="https://travis-ci.com/FelixErnst/Structstrings.svg?branch=master" alt="Build Status"></a> <a href="https://codecov.io/gh/FelixErnst/Structstrings"><img src="https://codecov.io/gh/FelixErnst/Structstrings/branch/master/graph/badge.svg" alt="codecov"></a>
+<a href="#structstrings-implementation-of-the-dot-bracket-annotations-with-biostrings-" class="anchor"></a>Structstrings: implementation of the dot bracket annotations with Biostrings <img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/Structstrings/Structstrings.png" height="300" align="right">
 </h1></div>
-<p><img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/Structstrings/Structstrings.png" height="300" align="right"></p>
+<!-- badges: start -->
+
 <p>The <code>Structstrings</code> package implements the widely used dot bracket annotation for storing base pairing information in structured RNA. For example it is heavily used in the ViennaRNA (<a href="#Literature">Lorenz et al. 2011</a>) package, the tRNAscan-SE (<a href="#Literature">Lowe et al. 1997</a>) software and the tRNAdb (<a href="#Literature">Juehling et al. 2009</a>).</p>
 <p><code>Structstrings</code> uses the infrastructure provided by the <a href="#Literature">Biostrings</a> package and derives the class <code>DotBracketString</code> and related classes from the <code>BString</code> class. From these base pair tables can be produced for in depth analysis, for which the <code>DotBracketDataFrame</code> class is derived from the <code>DataFrame</code> class. In addition, the loop indices of the base pairs can be retrieved as a <code>LoopIndexList</code>, a derivate of the <code>IntegerList</code> class. Generally, all classes check automatically for the validity of the base pairing information.</p>
 <p>The conversion of the <code>DotBracketString</code> to the base pair table and the loop indices is implemented in C for efficiency. The C implementation is inspired by the <a href="https://www.tbi.univie.ac.at/RNA/">ViennaRNA</a> package to a large extent.</p>
@@ -107,11 +108,9 @@ library("Structstrings")</code></pre>
 <h1 class="hasAnchor">
 <a href="#literature" class="anchor"></a>Literature</h1>
 <ul>
-<li>Lorenz, Ronny; Bernhart, Stephan H.; Höner zu Siederdissen, Christian; Tafer, Hakim; Flamm, Christoph; Stadler, Peter F.; Hofacker, Ivo L. (2011): “ViennaRNA Package 2.0”. Algorithms for Molecular Biology 6:26. <a href="doi:%5B10.1186/1748-7188-6-26%5D(https://doi.org/10.1186/1748-7188-6-26)" class="uri">doi:[10.1186/1748-7188-6-26](https://doi.org/10.1186/1748-7188-6-26)</a>
-</li>
-<li>Lowe, T.M.; Eddy, S.R.(1997): “tRNAscan-SE: A program for improved detection of transfer RNA genes in genomic sequence”. Nucl. Acids Res. 25: 955-964. <a href="doi:%5B10.1093/nar/25.5.955%5D(https://doi.org/10.1093/nar/25.5.955)" class="uri">doi:[10.1093/nar/25.5.955](https://doi.org/10.1093/nar/25.5.955)</a>
-</li>
-<li>Jühling, Frank; Mörl, Mario; Hartmann, Roland K.; Sprinzl, Mathias; Stadler, Peter F.; Pütz, Joern (2009): “TRNAdb 2009: Compilation of tRNA Sequences and tRNA Genes.” Nucleic Acids Research 37 (suppl_1): D159–D162. <a href="doi:%5B10.1093/nar/gkn772%5D(https://doi.org/10.1093/nar/gkn772)" class="uri">doi:[10.1093/nar/gkn772](https://doi.org/10.1093/nar/gkn772)</a>.</li>
+<li>Lorenz, Ronny; Bernhart, Stephan H.; Höner zu Siederdissen, Christian; Tafer, Hakim; Flamm, Christoph; Stadler, Peter F.; Hofacker, Ivo L. (2011): “ViennaRNA Package 2.0”. Algorithms for Molecular Biology 6:26. <a href="doi:%5B10.1186/1748-7188-6-26" class="uri">doi:[10.1186/1748-7188-6-26</a>](<a href="https://doi.org/10.1186/1748-7188-6-26" class="uri">https://doi.org/10.1186/1748-7188-6-26</a>)</li>
+<li>Lowe, T.M.; Eddy, S.R.(1997): “tRNAscan-SE: A program for improved detection of transfer RNA genes in genomic sequence”. Nucl. Acids Res. 25: 955-964. <a href="doi:%5B10.1093/nar/25.5.955" class="uri">doi:[10.1093/nar/25.5.955</a>](<a href="https://doi.org/10.1093/nar/25.5.955" class="uri">https://doi.org/10.1093/nar/25.5.955</a>)</li>
+<li>Jühling, Frank; Mörl, Mario; Hartmann, Roland K.; Sprinzl, Mathias; Stadler, Peter F.; Pütz, Joern (2009): “TRNAdb 2009: Compilation of tRNA Sequences and tRNA Genes.” Nucleic Acids Research 37 (suppl_1): D159–D162. <a href="doi:%5B10.1093/nar/gkn772" class="uri">doi:[10.1093/nar/gkn772</a>](<a href="https://doi.org/10.1093/nar/gkn772" class="uri">https://doi.org/10.1093/nar/gkn772</a>).</li>
 <li>Pagès, H.; Aboyoun, P.; Gentleman, R.; DebRoy, S. (2018). “Biostrings: Efficient manipulation of biological strings.” R package version 2.50.1.</li>
 </ul>
 </div>
@@ -143,7 +142,17 @@ library("Structstrings")</code></pre>
 </ul>
 </div>
 
-  </div>
+  <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/FelixErnst/Structstrings/actions/"><img src="https://github.com/FelixErnst/Structstrings/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://travis-ci.com/FelixErnst/Structstrings"><img src="https://travis-ci.com/FelixErnst/Structstrings.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="http://bioconductor.org/checkResults/devel/bioc-LATEST/Structstrings/"><img src="https://bioconductor.org/shields/build/devel/bioc/Structstrings.svg" alt="BioC Build"></a></li>
+<li><a href="https://codecov.io/gh/FelixErnst/Structstrings"><img src="https://codecov.io/gh/FelixErnst/Structstrings/branch/master/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://doi.org/doi:10.18129/B9.bioc.Structstrings"><img src="https://bioconductor.org/shields/years-in-bioc/Structstrings.svg" alt="BioC Years"></a></li>
+</ul>
+</div>
+</div>
 </div>
 
 
@@ -152,7 +161,7 @@ library("Structstrings")</code></pre>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
