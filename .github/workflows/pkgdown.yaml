@@ -47,6 +47,7 @@ jobs:
         run: |
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
+          sudo apt-get install libcurl4-openssl-dev
         
       - name: Install R dependencies
         run: |
