@@ -58,7 +58,7 @@ jobs:
 
       - name: Install package
         run: |
-          R CMD INSTALL .
+          devtools::install(".")
           git config --global user.name ${{secrets.GH_USER}}
           git config --global user.email ${{secrets.GH_EMAIL}}
 
