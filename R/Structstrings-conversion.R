@@ -298,7 +298,9 @@ setMethod("getDotBracket",
 .get_idx_of_loops_from_dbs <- function(dbs, type, warn.type.drops)
 {
   type <- .norm_bracket_type(dbs,type)
-  assertive::assert_is_a_bool(warn.type.drops)
+  if(!.is_a_bool(warn.type.drops)){
+    stop("'warn.type.drops' must TRUE or FALSE.")
+  }
   # XString* classes cannot be converted to strings in C function
   # since functions are not available from Biostrings package externally
   x <- lapply(dbs,as.character)
@@ -323,7 +325,9 @@ setMethod("getDotBracket",
 .get_idx_of_loops_from_dbdfl <- function(dbdfl, type, warn.type.drops)
 {
   type <- .norm_bracket_type(dbdfl,type)
-  assertive::assert_is_a_bool(warn.type.drops)
+  if(!.is_a_bool(warn.type.drops)){
+    stop("'warn.type.drops' must TRUE or FALSE.")
+  }
   if(is(dbdfl,"CompressedDataFrameList")){
     dbdfl@unlistData <- .norm_dbdf_bracket_type(dbdfl@unlistData, type)
   } else {
