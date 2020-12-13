@@ -133,9 +133,6 @@ jobs:
           ## For textshaping, required by ragg, and required by pkgdown
           brew install harfbuzz fribidi
 
-          ## See if this helps get RCurl installed
-          brew uninstall curl
-
       - name: Install Windows system dependencies
         if: runner.os == 'Windows'
         run: |
@@ -163,6 +160,7 @@ jobs:
           ## Ideally, all dependencies should get installed in the first pass.
 
           ## Temporary for now due to https://github.com/ropensci/RefManageR/issues/79
+          remotes::install_cran("RCurl")
           remotes::install_github("ropensci/bibtex")
           remotes::install_github("ropensci/RefManageR")
           remotes::install_github("cboettig/knitcitations")
