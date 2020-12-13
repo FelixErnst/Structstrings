@@ -43,6 +43,8 @@ setMethod(
   }
 )
 
+#' @rdname Structstrings-internals
+#' @export
 setReplaceMethod(
   "subseq", "DotBracketStringSet",
   function(x, start = NA, end = NA, width = NA, value)

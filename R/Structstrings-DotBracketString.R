@@ -52,9 +52,13 @@ NULL
 #' @export
 setClass("DotBracketString", contains = "BString")
 
+#' @rdname Structstrings-internals
+#' @export
 setMethod("seqtype", "DotBracketString", function(x) "DotBracket")
 
 # modified version, since the results might be invalid
+#' @rdname Structstrings-internals
+#' @export
 setMethod("subseq", "DotBracketString",
           function(x, start = NA, end = NA, width = NA){
             x <- callNextMethod()
@@ -62,6 +66,8 @@ setMethod("subseq", "DotBracketString",
             x
           }
 )
+#' @rdname Structstrings-internals
+#' @export
 setReplaceMethod("subseq", "DotBracketString",
                  function(x, start = NA, end = NA, width = NA, value){
                    x <- callNextMethod()

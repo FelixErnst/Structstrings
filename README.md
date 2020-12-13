@@ -2,7 +2,6 @@
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/FelixErnst/Structstrings/workflows/R-CMD-check/badge.svg)](https://github.com/FelixErnst/Structstrings/actions/)
-[![Build Status](https://travis-ci.com/FelixErnst/Structstrings.svg?branch=master)](https://travis-ci.com/FelixErnst/Structstrings)
 [![BioC Build](https://bioconductor.org/shields/build/devel/bioc/Structstrings.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/Structstrings/)
 [![codecov](https://codecov.io/gh/FelixErnst/Structstrings/branch/master/graph/badge.svg)](https://codecov.io/gh/FelixErnst/Structstrings)
 [![BioC Years](https://bioconductor.org/shields/years-in-bioc/Structstrings.svg)](https://doi.org/doi:10.18129/B9.bioc.Structstrings)

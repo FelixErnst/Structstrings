@@ -70,6 +70,8 @@ requireNamespace("Biostrings")
 #' used internally, but may be of use to other package developers.
 #' Otherwise take care.
 #' 
+#' @param seqtype,x,start,end,width,value,i,j,... used internally
+#' 
 #' @examples 
 #' DOTBRACKET_CHAR_VALUES
 #' DOTBRACKET_ALPHABET

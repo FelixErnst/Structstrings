@@ -464,7 +464,6 @@ setMethod("classNameForDisplay", "DotBracketDFrameList",
 # misc functions ---------------------------------------------------------------
 
 #' @rdname Structstrings-internals
-#' @param x,i,j,...,value See \link{DataFrame}.
 #' @export
 setReplaceMethod(
   "[", "DotBracketDataFrame",
