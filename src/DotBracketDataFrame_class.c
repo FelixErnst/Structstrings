@@ -23,10 +23,7 @@ SEXP new_DotBracketDFrameList(SEXP unlistData, SEXP partitioning)
   return ans;
 }
 
-long *get_base_pairing_per_char_pair(R_xlen_t length, 
-                                     const char *str,
-                                     char bracket_open,
-                                     char bracket_close)
+long *get_base_pairing_per_char_pair(R_xlen_t length, const char *str, char bracket_open, char bracket_close)
 {
   long *table, *stack, i,j,hx;
   
@@ -40,9 +37,7 @@ long *get_base_pairing_per_char_pair(R_xlen_t length,
     } else if(str[i-1] == bracket_close){
       j = stack[--hx];
       if (hx<0) {
-        error("unbalanced '%s%s' brackets in dot bracket structure",
-              bracket_open,
-              bracket_close);
+        error("unbalanced '%s%s' brackets in dot bracket structure", bracket_open, bracket_close);
         free(stack);
         return NULL;
       }
@@ -54,9 +49,7 @@ long *get_base_pairing_per_char_pair(R_xlen_t length,
   }
   free(stack);
   if (hx != 0) {
-    error("unbalanced '%s%s' brackets in dot bracket structure",
-          bracket_open,
-          bracket_close);
+    error("unbalanced '%s%s' brackets in dot bracket structure", bracket_open,  bracket_close);
     return NULL;
   }
   return(table);

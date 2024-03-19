@@ -1,7 +1,7 @@
 Package: Structstrings
 Title: Implementation of the dot bracket annotations with Biostrings
-Version: 1.19.0
-Date: 2020-12-13
+Version: 1.19.1
+Date: 2024-03-19
 Authors@R: person("Felix G.M.","Ernst",
                   email = "felix.gm.ernst@outlook.com",
                   role = c("aut", "cre"),
@@ -43,7 +43,7 @@ Suggests:
     tRNAscanImport,
     BiocStyle
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.1
 Collate: 
     'Structstrings.R'
     'AllGenerics.R'

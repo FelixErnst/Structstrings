@@ -208,7 +208,7 @@ make_DOTBRACKET_COLORED_LETTERS <- function()
 }
 
 add_colors <- function(x) UseMethod("add_colors")
-add_colors.default <- identity
+#' @export
 add_colors.DotBracket <- .add_DotBracket_colors
 
 setMethod("show", "DotBracketString",

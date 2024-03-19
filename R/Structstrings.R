@@ -47,9 +47,11 @@
 #' tRNA Genes." Nucleic Acids Research 37 (suppl_1): D159–D162.
 #' \href{https://doi.org/10.1093/nar/gkn772}{doi:10.1093/nar/gkn772}.
 #' 
-#' @docType package
 #' @name Structstrings
 NULL
+
+#' @keywords internal
+"_PACKAGE"
 
 #' @useDynLib Structstrings
 #' @import methods
