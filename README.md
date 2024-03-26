@@ -1,9 +1,9 @@
-# Structstrings: implementation of the dot bracket annotations with Biostrings <img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/Structstrings/Structstrings.png" height="300" align="right">
+# Structstrings: implementation of the dot bracket annotations with Biostrings <img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/devel/Structstrings/Structstrings.png" height="300" align="right">
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/FelixErnst/Structstrings/workflows/R-CMD-check-bioc-devel/badge.svg)](https://github.com/FelixErnst/Structstrings/actions/)
 [![BioC Build](https://bioconductor.org/shields/build/devel/bioc/Structstrings.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/Structstrings/)
-[![codecov](https://codecov.io/gh/FelixErnst/Structstrings/branch/master/graph/badge.svg)](https://codecov.io/gh/FelixErnst/Structstrings)
+[![codecov](https://codecov.io/gh/FelixErnst/Structstrings/branch/devel/graph/badge.svg)](https://codecov.io/gh/FelixErnst/Structstrings)
 [![BioC Years](https://bioconductor.org/shields/years-in-bioc/Structstrings.svg)](https://doi.org/doi:10.18129/B9.bioc.Structstrings)
 <!-- badges: end -->
 
