@@ -5,10 +5,10 @@
 SEXP new_DotBracketDFrame(SEXP vars, SEXP rownames, SEXP nrows)
 {
   SEXP ans;
-  PROTECT(ans = new_DataFrame("DotBracketDFrame", 
-                              vars,
-                              rownames, 
-                              nrows));
+  PROTECT(ans = new_DFrame("DotBracketDFrame", 
+                           vars,
+                           rownames, 
+                           nrows));
   UNPROTECT(1);
   return ans;
 }
