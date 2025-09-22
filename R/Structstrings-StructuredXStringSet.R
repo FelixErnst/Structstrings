@@ -145,6 +145,11 @@ StructuredXStringSet <- function(x, structure)
 #' @export
 StructuredRNAStringSet <- function(x, structure)
 {
+  # Drop metadata columns to avoid warning. They will be dropped by the
+  # constructor
+  if(is(x,"XStringSet")) {
+    mcols(x) <- NULL
+  } 
   StructuredXStringSet(RNAStringSet(x), as(structure,"DotBracketStringSet"))
 }
 
