@@ -12,11 +12,11 @@
 #' \code{Structstrings} uses the infrastructure provided by the
 #' \code{Biostrings} package and derives the class
 #' \code{\link{DotBracketString}} and such from the equivalent
-#' \code{\link{BString}} class. From these base pair table can be produced for
+#' \code{\link[Biostrings:XStringSet-class]{BString}} class. From these base pair table can be produced for
 #' in depth analysis. For this purpose the \code{\link{DotBracketDataFrame}}
-#' class is derived from the \code{\link{DataFrame}} class. In addition the loop
+#' class is derived from the \code{\link[S4Vectors:DataFrame-class]{DataFrame}} class. In addition the loop
 #' IDs of the base pairs can be retrieved as a \code{\link{LoopIndexList}}, a
-#' derivate if the \code{\link{IntegerList}}. Generally, it checks automatically
+#' derivate if the \code{\link[IRanges:AtomicList]{IntegerList}}. Generally, it checks automatically
 #' for the validity of the dot bracket annotation.
 #'
 #' The conversion of the \code{\link{DotBracketString}} to the base pair table
@@ -131,7 +131,7 @@ STRUCTURE_CLOSE_CHR <- c("\\)",">","\\]","\\}")
 #' is part of the \code{tRNAscanImport} package.
 #' @docType data
 #' @format object of class \code{\link{DotBracketStringSet}} and 
-#' \code{\link{DNAStringSet}}
+#' \code{\link[Biostrings:XStringSet-class]{DNAStringSet}}
 #' 
 #' @usage data(dbs)
 #' @keywords datasets

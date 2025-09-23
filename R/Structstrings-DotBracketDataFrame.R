@@ -445,7 +445,7 @@ SDBDFL <- function(..., compress = TRUE, cbindArgs = FALSE)
 
 setMethod("classNameForDisplay", "DotBracketDFrame",
           function(x) {
-            if (class(x) == "DotBracketDFrame") 
+            if (is(x, "DotBracketDFrame")) 
               "DotBracketDataFrame" 
             else 
               class(x)
@@ -454,7 +454,7 @@ setMethod("classNameForDisplay", "DotBracketDFrame",
 
 setMethod("classNameForDisplay", "DotBracketDFrameList",
           function(x) {
-            if (class(x) == "DotBracketDFrameList") 
+            if (is(x, "DotBracketDFrameList"))
               "DotBracketDataFrameList" 
             else 
               class(x)

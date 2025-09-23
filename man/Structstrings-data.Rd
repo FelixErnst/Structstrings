@@ -8,7 +8,7 @@
 \title{Structstrings example data}
 \format{
 object of class \code{\link{DotBracketStringSet}} and 
-\code{\link{DNAStringSet}}
+\code{\link[Biostrings:XStringSet-class]{DNAStringSet}}
 
 An object of class \code{DNAStringSet} of length 299.
 }
