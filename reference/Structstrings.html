@@ -36,7 +36,7 @@ improved upon."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/l
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Structstrings</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.23.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.25.3</span>
       </span>
     </div>
 
@@ -75,11 +75,11 @@ tRNAscan-SE software (Lowe et al. 1997) and the tRNAdb (Jühling et al. 2009).</
 <p><code>Structstrings</code> uses the infrastructure provided by the
 <code>Biostrings</code> package and derives the class
 <code><a href="DotBracketString.html">DotBracketString</a></code> and such from the equivalent
-<code>BString</code> class. From these base pair table can be produced for
+<code><a href="https://rdrr.io/pkg/Biostrings/man/XStringSet-class.html" class="external-link">BString</a></code> class. From these base pair table can be produced for
 in depth analysis. For this purpose the <code><a href="DotBracketDataFrame.html">DotBracketDataFrame</a></code>
-class is derived from the <code>DataFrame</code> class. In addition the loop
+class is derived from the <code><a href="https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html" class="external-link">DataFrame</a></code> class. In addition the loop
 IDs of the base pairs can be retrieved as a <code><a href="LoopIndexList.html">LoopIndexList</a></code>, a
-derivate if the <code>IntegerList</code>. Generally, it checks automatically
+derivate if the <code><a href="https://rdrr.io/pkg/IRanges/man/AtomicList-class.html" class="external-link">IntegerList</a></code>. Generally, it checks automatically
 for the validity of the dot bracket annotation.</p>
 <p>The conversion of the <code><a href="DotBracketString.html">DotBracketString</a></code> to the base pair table
 and the loop indices is implemented in C for efficiency. The C implementation
@@ -129,7 +129,7 @@ tRNA Genes." Nucleic Acids Research 37 (suppl_1): D159–D162.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer></div>
