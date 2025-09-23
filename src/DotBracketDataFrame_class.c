@@ -7,8 +7,8 @@ SEXP new_DotBracketDFrame(SEXP vars, SEXP rownames, SEXP nrows)
   SEXP ans;
   PROTECT(ans = new_DFrame("DotBracketDFrame", 
                            vars,
-                           rownames, 
-                           nrows));
+                           nrows,
+                           rownames));
   UNPROTECT(1);
   return ans;
 }
