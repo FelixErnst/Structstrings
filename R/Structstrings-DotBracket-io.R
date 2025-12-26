@@ -71,6 +71,7 @@ writeDotBracketStringSet <- function(x, filepath, append = FALSE,
 #' @export
 saveDotBracketStringSet <- function(x, objname, dirpath = ".",
                                     save.dups = FALSE, verbose = TRUE){
+  seqtype(x) <- seqtype(BStringSet())
   Biostrings::saveXStringSet(x, objname = objname, dirpath = dirpath,
                              save.dups = save.dups, verbose = verbose)
 }

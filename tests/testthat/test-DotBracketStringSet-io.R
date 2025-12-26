@@ -3,7 +3,7 @@ test_that("DotBracketStringSet input/output:",{
   data("dbs", package = "Structstrings")
   dbs2 <- DotBracketStringSet(getDotBracket(getBasePairing(dbs),TRUE))
   file <- tempfile()
-  writeXStringSet(dbs,file)
+  writeXStringSet(BStringSet(dbs),file)
   dbs2 <- readDotBracketStringSet(file)
   expect_equal(dbs,dbs2)
   writeDotBracketStringSet(dbs,file)
